@@ -6,7 +6,17 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/01 09:41:59 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/01 10:26:15 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
+
+int	main(int ac, char **av, char **env)
+{
+
+	(void)ac;
+	(void)av;
+	(void)env;
+	return (0);
+}
