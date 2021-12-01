@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/01 10:26:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/01 17:54:29 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 int	main(int ac, char **av, char **env)
 {
+	char	*line;
 
+	line = NULL;
+	write(1, ">", 2);
+	line = readline(av[1]);
+	while (line != NULL)
+	{
+		write(1, ">", 1);
+		// line = readline(line);
+		
+	}
 	(void)ac;
 	(void)av;
 	(void)env;
