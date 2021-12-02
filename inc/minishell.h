@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 14:57:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/02 19:02:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@
 # include <errno.h>
 # include <sys/ioctl.h>
 # include "../libft/libft.h"
-# include "./parsing_manager.h"
-# include "./parsing_err.h"
-# include "./minishell_manager.h"
+# include "./structures/parsing_structure.h"
+# include "./structures/minishell_structure.h"
+# include "./parsing_errors.h"
+# include "./exit_call.h"
+# include "./free_line.h"
 # define TRUE 1
 # define FALSE 0
 
@@ -39,8 +41,5 @@
 # define PS(x) printf("%s\n", x);
 # define PD(x) printf("%d\n", x);
 # define PP(x) printf("%p\n", x);
-
-
-char	*free_line(char *line);
 
 #endif

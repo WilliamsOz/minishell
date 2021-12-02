@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_line.c                                        :+:      :+:    :+:   */
+/*   exit_call.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:04:13 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 18:45:44 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 18:06:00 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 18:32:22 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef EXIT_CALL_H
+# define EXIT_CALL_H
 
-char	*free_line(char *line)
-{
-	free(line);
-	line = NULL;
-	return (line);
-}
+int		exit_call_check(char *line, char *exit, int i, int j);
+void	exit_called(t_minishell *minishell);
+
+#endif
