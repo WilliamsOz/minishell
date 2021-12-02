@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   parsing_manager.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:28:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:34:34 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 13:27:37 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 13:34:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#ifndef PARSING_MANAGER_H
+# define PARSING_MANAGER_H
 
-#include "./parsing_err_structure.h"
+# include "./minishell_structures.h"
 
-typedef struct	s_minishell
-{
-	char			*line;
-	t_parsing_err	*parsing_err;
-}				t_minishell;
+t_minishell	*parsing_err_creator(t_minishell *minishell);
+void		*parsing_err_destroyer(t_minishell *minishell);
 
 #endif

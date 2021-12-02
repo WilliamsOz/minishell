@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_help.h                                   :+:      :+:    :+:   */
+/*   free_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/01 17:30:41 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/01 17:49:35 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 13:04:13 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 13:07:10 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_HELP_H
-# define MINISHELL_HELP_H
+#include "../../inc/minishell.h"
 
-# define D printf("ICI|N");
-# define PS(x) printf("%s\n", x);
-# define PD(x) printf("%d\n", x);
-# define PP(x) printf("%p\n", x);
-
-#endif
+char	*free_line(char *line)
+{
+	free(line);
+	line = NULL;
+	return (line);
+}

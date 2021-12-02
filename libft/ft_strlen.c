@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:28:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:34:34 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 12:35:47 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 12:39:24 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "./libft.h"
 
-#include "./parsing_err_structure.h"
-
-typedef struct	s_minishell
+int		ft_strlen(char *str)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-}				t_minishell;
+	int	i;
 
-#endif
+	if (str == NULL)
+		return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}

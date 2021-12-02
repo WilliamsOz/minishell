@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   parsing_err_creator.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:28:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:34:34 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 13:25:13 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 13:33:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "../../inc/minishell.h"
 
-#include "./parsing_err_structure.h"
-
-typedef struct	s_minishell
+t_minishell	*parsing_err_creator(t_minishell *minishell)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-}				t_minishell;
-
-#endif
+	minishell->parsing_err = (t_parsing_err*)malloc(sizeof(t_parsing_err));
+	if (minishell->parsing_err == NULL)
+	{
+		minishell_destroyer(minishell);
+		strerror(errno);
+		exit (EXIT_FAILURE);
+	}
+	minishell->parsing_err->exit_called = 0;
+	return (minishell);
+}

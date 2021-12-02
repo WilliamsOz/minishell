@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   minishell_creator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:28:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:34:34 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 13:17:19 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 13:24:53 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#include "../../inc/minishell.h"
 
-#include "./parsing_err_structure.h"
-
-typedef struct	s_minishell
+t_minishell	*minishell_creator(void)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-}				t_minishell;
+	t_minishell	*minishell;
 
-#endif
+	minishell = (t_minishell *)malloc(sizeof(t_minishell));
+	if (minishell == NULL)
+	{
+		strerror(errno);
+		exit (EXIT_FAILURE);
+	}
+	minishell->line = NULL;
+	return (minishell);
+}
