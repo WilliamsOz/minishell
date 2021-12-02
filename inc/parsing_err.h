@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structures.h                             :+:      :+:    :+:   */
+/*   parsing_err.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:28:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:34:34 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 14:42:14 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/02 14:58:00 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURES_H
-# define MINISHELL_STRUCTURES_H
+#ifndef PARSING_ERR_H
+# define PARSING_ERR_H
 
-#include "./parsing_err_structure.h"
-
-typedef struct	s_minishell
-{
-	char			*line;
-	t_parsing_err	*parsing_err;
-}				t_minishell;
+int	quotes_closed(t_parsing_err *parsing_err, int i, char *line);
 
 #endif

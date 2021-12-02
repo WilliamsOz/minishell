@@ -6,7 +6,7 @@
 #    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2021/12/02 13:18:50 by wiozsert         ###   ########.fr        #
+#    Updated: 2021/12/02 15:04:50 by wiozsert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,14 @@ LIBFTFILESO = ./libft/ft_pustr_fd.o ./libft/ft_strcmp.o ./libft/ft_strlen.o
 
 #srcs
 PATHSRCS = ./srcs/
+PATHMIMA = $(PATHSRCS)minishell_manager/
+PATHPAEM = $(PATHSRCS)parsing_err_manager/
 PATHPAER = $(PATHSRCS)parsing_errors/
 PATHUTLS = $(PATHSRCS)utils/
-PATHMIMA = $(PATHSRCS)minishell_manager/
-FILESC = $(PATHSRCS)minishell.c $(PATHPAER)are_quotes_closed.c \
-$(PATHUTLS)free_line.c $(PATHMIMA)minishell_creator.c
+FILESC = $(PATHSRCS)minishell.c $(PATHMIMA)minishell_creator.c \
+$(PATHMIMA)minishell_destroyer.c $(PATHPAEM)parsing_err_creator.c \
+$(PATHPAEM)parsing_err_desroyer.c $(PATHPAER)check_quotes_closed.c \
+$(PATHUTLS)free_line.c
 OBJS = $(addsuffix .o, $(notdir $(basename $(FILESC))))
 
 all : $(NAME)

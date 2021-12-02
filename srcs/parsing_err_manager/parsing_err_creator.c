@@ -6,21 +6,22 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:25:13 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:33:31 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/02 15:05:29 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*parsing_err_creator(t_minishell *minishell)
+t_parsing_err	*parsing_err_creator()
 {
-	minishell->parsing_err = (t_parsing_err*)malloc(sizeof(t_parsing_err));
-	if (minishell->parsing_err == NULL)
+	t_parsing_err	*parsing_err;
+
+	parsing_err = (t_parsing_err*)malloc(sizeof(t_parsing_err));
+	if (parsing_err == NULL)
 	{
-		minishell_destroyer(minishell);
 		strerror(errno);
-		exit (EXIT_FAILURE);
+		return (parsing_err);
 	}
-	minishell->parsing_err->exit_called = 0;
-	return (minishell);
+	parsing_err->exit_called = 0;
+	return (parsing_err);
 }

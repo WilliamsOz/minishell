@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 13:29:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:57:15 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@
 # include <errno.h>
 # include <sys/ioctl.h>
 # include "../libft/libft.h"
+# include "./parsing_manager.h"
+# include "./parsing_err.h"
 # include "./minishell_manager.h"
-# include "./minishell_structures.h"
+# define TRUE 1
+# define FALSE 0
 
 # define D printf("ICI|N");
 # define PS(x) printf("%s\n", x);
@@ -38,7 +41,6 @@
 # define PP(x) printf("%p\n", x);
 
 
-t_minishell		are_quotes_closed(t_minishell minishell, int i);
-char			*free_line(char *line);
+char	*free_line(char *line);
 
 #endif
