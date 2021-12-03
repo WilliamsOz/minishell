@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 16:16:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:41:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,20 @@
 # include <sys/ioctl.h>
 # include "../libft/libft.h"
 # include "./structures/parsing_structure.h"
+# include "./structures/double_linked_list_structure.h"
 # include "./structures/minishell_structure.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
-# include "./structures/double_linked_list_structure.h"
+# include "./double_lk.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
 # define SEMICOLON 59
 # define SIMPLE_COTE 39
 # define DOUBLE_COTE 34
+# define LOWER_RAFTER 60
+# define UPPER_RAFTER 62
+# define PIPELINE 124
 
 # define D printf("ICI|N");
 # define PS(x) printf("%s\n", x);
@@ -51,5 +55,7 @@ t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
 void			minishell_destroyer(t_minishell *minishell);
 t_minishell		*minishell_creator(void);
+void			double_lk_destroyer(t_dlk_list *d_lk);
+t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
 
 #endif

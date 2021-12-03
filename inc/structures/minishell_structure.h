@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 16:19:22 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:27:59 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ typedef struct	s_minishell
 {
 	char			*line;
 	t_parsing_err	*parsing_err;
-	t_dlk_list		*dlk_minishell;
+	t_dlk_list		*d_lk;
 }				t_minishell;
 
 #endif

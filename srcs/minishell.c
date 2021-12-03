@@ -6,17 +6,19 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 17:31:37 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 19:14:02 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-t_minishell	*init_double_linked_list(t_minishell *minishell, char *line)
+void	destroy_all_data(t_minishell *minishell)
 {
-	
-
-	return (minishell);
+	if (minishell->parsing_err != NULL)
+		parsing_err_destroyer(minishell->parsing_err);
+	if (minishell->d_lk != NULL)
+		double_lk_destroyer(minishell->d_lk);
+	minishell_destroyer(minishell);
 }
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
@@ -25,16 +27,19 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	while (minishell->line != NULL)
 	{
 		minishell = check_interpretation_errors(minishell);
-		minishell->dlk_minishell = init_double_linked_list(minishell,
-			minishell->line);
-		if (minishell->line != NULL)
-			minishell->line = free_line(minishell->line);
-		if (minishell->parsing_err->exit_called == 0)
-			minishell->line = readline("minishell> ");
+		if (minishell->line != NULL && minishell->line[0] != '\0')
+		{
+			minishell->d_lk = double_lk_creator(minishell,
+				minishell->line, 0);
+			if (minishell->line != NULL)
+				minishell->line = free_line(minishell->line);
+		}
+		minishell->line = readline("minishell> ");
 	}
 	(void)ac;
 	(void)av;
 	(void)env;
+	destroy_all_data(minishell);
 }
 
 /*

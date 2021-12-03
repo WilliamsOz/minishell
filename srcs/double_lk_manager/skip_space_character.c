@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_err_desroyer.c                             :+:      :+:    :+:   */
+/*   skip_space_character.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:25:57 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 18:42:05 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/03 18:09:11 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/03 18:10:34 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void		parsing_err_destroyer(t_parsing_err *parsing_err)
+int	skip_space(char *line, int i)
 {
-	free(parsing_err);
+	while (line[i] != '\0' && line[i] == ' ')
+		i++;
+	return (i);
 }
