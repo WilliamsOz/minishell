@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 18:41:32 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 22:53:52 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@
 # define UPPER_RAFTER 62
 # define PIPELINE 124
 
-# define D printf("ICI|N");
+# define D printf("ICI\n");
 # define PS(x) printf("%s\n", x);
 # define PC(x) printf("%c\n", x);
 # define PD(x) printf("%d\n", x);
 # define PP(x) printf("%p\n", x);
+# define ex exit(EXIT_SUCCESS);
 
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
