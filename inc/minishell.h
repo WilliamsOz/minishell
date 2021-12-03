@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 19:02:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 13:44:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,23 @@
 # include "./structures/parsing_structure.h"
 # include "./structures/minishell_structure.h"
 # include "./parsing_errors.h"
-# include "./exit_call.h"
 # include "./free_line.h"
 # define TRUE 1
 # define FALSE 0
+# define BACKSLASH_CHAR 92
+# define SEMICOLON 59
+# define SIMPLE_COTE 39
+# define DOUBLE_COTE 34
 
 # define D printf("ICI|N");
 # define PS(x) printf("%s\n", x);
+# define PC(x) printf("%c\n", x);
 # define PD(x) printf("%d\n", x);
 # define PP(x) printf("%p\n", x);
+
+t_parsing_err	*parsing_err_creator();
+void			parsing_err_destroyer(t_parsing_err *parsing_err);
+void			minishell_destroyer(t_minishell *minishell);
+t_minishell		*minishell_creator(void);
 
 #endif

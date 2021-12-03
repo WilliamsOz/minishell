@@ -6,28 +6,18 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/02 18:45:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 14:03:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-t_minishell	*quotes_not_closed(t_minishell *minishell)
-{
-	ft_putstr_fd("Unclosed quotes detected\n", 2);
-	minishell->line = free_line(minishell->line);
-	return (minishell);
-}
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
 	minishell->line = readline("minishell> ");
 	while (minishell->line != NULL)
 	{
-		if (quotes_closed(minishell->parsing_err, 0, minishell->line) == FALSE)
-			minishell = quotes_not_closed(minishell);
-		else if (exit_call_check(minishell->line, "exit", 0, 0) == 1)
-			exit_called(minishell);
+		minishell = check_interpretation_errors(minishell);
 		if (minishell->line != NULL)
 			minishell->line = free_line(minishell->line);
 		if (minishell->parsing_err->exit_called == 0)
@@ -38,8 +28,29 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	(void)env;
 }
 
-// " = 34
-// ' = 39
+/*
+Le shell :
+
+_OK_ Ne doit pas interpreter des cotes simple ou double pas fermer
+_OK_ Ne doit pas interpreter des caracteres special non specifies comme \ ou ;
+
+Utiliser pas plus d'une variable global et justifier
+son utilisation lors de la correction (singleton? Cf kaye)
+
+_OK_ Afficher un promp lorsqu'il attend une nouvelle commande
+
+Avoir un historique de travail fonctionnel
+
+Chercher et lancer le bonne executable (base sur la variable PATH????? ou
+en utilisant le chemin relatif ou absolu)
+
+’ inhibe toute interprétation d’une séquence de caractères.
+
+" inhibe toute interprétation d'une séquence de caractères à l'exception de $.
+
+
+
+*/
 
 int	main(int ac, char **av, char **env)
 {
