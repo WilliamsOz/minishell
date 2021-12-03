@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 13:44:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:16:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include "./structures/minishell_structure.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
+# include "./structures/double_linked_list_structure.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92

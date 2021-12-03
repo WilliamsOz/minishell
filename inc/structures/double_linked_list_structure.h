@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   double_linked_list_structure.h                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 16:19:22 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/03 16:15:49 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/03 16:18:37 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#ifndef DOUBLE_LINKED_LIST_STRUCTURE_H
+# define DOUBLE_LINKED_LIST_STRUCTURE_H
 
-typedef struct	s_minishell
+typedef struct    s_dlk_list
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*dlk_minishell;
-}				t_minishell;
+	char				*token;
+	struct s_dlk_list	*next;
+	struct s_dlk_list	*previous;
+}						t_dlk_list;
 
 #endif
