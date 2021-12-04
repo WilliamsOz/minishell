@@ -6,19 +6,21 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 23:23:54 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 11:28:40 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	destroy_all_data(t_minishell *minishell)
+t_minishell	*destroy_all_data(t_minishell *minishell)
 {
 	if (minishell->parsing_err != NULL)
 		parsing_err_destroyer(minishell->parsing_err);
 	if (minishell->d_lk != NULL)
 		double_lk_destroyer(minishell->d_lk);
-	minishell_destroyer(minishell);
+	if (minishell != NULL)
+		minishell_destroyer(minishell);
+	return (minishell);
 }
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
@@ -31,6 +33,7 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 		{
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
+			minishell = check_metacharacter_errors(minishell);
 			if (minishell->line != NULL)
 				minishell->line = free_line(minishell->line);
 		}

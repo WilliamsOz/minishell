@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:17:19 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 19:09:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 11:14:57 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_minishell	*minishell_creator(void)
 {
 	t_minishell	*minishell;
 
+	minishell = NULL;
 	minishell = (t_minishell *)malloc(sizeof(t_minishell));
 	if (minishell == NULL)
 	{
