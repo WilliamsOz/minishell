@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:15:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 22:53:53 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 16:39:50 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ typedef struct    s_dlk_list
 	int					upper_rafter;
 	int					pipeline;
 	int					is_metacharacter;
+	int					simple_quote;
+	int					double_quote;
+	int					quote_ind;
 }						t_dlk_list;
 
 #endif

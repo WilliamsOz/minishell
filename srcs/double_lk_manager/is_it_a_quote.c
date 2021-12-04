@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_errors.h                                   :+:      :+:    :+:   */
+/*   is_it_a_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 14:42:14 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 16:21:08 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/04 16:48:47 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/04 16:49:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_ERRORS_H
-# define PARSING_ERRORS_H
+#include "../../inc/minishell.h"
 
-int				check_pipeline_errors(t_dlk_list *dlk);
-t_minishell		*check_metacharacter_errors(t_minishell *minishell);
-int				unspecified_char(char *line);
-int				quote_not_closed(t_parsing_err *parsing_err, int i,
-	char *line);
-t_minishell		*check_interpretation_errors(t_minishell *minishell);
-
-#endif
+int	is_it_a_quote(char c)
+{
+	if (c == SIMPLE_COTE || c == DOUBLE_COTE)
+		return (1);
+	return (0);
+}

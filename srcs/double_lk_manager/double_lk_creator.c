@@ -6,24 +6,23 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 12:11:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 18:08:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char			*__copy_token__(char *line, int *ptr_i, int i, int j)
+static char			*_cpy_token_(char *line, int *p_i, int i, int j)
 {
 	char	*tmp;
 
-	i = *ptr_i;
-	while (line[i] != '\0' && line[i] != LOWER_RAFTER &&
-			line[i] != UPPER_RAFTER && line[i] != PIPELINE)
+	i = *p_i;
+	while (line[i] != '\0' && is_metacharacter(line[i]) == 0 && line[i] != ' ')
 	{
 		i++;
 		j++;
 	}
-	*ptr_i = i;
+	*p_i = i;
 	tmp = (char *)malloc(sizeof(char) * (j + 1));
 	if (tmp == NULL)
 		return (NULL);
@@ -40,15 +39,20 @@ static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *str, int *p_i, int i)
 {
 	i = *p_i;
 	i = skip_space(str, i);
-	if (str[i] != '\0' && is_metacharacter(str[i]) == 1)
+	if (is_it_a_quote(str[i]) == 1)
+	{
+		if (str[i] == SIMPLE_COTE)
+			dlk->simple_quote++;
+		else if (str[i] == DOUBLE_COTE)
+			dlk->double_quote++;
+		i++;
+		dlk = get_coted_token(dlk, str, &i, 1);
+	}
+	else if (str[i] != '\0' && is_metacharacter(str[i]) == 1)
 		dlk = get_metacharacter(dlk, str[i], &i);
 	else
-	{
-		dlk->token = __copy_token__(str, &i, 0, 0);
-		if (dlk->token == NULL)
-			return (NULL);
-	}
-	i = skip_space(str, i); 
+		dlk->token = _cpy_token_(str, &i, 0, 0);
+	i = skip_space(str, i);
 	*p_i = i;
 	return (dlk);
 }
@@ -86,12 +90,12 @@ t_dlk_list	*double_lk_creator(t_minishell *minishell, char *line, int i)
 	if (dlk == NULL)
 		init_dlk_creator_failed(minishell);
 	dlk->previous = NULL;
-	minishell->d_lk = init_dlk_metacharacter(dlk);
+	dlk = init_dlk_metacharacter(dlk);
 	dlk = __get_token__(dlk, line, &i, 0);
-	if (dlk->token == NULL)
+	if (dlk->is_metacharacter == 0 && dlk->token == NULL)
 		init_dlk_token_failed(minishell);
 	dlk = __get_next_tokens__(dlk, line, i);
-	if (dlk == NULL)
+	if (dlk->is_metacharacter == 0 && dlk == NULL)
 		init_dlk_token_failed(minishell);
 	return (dlk);
 }

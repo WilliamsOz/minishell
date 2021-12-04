@@ -6,11 +6,43 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:28:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 18:47:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void    show_dlk(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		printf("\n");
+		if (tmp->token != NULL)
+		{
+			BLUECLR
+			printf("Token :\n");
+			PS(tmp->token)
+			printf("\n");
+			STOPCLR
+		}
+		else if (tmp->is_metacharacter == 1)
+		{
+			YELLOWCLR
+			if (tmp->pipeline == 1)
+				printf("Pipeline\n");
+			else if (tmp->lower_rafter == 1)
+				printf("Lower Rafter\n");
+			else if (tmp->upper_rafter == 1)
+				printf("Upper Rafter\n");
+			STOPCLR
+			printf("\n");
+		}
+		tmp = tmp->next;
+	}
+}
 
 t_minishell	*destroy_all_data(t_minishell *minishell)
 {
@@ -25,19 +57,21 @@ t_minishell	*destroy_all_data(t_minishell *minishell)
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
-	minishell->line = readline("minishell> ");
+	minishell->line = readline("minishell>$ ");
 	while (minishell->line != NULL)
 	{
+		add_history(minishell->line);
 		minishell = check_interpretation_errors(minishell);
 		if (minishell->line != NULL && minishell->line[0] != '\0')
 		{
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
+			SMDLK
 			minishell = check_metacharacter_errors(minishell);
 			if (minishell->line != NULL)
 				minishell->line = free_line(minishell->line);
 		}
-		minishell->line = readline("minishell> ");
+		minishell->line = readline("minishell>$ ");
 	}
 	(void)ac;
 	(void)av;

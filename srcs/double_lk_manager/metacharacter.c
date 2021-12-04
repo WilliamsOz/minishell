@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:05:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/03 22:54:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 17:19:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ t_dlk_list	*init_dlk_metacharacter(t_dlk_list *dlk)
 	dlk->upper_rafter = 0;
 	dlk->pipeline = 0;
 	dlk->is_metacharacter = 0;
+	dlk->quote_ind = 0;
+	dlk->simple_quote = 0;
+	dlk->double_quote = 0;
 	return (dlk);
 }

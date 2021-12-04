@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:18:20 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/04 18:09:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,27 @@
 # define UPPER_RAFTER 62
 # define PIPELINE 124
 
+//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
+
+# define REDCLR printf("\033[0;31m");
+# define GREENCLR printf("\033[0;32m");
+# define YELLOWCLR printf("\033[0;33m");
+# define BLUECLR printf("\033[0;34m");
+# define PURPLECLR printf("\033[0;35m");
+# define CYANCLR printf("\033[0;36m");
+# define WHITECLR printf("\033[0;37m");
+# define STOPCLR printf("\033[0m");
 # define D printf("ICI\n");
 # define PS(x) printf("%s\n", x);
 # define PC(x) printf("%c\n", x);
 # define PD(x) printf("%d\n", x);
 # define PP(x) printf("%p\n", x);
 # define ex exit(EXIT_SUCCESS);
+void    show_dlk(t_dlk_list *dlk);
+# define SMDLK show_dlk(minishell->d_lk);
+# define SDLK show_dlk(dlk);
+
+//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
