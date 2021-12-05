@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_it_a_quote.c                                    :+:      :+:    :+:   */
+/*   rafters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/04 16:48:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 16:49:11 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/05 14:30:11 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/05 15:28:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_it_a_quote(char c)
+
+
+int	check_rafter_errors(t_dlk_list *dlk)
 {
-	if (c == SIMPLE_COTE || c == DOUBLE_COTE)
-		return (1);
+	
+
 	return (0);
 }

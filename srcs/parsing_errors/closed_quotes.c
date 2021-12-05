@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_interpretation.c                             :+:      :+:    :+:   */
+/*   closed_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 13:13:11 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 18:46:36 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/02 12:58:29 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/05 15:00:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,27 @@ static t_minishell	*__interpretation_errors_found__(t_minishell *minishell)
 	return (minishell);
 }
 
-t_minishell			*check_interpretation_errors(t_minishell *minishell)
+t_minishell	*are_quotes_closed(t_minishell*minishell, int i, char *line)
 {
-	if (unspecified_char(minishell->line) == TRUE)
+	t_parsing_err	*parsing_err;
+
+	parsing_err = parsing_err_creator();
+	parsing_err->simple_cote = 0;
+	parsing_err->double_cote = 0;
+	while (line[i] != '\0')
 	{
-		ft_putstr_fd("Unspecified char detected\n", 2);
-		minishell = __interpretation_errors_found__(minishell);
+		if (line[i] == SIMPLE_COTE)
+			parsing_err->simple_cote++;
+		else if (line[i] == DOUBLE_COTE)
+			parsing_err->double_cote++;
+		i++;
 	}
-	else if (quote_not_closed(minishell->parsing_err, 0, minishell->line) == TRUE)
+	if (parsing_err->simple_cote % 2 != 0 ||
+		parsing_err->double_cote % 2 != 0)
 	{
-		ft_putstr_fd("Unclosed cote detected\n", 2);
-		minishell = __interpretation_errors_found__(minishell);
+		ft_putstr_fd("Unclosed Quotes\n", 2);
+		minishell_destroyer(minishell);
+		parsing_err_destroyer(parsing_err);
 	}
 	return (minishell);
 }

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:25:13 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:20:05 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 14:57:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ t_parsing_err	*parsing_err_creator()
 		strerror(errno);
 		return (parsing_err);
 	}
-	parsing_err->exit_called = 0;
 	return (parsing_err);
 }

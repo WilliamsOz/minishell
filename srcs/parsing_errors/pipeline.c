@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_destroyer.c                              :+:      :+:    :+:   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:18:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:17:09 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/04 11:26:40 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/05 15:25:40 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	minishell_destroyer(t_minishell *minishell)
+t_minishell	*check_pipeline_errors(t_minishell *minishell, t_dlk_list *dlk)
 {
-	free(minishell);
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->pipeline_next_to_pipeline == 1)
+			minishell->parsing_err->pipeline_next_to_pipeline = 1;
+		else if (tmp->pipeline == 1 &&
+			(tmp->previous->token == NULL ||tmp->next->token == NULL))
+			minishell->parsing_err->pipeline_next_to_null = 1;
+		tmp = tmp->next;
+	}
+	return (minishell);
 }

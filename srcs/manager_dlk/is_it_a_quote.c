@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_err_desroyer.c                             :+:      :+:    :+:   */
+/*   is_it_a_quote.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:25:57 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:20:18 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/04 16:48:47 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/05 14:38:59 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void		parsing_err_destroyer(t_parsing_err *parsing_err)
+int	is_it_a_quote(char c)
 {
-	free(parsing_err);
+	if (c == SIMPLE_COTE || c == DOUBLE_COTE)
+		return (1);
+	return (0);
 }
