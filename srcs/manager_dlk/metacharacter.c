@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:05:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 16:51:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:21:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ t_dlk_list	*get_metacharacter(t_dlk_list *dlk, char c, int *ptr_i, char *str)
 	if (str[i] == LOWER_RAFTER && str[i + 1] == LOWER_RAFTER)
 	{
 		dlk->here_doc = 1;
+		*ptr_i += 2;
+		return (dlk);
+	}
+	else if (str[i] == UPPER_RAFTER && str[i + 1] == UPPER_RAFTER)
+	{
+		dlk->double_upper_rafter = 1;
 		*ptr_i += 2;
 		return (dlk);
 	}
@@ -46,6 +52,7 @@ t_dlk_list	*init_dlk_metacharacter(t_dlk_list *dlk)
 	dlk->next = NULL;
 	dlk->token = NULL;
 	dlk->here_doc = 0;
+	dlk->double_upper_rafter = 0;
 	dlk->lower_rafter = 0;
 	dlk->upper_rafter = 0;
 	dlk->pipeline = 0;

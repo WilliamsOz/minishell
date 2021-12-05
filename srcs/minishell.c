@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 16:51:44 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:22:04 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void    show_dlk(t_dlk_list *dlk)
 			YELLOWCLR
 			if (tmp->here_doc == 1)
 				printf("Here_doc\n");
+			else if (tmp->double_upper_rafter == 1)
+				printf("Double Upper Rafter\n");
 			else if (tmp->pipeline == 1)
 				printf("Pipeline\n");
 			else if (tmp->lower_rafter == 1)

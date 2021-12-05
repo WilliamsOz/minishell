@@ -6,18 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 14:30:11 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 17:15:29 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 18:40:41 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-	// int			rafter_null_output;
-	// int			rafter_null_input;
-
-int	check_rafter_errors(t_dlk)
+int	check_rafter_errors(t_dlk_list *dlk)
 {
 	
-
 	return (0);
 }
