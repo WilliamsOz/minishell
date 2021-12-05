@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 15:16:59 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 16:51:42 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *str, int *p_i, int i)
 	{
 		if (str[i + 1] == PIPELINE)
 			dlk->pipeline_next_to_pipeline = 1;
-		dlk = get_metacharacter(dlk, str[i], &i);
+		dlk = get_metacharacter(dlk, str[i], &i, str);
 	}
 	else
 		dlk->token = _cpy_token_(str, &i, 0, 0);

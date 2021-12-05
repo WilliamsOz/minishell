@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 14:45:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 15:27:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 16:17:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static int	_is_there_special_char_(char *token)
 			simple_cote_ind--;
 		if (simple_cote_ind == 0  && _unsuported_chars_(token[i]) == TRUE)
 			return (TRUE);
-		else
-			i++;
+		i++;
 	}
 	return (FALSE);
 }
@@ -47,10 +46,9 @@ int	check_special_chars(t_dlk_list *dlk)
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL && _is_there_special_char_(dlk->token) == TRUE)
+		if (tmp->token != NULL && _is_there_special_char_(tmp->token) == TRUE)
 			return (TRUE);
-		else
-			tmp = tmp->next;
+		tmp = tmp->next;
 	}
 	return (FALSE);
 }

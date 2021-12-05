@@ -6,17 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:58:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 15:00:23 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 16:05:12 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static t_minishell	*__interpretation_errors_found__(t_minishell *minishell)
-{
-	minishell->line = free_line(minishell->line);
-	return (minishell);
-}
 
 t_minishell	*are_quotes_closed(t_minishell*minishell, int i, char *line)
 {

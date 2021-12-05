@@ -6,36 +6,28 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 15:25:36 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 17:14:17 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// || en 1er, | en 2eme < en 3eme
-
-//verifier les pipelines errors
-//faire les rafter errors
-
-static t_parsing_err	*_init_parsing_errors_(t_parsing_err *errors)
+static int	__check_all_tokens_errors__(t_minishell *minishell)
 {
-	errors->pipeline_next_to_null = 0;
-	return (errors);
-}
+	t_dlk_list	*tmp;
 
-static int	_is_there_tokens_errors_(t_parsing_err *errors)
-{
-	if (errors->pipeline_next_to_pipe == TRUE)
+	tmp = minishell->d_lk;
+	while (tmp != NULL)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `||'\n", 2);
-		return (TRUE);
+		if (tmp->here_doc == 1 && check_here_doc_errors(tmp) == 1)
+			return (TRUE);
+		if (tmp->pipeline == 1 && check_pipeline_errors(tmp) == 1)
+			return (TRUE);
+		else if ((tmp->lower_rafter == 1 || tmp->upper_rafter == 1) &&
+			check_rafter_errors(tmp) == 1)
+			return (TRUE);
 	}
-	else if (errors->pipeline_next_to_null == TRUE)
-	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-		return (TRUE);
-	}
-	return (FALSE);
+	return(FALSE);
 }
 
 t_minishell	*check_tokens_errors(t_minishell *minishell)
@@ -45,16 +37,12 @@ t_minishell	*check_tokens_errors(t_minishell *minishell)
 		minishell = special_char_found(minishell);
 		return (minishell);
 	}
-	minishell->parsing_err = _init_parsing_errors_(minishell->parsing_err);
-	minishell = check_pipeline_errors(minishell, minishell->d_lk);
-		// check_rafter_errors(minishell->d_lk) == 1)
-	if (_is_there_tokens_errors_(minishell->parsing_err) == TRUE)
+	if (__check_all_tokens_errors__(minishell) == TRUE)
 	{
 		if (minishell->parsing_err != NULL)
 			parsing_err_destroyer(minishell->parsing_err);
 		if (minishell->d_lk != NULL)
 			double_lk_destroyer(minishell->d_lk);
-		return (minishell);
 	}
 	return (minishell);
 }

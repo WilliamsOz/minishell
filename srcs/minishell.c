@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 15:17:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/05 16:51:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ void    show_dlk(t_dlk_list *dlk)
 			BLUECLR
 			printf("Token :\n");
 			PS(tmp->token)
-			printf("\n");
 			STOPCLR
+			printf("\n");
 		}
 		else if (tmp->is_metacharacter == 1)
 		{
 			YELLOWCLR
-			if (tmp->pipeline == 1)
+			if (tmp->here_doc == 1)
+				printf("Here_doc\n");
+			else if (tmp->pipeline == 1)
 				printf("Pipeline\n");
 			else if (tmp->lower_rafter == 1)
 				printf("Lower Rafter\n");
@@ -61,7 +63,7 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	while (minishell->line != NULL)
 	{
 		add_history(minishell->line);
-		minishell = are_quotes_closed(minishell);
+		minishell = are_quotes_closed(minishell, 0, minishell->line);
 		if (minishell->line != NULL && minishell->line[0] != '\0')
 		{
 			minishell->d_lk = double_lk_creator(minishell,
