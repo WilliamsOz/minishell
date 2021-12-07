@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 14:45:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 16:17:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:01:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static int	_unsuported_chars_(char c)
 static int	_is_there_special_char_(char *token)
 {
 	int		simple_cote_ind;
+	int		double_cote_ind;
 	int		i;
 
 	simple_cote_ind = 0;
+	double_cote_ind = 0;
 	i = 0;
 	while (token[i] != '\0')
 	{
@@ -32,7 +34,12 @@ static int	_is_there_special_char_(char *token)
 			simple_cote_ind++;
 		else if (simple_cote_ind == 1 && token[i] == SIMPLE_COTE)
 			simple_cote_ind--;
-		if (simple_cote_ind == 0  && _unsuported_chars_(token[i]) == TRUE)
+		if (double_cote_ind == 0 && token[i] == DOUBLE_COTE)
+			double_cote_ind++;
+		else if (double_cote_ind == 1 && token[i] == DOUBLE_COTE)
+			double_cote_ind--;
+		if (simple_cote_ind == 0 && double_cote_ind == 0 && 
+			_unsuported_chars_(token[i]) == TRUE)
 			return (TRUE);
 		i++;
 	}
@@ -51,16 +58,4 @@ int	check_special_chars(t_dlk_list *dlk)
 		tmp = tmp->next;
 	}
 	return (FALSE);
-}
-
-t_minishell	*special_char_found(t_minishell *minishell)
-{
-	ft_putstr_fd("Unsuported character found\n", 2);
-	if (minishell->parsing_err != NULL)
-		parsing_err_destroyer(minishell->parsing_err);
-	if (minishell->d_lk != NULL)
-		double_lk_destroyer(minishell->d_lk);
-	if (minishell != NULL)
-		minishell_destroyer(minishell);
-	return (minishell);
 }

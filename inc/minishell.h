@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 18:09:07 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 11:49:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define LOWER_RAFTER 60
 # define UPPER_RAFTER 62
 # define PIPELINE 124
+
+# define _GNU_SOURCE //sigaction ?
+#define _XOPEN_SOURCE 700 //sigaction ?
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 

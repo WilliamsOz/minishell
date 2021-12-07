@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 18:22:04 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 13:06:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void    show_dlk(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
+	if (dlk == NULL)
+	{
+		printf("La double_lk est vide\n");
+		return ;
+	}
 	tmp = dlk;
 	while (tmp != NULL)
 	{
@@ -54,6 +59,8 @@ t_minishell	*destroy_all_data(t_minishell *minishell)
 		parsing_err_destroyer(minishell->parsing_err);
 	if (minishell->d_lk != NULL)
 		double_lk_destroyer(minishell->d_lk);
+	if (minishell->line != NULL)
+		minishell->line = free_line(minishell->line);
 	if (minishell != NULL)
 		minishell_destroyer(minishell);
 	return (minishell);
@@ -64,16 +71,18 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	minishell->line = readline("minishell>$ ");
 	while (minishell->line != NULL)
 	{
-		add_history(minishell->line);
 		minishell = are_quotes_closed(minishell, 0, minishell->line);
 		if (minishell->line != NULL && minishell->line[0] != '\0')
 		{
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
-			SMDLK
 			minishell = check_tokens_errors(minishell);
 			if (minishell->line != NULL)
+			{
+				SMDLK
+				add_history(minishell->line);
 				minishell->line = free_line(minishell->line);
+			}
 		}
 		minishell->line = readline("minishell>$ ");
 	}
@@ -88,13 +97,13 @@ Le shell :
 
 _OK_ Ne doit pas interpreter des cotes simple ou double pas fermer
 _OK_ Ne doit pas interpreter des caracteres special non specifies comme \ ou ;
+_OK_ Afficher un promp lorsqu'il attend une nouvelle commande
+_OK_ Avoir un historique de travail fonctionnel
+
+
 
 Utiliser pas plus d'une variable global et justifier
 son utilisation lors de la correction (singleton? Cf kaye)
-
-_OK_ Afficher un promp lorsqu'il attend une nouvelle commande
-
-Avoir un historique de travail fonctionnel
 
 Chercher et lancer le bonne executable (base sur la variable PATH????? ou
 en utilisant le chemin relatif ou absolu)

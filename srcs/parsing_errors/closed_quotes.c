@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:58:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 17:16:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 12:58:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ t_minishell	*are_quotes_closed(t_minishell*minishell, int i, char *line)
 		parsing_err->double_cote % 2 != 0)
 	{
 		ft_putstr_fd("Unclosed Quotes\n", 2);
-		minishell_destroyer(minishell);
-		parsing_err_destroyer(parsing_err);
+		minishell->line = free_line(minishell->line);
 	}
 	return (minishell);
 }

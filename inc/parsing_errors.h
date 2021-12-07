@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:42:14 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/05 18:36:56 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 12:08:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSING_ERRORS_H
 
 int				check_double_upper_rafter(t_dlk_list *dlk);
-int				check_rafter_errors(t_dlk);
+int				check_rafter_errors(t_dlk_list *dlk);
 int				check_pipeline_errors(t_dlk_list *tmp);
 int				check_here_doc_errors(t_dlk_list *tmp);
 t_minishell		*special_char_found(t_minishell *minishell);
