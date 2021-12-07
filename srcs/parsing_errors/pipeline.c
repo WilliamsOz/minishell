@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:26:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 15:28:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 16:46:34 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	is_pipeline_link_to_cmd(t_dlk_list *dlk)
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (tmp->pipeline == 1 && tmp->next == NULL && tmp->previous != NULL)
+		if (tmp->pipeline == 1 && tmp->next == NULL &&
+			tmp->previous != NULL && tmp->previous->token != NULL)
 		{
 			ft_putstr_fd("Command after pipeline is missing\n", 2);
 			return (TRUE);
@@ -36,7 +37,8 @@ int	check_pipeline_errors(t_dlk_list *tmp)
 		ft_putstr_fd("bash: syntax error near unexpected token `||'\n", 2);
 		return (TRUE);
 	}
-	else if (tmp->previous == NULL)
+	else if (tmp->previous == NULL ||
+		(tmp->previous != NULL && tmp->previous->token == NULL))
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 		return (TRUE);

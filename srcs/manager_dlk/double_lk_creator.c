@@ -6,11 +6,38 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 15:29:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:32:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+//modifier la fonction : cc' cc"cc'""cc<"c" doit recuperer cc' cc"cc'""cc<"c"
+//si aucune cote ouvert elle split avec les espace et les metacaractere
+//si cote ouverte, elle recupere tout ce quil y a jusqua la fin de la cote
+//puis si pas de nouvelle cote et pas despace et pas de metacaractere
+//elle continue a recuperer
+
+static void			__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
+{
+	int	i;
+
+	i = *ptr_i;
+	if (line[i] == SIMPLE_COTE)
+	{
+		i++;
+		while (line[i] != SIMPLE_COTE)
+			i++;
+	}
+	else
+	{
+		i++;
+		while (line[i] != DOUBLE_COTE)
+			i++;
+	}
+	*ptr_i = i;
+	*ptr_j = *ptr_i;
+}
 
 static char			*_cpy_token_(char *line, int *p_i, int i, int j)
 {
@@ -19,6 +46,8 @@ static char			*_cpy_token_(char *line, int *p_i, int i, int j)
 	i = *p_i;
 	while (line[i] != '\0' && is_metacharacter(line[i]) == 0 && line[i] != ' ')
 	{
+		if (is_it_a_quote(line[i]) == 1)
+			__get_end_of_quote__(line, &i, &j);
 		i++;
 		j++;
 	}

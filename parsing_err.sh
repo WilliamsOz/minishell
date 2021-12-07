@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Fatal Errors :
+# c c 'c c" c c' c c "
+# Unclosed cote
+# c c 'c c" c c' c c ""
+# ok
+# cc'cc"cc'cc"
+# Unclosed cote
+
 
 # Parsing Errors :
 # cc\cc

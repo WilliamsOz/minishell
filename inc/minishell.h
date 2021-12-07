@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 14:52:44 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:05:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "./parsing_errors.h"
 # include "./free_line.h"
 # include "./double_lk.h"
+# include "./quotes_expansion.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
@@ -77,5 +78,6 @@ void			minishell_destroyer(t_minishell *minishell);
 t_minishell		*minishell_creator(void);
 void			double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
+t_minishell		*destroy_all_data(t_minishell *minishell);
 
 #endif
