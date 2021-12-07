@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 13:06:19 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:33:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	__check_all_tokens_errors__(t_minishell *minishell)
 
 static t_minishell	*__special_char_found__(t_minishell *minishell)
 {
-	ft_putstr_fd("Unsuported character found\n", 2);
 	if (minishell->d_lk != NULL)
 		double_lk_destroyer(minishell->d_lk);
 	if (minishell->line != NULL)
@@ -46,7 +45,8 @@ static t_minishell	*__special_char_found__(t_minishell *minishell)
 
 t_minishell	*check_tokens_errors(t_minishell *minishell)
 {
-	if (check_special_chars(minishell->d_lk) == TRUE)
+	if (is_pipeline_link_to_cmd(minishell->d_lk) == TRUE ||
+		check_special_chars(minishell->d_lk) == TRUE)
 	{
 		minishell = __special_char_found__(minishell);
 		return (minishell);
@@ -60,4 +60,3 @@ t_minishell	*check_tokens_errors(t_minishell *minishell)
 	}
 	return (minishell);
 }
-//faire les pipeline si jamais le shell attend quelque chose

@@ -6,53 +6,57 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 14:30:11 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 12:15:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:33:37 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	_lower_rafter_missing_input_(t_dlk_list *dlk)
+static int	__lower_rafter_errors__(t_dlk_list *dlk)
 {
 	if (dlk->next == NULL)
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
-			2);
-	else if (dlk->next->token == NULL && dlk->next->pipeline == 0)
-		ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
-	if (dlk->next == NULL ||
-		(dlk->next->token == NULL && dlk->next->pipeline == 0))
-		return (TRUE);
-	return (FALSE);
-}
-
-static int	_lower_rafter_missing_output_(t_dlk_list *dlk)
-{
-	if (dlk->next == NULL)
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
-			2);
-	else if (dlk->next->token == NULL && dlk->next->pipeline == 0)
-		ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
-	if (dlk->next == NULL ||
-		(dlk->next->token == NULL && dlk->next->pipeline == 0))
-		return (TRUE);
-	return (FALSE);
-}
-
-static int	_upper_rafter_missing_input_(t_dlk_list *dlk)
-{
-	if (dlk->previous != NULL && dlk->previous->token == NULL)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
+			2);
+		return (TRUE);
+	}
+	else if (dlk->next != NULL)
+	{
+		if (dlk->next->upper_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
+		else if (dlk->next->lower_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
+		else if (dlk->next->double_upper_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
+		else if (dlk->next->here_doc == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 2);
+		else
+			return (FALSE);
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-static int	_upper_rafter_missing_output_(t_dlk_list *dlk)
+static int	_upper_rafter_errors_(t_dlk_list *dlk)
 {
-	if (dlk->previous != NULL && dlk->previous->token == NULL)
+	if (dlk->next == NULL)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
+			2);
+		return (TRUE);
+	}
+	else if (dlk->next != NULL)
+	{
+		if (dlk->next->upper_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
+		else if (dlk->next->lower_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
+		else if (dlk->next->double_upper_rafter == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
+		else if (dlk->next->here_doc == 1)
+			ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 2);
+		else
+			return (FALSE);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -60,13 +64,9 @@ static int	_upper_rafter_missing_output_(t_dlk_list *dlk)
 
 int	check_rafter_errors(t_dlk_list *dlk)
 {
-	if (dlk->lower_rafter == 1 && _lower_rafter_missing_input_(dlk) == 1)
+	if (dlk->lower_rafter == 1 && __lower_rafter_errors__(dlk) == 1)
 		return (TRUE);
-	else if (dlk->lower_rafter == 1 && _lower_rafter_missing_output_(dlk) == 1)
-		return (TRUE);
-	else if (dlk->upper_rafter == 1 && _upper_rafter_missing_input_(dlk) == 1)
-		return (TRUE);
-	else if (dlk->upper_rafter == 1 && _upper_rafter_missing_output_(dlk) == 1)
+	else if (dlk->upper_rafter == 1 && _upper_rafter_errors_(dlk) == 1)
 		return (TRUE);
 	return (FALSE);
 }

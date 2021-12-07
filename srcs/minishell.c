@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 13:06:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 15:33:50 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,14 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 		minishell = are_quotes_closed(minishell, 0, minishell->line);
 		if (minishell->line != NULL && minishell->line[0] != '\0')
 		{
+			add_history(minishell->line);
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
+			SMDLK
 			minishell = check_tokens_errors(minishell);
 			if (minishell->line != NULL)
 			{
 				SMDLK
-				add_history(minishell->line);
 				minishell->line = free_line(minishell->line);
 			}
 		}

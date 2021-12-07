@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/05 14:45:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 13:01:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:23:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	check_special_chars(t_dlk_list *dlk)
 	while (tmp != NULL)
 	{
 		if (tmp->token != NULL && _is_there_special_char_(tmp->token) == TRUE)
+		{
+			ft_putstr_fd("Unsuported character found\n", 2);
 			return (TRUE);
+		}
 		tmp = tmp->next;
 	}
 	return (FALSE);
