@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 14:40:23 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 15:00:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/08 16:24:37 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	need_to_be_trim(char *token, int i)
 	while (token[i] != '\0')
 	{
 		if (token[i] == SIMPLE_COTE || token[i] == DOUBLE_COTE ||
-			token[i] == '$');
+			token[i] == '$')
 		return (TRUE);
 		i++;
 	}
