@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_quotes_and_make_expansion.c                   :+:      :+:    :+:   */
+/*   trim_token.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 11:38:18 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/08 15:15:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef TRIM_TOKEN_H
+# define TRIM_TOKEN_H
 
-t_minishell	*sort_quotes_and_make_expansion(t_minishell *minishell, char **env)
-{
-	(void)env;
-	minishell->d_lk = sort_quotes(minishell->d_lk);
-	minishell->d_lk = make_expansion(minishell->d_lk);
-	return (minishell);
-}
+void		trim_malloc_failed(t_minishell *minishell, t_trim *trim);
+void		destroy_trim(t_trim *trim);
+t_trim		*init_trim(t_minishell *minishell);
+int			need_to_be_trim(char *token, int i);
+t_minishell	*trim_token(t_minishell *minishell, char **env);
+
+#endif

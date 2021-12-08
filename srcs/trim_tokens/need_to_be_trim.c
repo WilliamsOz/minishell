@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_expansion.h                                 :+:      :+:    :+:   */
+/*   need_to_be_trim.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 11:38:17 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/08 14:40:23 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/08 15:00:34 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUOTES_EXPANSION_H
-# define QUOTES_EXPANSION_H
+#include "../../inc/minishell.h"
 
-t_dlk_list	*make_expansion(t_dlk_list *dlk);
-t_dlk_list	*sort_quotes(t_dlk_list *dlk);
-t_minishell	*sort_quotes_and_make_expansion(t_minishell *minishell,
-	char **env);
-
-#endif
+int	need_to_be_trim(char *token, int i)
+{
+	while (token[i] != '\0')
+	{
+		if (token[i] == SIMPLE_COTE || token[i] == DOUBLE_COTE ||
+			token[i] == '$');
+		return (TRUE);
+		i++;
+	}
+	return (FALSE);
+}

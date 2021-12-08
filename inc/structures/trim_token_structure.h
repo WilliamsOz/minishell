@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   trim_token_structure.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 12:35:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 15:03:20 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/08 14:45:28 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/08 14:58:40 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
+#ifndef TRIM_TOKEN_STRUCTURE_H
+# define TRIM_TOKEN_STRUCTURE_H
 
-int	ft_strlen(char *str)
+typedef struct s_trim
 {
-	int	i;
+	char		*before_quote;
+	char		*between_quote;
+	char		*after_quote;
+}				t_trim;
 
-	if (str == NULL)
-		return (0);
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
+#endif

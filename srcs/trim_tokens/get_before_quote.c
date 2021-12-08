@@ -1,20 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_expansion.c                                   :+:      :+:    :+:   */
+/*   get_before_quote.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:45:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 17:04:08 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/08 15:09:01 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/08 15:09:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*make_expansion(t_dlk_list *dlk)
-{
-	(void)dlk;
-
-	return (dlk);
-}

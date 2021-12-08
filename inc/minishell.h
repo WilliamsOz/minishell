@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 17:05:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/08 14:47:53 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 # include "./parsing_errors.h"
 # include "./free_line.h"
 # include "./double_lk.h"
-# include "./quotes_expansion.h"
+# include "./structures/trim_token_structure.h"
+# include "./trim_token.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
