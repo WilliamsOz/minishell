@@ -6,11 +6,62 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 17:32:09 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/08 18:57:40 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	get_end_of_expansion(char *token, char **env, int i, int j)
+{
+	i = get_expanded_index(token, env, 0, 0);
+	while (env[i][j] == token[j])
+		j++;
+	j++;
+	return (j);
+}
+
+int	get_expanded_index(char *token, char **env, int i, int j)
+{
+	while (env[i] != NULL)
+	{
+		while (env[i][j] != '\0')
+		{
+			if (j == 0 && env[i][j] == token[j])
+			{
+				while (env[i][j] == token[j])
+					j++;
+				if (env[i][j] == '=')
+					return (i);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (i);
+}
+
+int	existing_expand(char *token, char **env, int i, int j)
+{
+	while (env[i] != NULL)
+	{
+		while (env[i][j] != '\0')
+		{
+			if (j == 0 && env[i][j] == token[j])
+			{
+				while (env[i][j] == token[j] && env[i][j] != '=')
+					j++;
+				if (env[i][j] == '=')
+					return (TRUE);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (FALSE);
+}
 
 static char	*__get_final_token__(t_trim *trim, int i, int j, int len)
 {
@@ -60,8 +111,6 @@ static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
 	free(token);
 	token = __get_final_token__(trim, 0, 0, 0);
 	destroy_trim(trim);
-	PS(token)
-	ex
 	return (token);
 }
 
@@ -70,7 +119,6 @@ t_minishell	*trim_token(t_minishell *minishell, char **env)
 	t_dlk_list	*tmp;
 
 	tmp = minishell->d_lk;
-	(void)env;
 	while (tmp != NULL)
 	{
 		if (tmp->token != NULL)
