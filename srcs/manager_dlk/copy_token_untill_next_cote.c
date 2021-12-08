@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 16:58:30 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 18:05:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:39:16 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 static t_dlk_list *__manage_dlk_cote_data__(t_dlk_list *dlk, char c)
 {
-	if (dlk->simple_quote == 1 && c == SIMPLE_COTE)
+	if (dlk->double_quote == 0 &&
+		dlk->simple_quote == 1 && c == SIMPLE_COTE)
 		dlk->simple_quote--;
-	else if (dlk->simple_quote == 0 && c == SIMPLE_COTE)
+	else if (dlk->double_quote == 0 &&
+		dlk->simple_quote == 0 && c == SIMPLE_COTE)
 		dlk->simple_quote++;
-	if (dlk->double_quote == 1 && c == DOUBLE_COTE)
+	if (dlk->simple_quote == 0 &&
+		dlk->double_quote == 1 && c == DOUBLE_COTE)
 		dlk->double_quote--;
-	else if (dlk->simple_quote == 0 && c == DOUBLE_COTE)
+	else if (dlk->simple_quote == 0 &&
+		dlk->double_quote == 0 && c == DOUBLE_COTE)
 		dlk->double_quote++;
 	return (dlk);
 }

@@ -6,17 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 17:32:39 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/08 12:39:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//modifier la fonction : cc' cc"cc'""cc<"c" doit recuperer cc' cc"cc'""cc<"c"
-//si aucune cote ouvert elle split avec les espace et les metacaractere
-//si cote ouverte, elle recupere tout ce quil y a jusqua la fin de la cote
-//puis si pas de nouvelle cote et pas despace et pas de metacaractere
-//elle continue a recuperer
 
 static void			__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
 {
