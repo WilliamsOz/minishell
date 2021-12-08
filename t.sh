@@ -13,3 +13,6 @@ echo cat -e ""$LESS"E"
 echo cat -e ""$"LE"SS"E"
 
 # ccccc''''ca'''' "<<" | xd
+
+cc$LESS$LESS$LESScc
+cc-R-R-Rcc
