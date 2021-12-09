@@ -6,62 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 18:57:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:07:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	get_end_of_expansion(char *token, char **env, int i, int j)
-{
-	i = get_expanded_index(token, env, 0, 0);
-	while (env[i][j] == token[j])
-		j++;
-	j++;
-	return (j);
-}
-
-int	get_expanded_index(char *token, char **env, int i, int j)
-{
-	while (env[i] != NULL)
-	{
-		while (env[i][j] != '\0')
-		{
-			if (j == 0 && env[i][j] == token[j])
-			{
-				while (env[i][j] == token[j])
-					j++;
-				if (env[i][j] == '=')
-					return (i);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return (i);
-}
-
-int	existing_expand(char *token, char **env, int i, int j)
-{
-	while (env[i] != NULL)
-	{
-		while (env[i][j] != '\0')
-		{
-			if (j == 0 && env[i][j] == token[j])
-			{
-				while (env[i][j] == token[j] && env[i][j] != '=')
-					j++;
-				if (env[i][j] == '=')
-					return (TRUE);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return (FALSE);
-}
 
 static char	*__get_final_token__(t_trim *trim, int i, int j, int len)
 {
@@ -84,11 +33,14 @@ static char	*__get_final_token__(t_trim *trim, int i, int j, int len)
 	return (token);
 }
 
+//modifier la fct before_quote pour la rendre modulable et la rendre
+//accessible en dehors des quote afin de pouvoir l'utiliser a la place
+//de la fct get_after_token
+
 static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
 {
 	t_trim	*trim;
 
-	(void)env;
 	trim = init_trim(minishell);
 	if (token[i] != SIMPLE_COTE && token[i] != DOUBLE_COTE)
 	{
@@ -96,18 +48,14 @@ static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
 		if (trim->before_quote == NULL)
 			trim_malloc_failed(minishell, trim);
 	}
-	// if (token[i] == SIMPLE_COTE || token[i] == DOUBLE_COTE)
-	// {
-	// 	trim->between_quote = get_between_quote(trim, token, &i, env);
-	// 	if (trim->between_quote == NULL)
-	// 		trim_malloc_failed(minishell, trim);
-	// }
-	// if (token[i] != '\0')
-	// {
-	// 	trim->after_quote = get_after_quote(trim, token, &i, 0);
-	// 	if (trim->after_quote == NULL)
-	// 		trim_malloc_failed(minishell, trim);
-	// }
+	if (token[i] == SIMPLE_COTE || token[i] == DOUBLE_COTE)
+	{
+		trim->between_quote = get_between_quote(trim, token, &i, env);
+		if (trim->between_quote == NULL)
+			trim_malloc_failed(minishell, trim);
+		// if (token[i] != '\0')
+			// trim->after_quote = get_after_quote(trim, token, &i, 0);
+	}
 	free(token);
 	token = __get_final_token__(trim, 0, 0, 0);
 	destroy_trim(trim);

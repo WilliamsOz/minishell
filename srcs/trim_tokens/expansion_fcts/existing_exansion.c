@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_lk_destroyer.c                              :+:      :+:    :+:   */
+/*   existing_exansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 18:29:51 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 16:44:52 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/09 16:15:42 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/09 16:37:15 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
-void	double_lk_destroyer(t_dlk_list *d_lk)
+int	existing_expand(char *token, char **env, int i, int j)
 {
-	t_dlk_list	*tmp;
-
-	while (d_lk != NULL)
+	while (env[i] != NULL)
 	{
-		tmp = d_lk;
-		d_lk = d_lk->next;
-		if (tmp->token != NULL)
-			free(tmp->token);
-		free(tmp);
+		while (env[i][j] != '\0')
+		{
+			if (j == 0 && env[i][j] == token[j])
+			{
+				while (env[i][j] == token[j] && env[i][j] != '=')
+					j++;
+				if (env[i][j] == '=')
+					return (TRUE);
+			}
+			j++;
+		}
+		j = 0;
+		i++;
 	}
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 18:30:01 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/09 16:55:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	}
 	(void)ac;
 	(void)av;
-	(void)env;
 	destroy_all_data(minishell);
 }
 
@@ -146,3 +145,7 @@ int	main(int ac, char **av, char **env)
 	minishell_core(minishell, ac, av, env);
 	return (0);
 }
+
+//pour les built in pour setenv unsetenv (export et unset)
+//regarder les fonctions qui existe
+//et les suivre pour les refaire

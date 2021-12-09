@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   between_quote.c                                    :+:      :+:    :+:   */
+/*   get_expansion_end.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/08 15:55:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/08 15:57:41 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/09 16:15:12 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/09 16:15:26 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
-// char	*get_between_quote(t_trim *trim, char *token, int *ptr_i, char **env)
-// {
-// 	int	i;
-
-// 	i = *ptr_i;
-
-
-
-
-// 	*ptr_i = i;
-// 	return (trim->between_quote);
-// }
+int	get_end_of_expansion(char *token, char **env, int i, int j)
+{
+	i = get_expanded_index(token, env, 0, 0);
+	while (env[i][j] == token[j])
+		j++;
+	j++;
+	return (j);
+}

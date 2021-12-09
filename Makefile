@@ -6,12 +6,12 @@
 #    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2021/12/08 19:03:13 by wiozsert         ###   ########.fr        #
+#    Updated: 2021/12/09 16:49:26 by wiozsert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-ggdb3 #-fsanitize=address
 RLFLAGS = -lreadline
 
 #libft
