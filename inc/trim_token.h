@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_token.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 17:05:46 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:18:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int			get_expanded_index(char *token, char **env, int i, int j);
 int			existing_expand(char *token, char **env, int i, int j);
 int			quotes_remaining(char *token, int i);
 int			get_between_len(char *token, char **env, int do_expansion, int i);
-char		*get_between_quote(t_trim *trim, char *token, int *ptr_i,
-	char **env);
+char		*get_between_quote(char *token, int *ptr_i, char **env);
 char		*bq_get_final_token(char *token, char *tmp, char **env, int i);
 int			bq_get_len(char *token, int *ptr_i, int len, char **env);
 char		*before_quote(t_trim *trim, char *token, int *ptr_i, char **env);

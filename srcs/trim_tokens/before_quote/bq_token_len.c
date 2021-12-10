@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bq_token_len.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 17:27:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 17:04:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:26:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	bq_get_len(char *token, int *ptr_i, int len, char **env)
 	int	i;
 
 	i = *ptr_i;
-	while (token[i] != '\0' &&
-		token[i] != SIMPLE_COTE && token[i] != DOUBLE_COTE)
+	while (token[i] != '\0' 
+		&& token[i] != SIMPLE_COTE && token[i] != DOUBLE_COTE)
 	{
 		if (token[i] == '$' &&
 			existing_expand(token + i + 1, env, 0 ,0) == TRUE)

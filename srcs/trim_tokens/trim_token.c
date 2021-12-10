@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 17:07:48 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/10 19:27:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static char	*__get_final_token__(t_trim *trim, int i, int j, int len)
 {
 	char	*token;
 
+	PS(trim->before_quote)
+	PS(trim->between_quote)
 	len = ft_strlen(trim->before_quote) + ft_strlen(trim->between_quote)
 		+ ft_strlen(trim->after_quote);
 	token = (char *)malloc(sizeof(char) * (len + 1));
@@ -50,7 +52,7 @@ static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
 	}
 	if (token[i] == SIMPLE_COTE || token[i] == DOUBLE_COTE)
 	{
-		trim->between_quote = get_between_quote(trim, token, &i, env);
+		trim->between_quote = get_between_quote(token, &i, env);
 		if (trim->between_quote == NULL)
 			trim_malloc_failed(minishell, trim);
 		// if (token[i] != '\0')
