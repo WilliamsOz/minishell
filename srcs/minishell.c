@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/10 19:01:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/11 18:27:14 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,19 @@ Ctrl-\ ne fait rien
 
 */
 
+void	signal_handler(int signo)
+{
+	if (signo == SIGINT)
+		printf("signal recu %d\n", signo);
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
+	struct sigaction s;
 	t_minishell	*minishell;
 
+	s.sa_handler = &signal_handler;
 	minishell = minishell_creator();
 	minishell->parsing_err = parsing_err_creator();
 	if (minishell->parsing_err == NULL)
