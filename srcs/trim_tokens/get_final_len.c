@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bw_token_len.c                                     :+:      :+:    :+:   */
+/*   get_final_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 17:00:10 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/11 15:37:53 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/11 17:11:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int inside_sc(char *token, int *ptr_i, int len)
 {
@@ -61,9 +61,9 @@ static void	inc_i_and_len(int *ptr_i, int *ptr_len)
 	*ptr_len += 1;
 }
 
-int	get_between_len(char *token, char **env, int i, int len)
+int	get_final_len(char *token, char **env, int i, int len)
 {
-	while (token[i] != '\0' && quotes_remaining(token + i, 0) == TRUE)
+	while (token[i] != '\0')
 	{
 		if (token[i] == SIMPLE_COTE)
 			len = inside_sc(token, &i, len);
@@ -79,6 +79,5 @@ int	get_between_len(char *token, char **env, int i, int len)
 		else
 				inc_i_and_len(&i, &len);
 	}
-	PD(len)
 	return (len);
 }
