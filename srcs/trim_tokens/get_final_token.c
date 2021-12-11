@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/11 17:33:44 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:36:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,6 @@ static t_index	get_index(int i)
 	index.i = i;
 	index.j = 0;
 	return (index);
-}
-
-static char	*ft_strjoin(char *first, char *last, int i, int j)
-{
-	char	*dest;
-	int		len;
-
-	len = ft_strlen(first) + ft_strlen(last);
-	dest = (char *)malloc(sizeof(char) * (len + 1));
-	if (dest == NULL)
-		return (NULL);
-	dest[len] = '\0';
-	while (first[i] != '\0')
-	{
-		dest[i] = first[i];
-		i++;
-	}
-	while (last[j] != '\0')
-	{
-		dest[i] = last[j];
-		i++;
-		j++;
-	}
-	free(first);
-	free(last);
-	return (dest);
 }
 
 static char	*__get_sq__(char *token, char *tmp, int *ptr_i, int *ptr_j)
