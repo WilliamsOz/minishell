@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_all_data.c                                 :+:      :+:    :+:   */
+/*   init_hd_pipes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:09:57 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/12 17:22:03 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/12 17:38:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*destroy_all_data(t_minishell *minishell)
+t_dlk_list	*__init_heredoc_pipes__(t_minishell *m, t_dlk_list *dlk, int ind)
 {
-	if (minishell->parsing_err != NULL)
-		parsing_err_destroyer(minishell->parsing_err);
-	if (minishell->d_lk != NULL)
-		double_lk_destroyer(minishell->d_lk);
-	if (minishell->line != NULL)
-		minishell->line = free_line(minishell->line);
-	if (minishell != NULL)
-		minishell_destroyer(minishell);
-	return (minishell);
+	t_dlk_list	*tmp;
+	t_dlk_list	*keep;
+
+	tmp = dlk;
+	dlk = memset_heredoc_pipe(dlk);
+	while (tmp != NULL)
+	{
+		if (tmp->here_doc == 1)
+		{
+			ind = pipe(tmp->heredoc_pipe);
+			if (ind == -1)
+				pipe_failed(m);
+			tmp->limiter = tmp->next->token;
+			keep = tmp->next->next;
+			free(tmp->next);
+			tmp->next = keep;
+		}
+		tmp = tmp->next;
+	}
+	return (dlk);
 }

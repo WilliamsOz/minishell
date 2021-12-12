@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:15:12 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 16:15:26 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/12 17:58:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,3 +20,5 @@ int	get_end_of_expansion(char *token, char **env, int i, int j)
 	j++;
 	return (j);
 }
+
+//peut etre inutile

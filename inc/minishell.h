@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/10 13:21:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/12 17:44:16 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdlib.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -37,6 +36,7 @@
 # include "./double_lk.h"
 # include "./structures/trim_token_structure.h"
 # include "./trim_token.h"
+# include "./heredoc.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92

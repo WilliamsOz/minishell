@@ -1,35 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cpy_expansion.c                                    :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/09 16:12:04 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 18:10:37 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/12 17:15:02 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/12 18:07:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
-char	*copy_expanded_value(char *token, char **env, char *tmp, int *p_j)
-{
-	int	i;
-	int	j;
-	int	cpy;
+t_dlk_list	*__init_heredoc_pipes__(t_minishell *m, t_dlk_list *dlk, int ind);
+void		pipe_failed(t_minishell *minishell);
+t_dlk_list	*memset_heredoc_pipe(t_dlk_list *dlk);
+void		close_heredoc_pipes(t_dlk_list *dlk);
 
-	i = get_expanded_index(token, env, 0, 0);
-	cpy = 0;
-	j = *p_j;
-	while (env[i][cpy] != '=')
-		cpy++;
-	cpy++;
-	while (env[i][cpy] != '\0')
-	{
-		tmp[j] = env[i][cpy];
-		j++;
-		cpy++;
-	}
-	*p_j = j;
-	return (tmp);
-}
+#endif

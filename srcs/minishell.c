@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 12:27:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/12 18:16:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,92 +55,174 @@ void    show_dlk(t_dlk_list *dlk)
 }
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
+char	*expand_heredoc(char *buffer, int i)
+{
+	(void)i;
+	PS(buffer)
+	return (buffer);
+}
+
+int	expansion_needed(char *buffer, int i)
+{
+	while (buffer[i] != '\0')
+	{
+		if (buffer[i] == '$')
+			return (TRUE);
+		else
+			i++;
+	}
+	return (FALSE);
+}
+
+static int	get_new_heredoc_len(char *buffer, char **env, int i, int len)
+{
+	while (buffer[i] != '\0')
+	{
+		if (buffer[i] == '$'
+			&& existing_expand(buffer + i + 1, env, 0, 0) == TRUE)
+			len += get_expanded_len(buffer + i + 1, &i, 0, env);
+		else if (buffer[i] == '$')
+		{
+			i++;
+			while (buffer[i] != '\0' && buffer[i] != ' ' && buffer[i] != '$'
+				&& is_it_a_quote(buffer[i]) == FALSE)
+				i++;
+		}
+		else
+		{
+			i++;
+			len++;
+		}
+	}
+	return (len);
+}
+
+static char	*get_new_heredoc(char *buffer, char **env, char *tmp, int i)
+{
+	int	j;
+
+	j = 0;
+	while (buffer[i] != '\0')
+	{
+		if (buffer[i] == '$'
+			&& existing_expand(buffer + i + 1, env, 0, 0) == TRUE)
+		{
+			tmp = copy_expanded_value(buffer + i + 1, env, tmp, &j);
+			i += get_end_of_expansion(buffer + i + 1, env, 0, 0);
+		}
+		else if (buffer[i] == '$')
+		{
+			i++;
+			while (buffer[i] != '\0' && buffer[i] != ' '
+				&& is_it_a_quote(buffer[i]) == FALSE)
+				i++;
+		}
+	}
+
+	return (tmp);
+}
+
+char	*get_hd_expansion(t_minishell *m, char *buffer, char **env, int i)
+{
+	int		len;
+	char	*tmp;
+
+	tmp = NULL;
+	if (expansion_needed(buffer, i) == FALSE)
+		return (buffer);
+	len = get_new_heredoc_len(buffer, env, 0, 0);
+	tmp = (char *)malloc(sizeof(char) * (len + 1));
+	if (tmp == NULL)
+	{
+		strerror(errno);
+		close_heredoc_pipes(m->d_lk);
+		m = destroy_all_data(m);
+		exit (EXIT_FAILURE);
+	}
+	tmp = get_new_heredoc(buffer, env, tmp, 0);
+	PD(tmp)
+	ex
+	return (tmp);
+}
+
+t_dlk_list	*__read_hd__(t_minishell *m, t_dlk_list *dlk, char **env, int eof)
+{
+	char	*buffer;
+
+	dup2(STDIN_FILENO ,dlk->heredoc_pipe[0]);
+	while (eof > 0)
+	{
+		write(1, ">", 1);
+		eof = get_next_line(0, &buffer);
+		buffer = get_hd_expansion(m, buffer, env, 0);
+		if (ft_strcmp(dlk->limiter, buffer) == TRUE)
+		{
+			D
+			ex
+		}
+		if (buffer != NULL)
+			buffer = expand_heredoc(buffer, 0);
+		// write();
+	}
+	ex
+	return (dlk);
+}
+
+static t_dlk_list	*__treat_hd__(t_minishell *m, t_dlk_list *dlk, char **env)
+{
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->here_doc == 1)
+			tmp = __read_hd__(m, tmp, env, 1);
+		tmp = tmp->next;
+	}
+	return (dlk);
+}
+
+t_dlk_list	*is_there_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
+{
+	dlk = __init_heredoc_pipes__(m, dlk, 0);
+	dlk = __treat_hd__(m, dlk, env);
+	return (dlk);
+}
+
+/*
+Redirection :
+< doit redigirer l'entree
+> doit rediriger la sortie en mode TRUNC
+<< read depuis une pipe
+>> doit rediriger la sortie en mode APPEND
+
+Pipes | :
+La sortie de chaque commande est connecter via
+pipe a l'entree de la prochaine commande
+*/
+
 // void	first_entry(t_dlk_list *dlk)
 // {
 // 	if (dlk->upper_rafter )
 // }
-
-void	pipe_failed(t_minishell *minishell)
-{
-	
-}
-
-static t_dlk_list	*__init_heredoc_pipes__(t_minishell *m, t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	t_dlk_list	*keep;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		if (tmp->here_doc == 1)
-		{
-			pipe(tmp->heredoc_pipe);
-			if (tmp->heredoc_pipe == -1)
-				pipe_failed(m);
-			tmp->limiter = tmp->next->token;
-			keep = tmp->next->next;
-			free(tmp->next);
-			tmp->next = keep;
-		}
-		tmp = tmp->next;
-	}
-	return (dlk);
-}
-
-t_dlk_list	*__read_heredoc__(t_dlk_list *list)
-{
-	char	*buffer;
-	int		eof;
-
-	eof = read(0, &buffer, sizeof(buffer));
-	if (ft_strcmp(buffer, list->limiter) == TRUE)
-	{
-		close(fd())
-		return (list);
-	}
-	
-		
-	return (list);
-}
-
-static t_dlk_list	*__treat_heredoc__(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		if (tmp->here_doc == 1)
-			tmp = __read_heredoc__(tmp);
-		tmp = tmp->next;
-	}
-	return (dlk);
-}
-
-t_dlk_list	*is_there_heredoc(t_minishell *minishell, t_dlk_list *dlk)
-{
-	dlk = __init_heredoc_pipes__(minishell, dlk);
-	dlk = __treat_heredoc__(dlk);
-	return (dlk);
-}
 
 t_minishell	*treat_data(t_minishell *minishell, char **env)
 {
 	t_dlk_list	*dlk;
 
 	dlk = minishell->d_lk;
-	dlk = is_there_heredoc(minishell, dlk);
-	while (dlk != NULL)
-	{
-		if (dlk->previous == NULL)
-			first_entry(dlk);
+	(void)env;
+	dlk = is_there_heredoc(minishell, dlk, env);
+	// while (dlk != NULL)
+	// {
+		// if (dlk->previous == NULL)
+			// first_entry(dlk);
 		// else if (dlk->next != NULL)
 			// second_entry();
 		// else
 			// last_entry();
-		dlk = dlk->next;
-	}
+		// dlk = dlk->next;
+	// }
 	return (minishell);
 }
 
@@ -173,37 +255,12 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 }
 
 /*
-Le shell :
-
-_OK_ Ne doit pas interpreter des cotes simple ou double pas fermer
-_OK_ Ne doit pas interpreter des caracteres special non specifies comme \ ou ;
-_OK_ Afficher un promp lorsqu'il attend une nouvelle commande
-_OK_ Avoir un historique de travail fonctionnel
-
-
 
 Utiliser pas plus d'une variable global et justifier
-son utilisation lors de la correction (singleton? Cf kaye)
+son utilisation lors de la correction
 
-Chercher et lancer le bonne executable (base sur la variable PATH????? ou
+Chercher et lancer le bonne executable (base sur la variable PATH ou
 en utilisant le chemin relatif ou absolu)
-
-’ inhibe toute interprétation d’une séquence de caractères.
-
-" inhibe toute interprétation d'une séquence de caractères à l'exception de $.
-
-Redirection :
-< doit redigirer l'entree
-> doit rediriger la sortie en mode TRUNC
-<< read depuis une pipe
->> doit rediriger la sortie en mode APPEND
-
-Pipes | :
-La sortie de chaque commande est connecter via
-pipe a l'entree de la prochaine commande
-
-Les variables d'environement ($ suivi des caracteres)
-doit etre expandu a leur valeur
 
 $? doit etre receptionne et renvoyer le
 dernier status de la derniere commande
@@ -216,24 +273,16 @@ Ctrl-C affiche un nouveau promt dans une nouvelle ligne
 Ctrl-D exit le shell
 Ctrl-\ ne fait rien
 
-
-1_recuperer les token, attention au quote
+//pour les built in pour setenv et unsetenv (export et unset)
+//regarder les fonctions qui existe
+//et les suivre pour les refaire
 
 */
 
-void	signal_handler(int signo)
-{
-	if (signo == SIGINT)
-		printf("signal recu %d\n", signo);
-	return (0);
-}
-
 int	main(int ac, char **av, char **env)
 {
-	struct sigaction s;
 	t_minishell	*minishell;
 
-	s.sa_handler = &signal_handler;
 	minishell = minishell_creator();
 	minishell->parsing_err = parsing_err_creator();
 	if (minishell->parsing_err == NULL)
@@ -244,7 +293,3 @@ int	main(int ac, char **av, char **env)
 	minishell_core(minishell, ac, av, env);
 	return (0);
 }
-
-//pour les built in pour setenv unsetenv (export et unset)
-//regarder les fonctions qui existe
-//et les suivre pour les refaire
