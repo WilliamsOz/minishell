@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/10 13:21:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/12 11:33:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_minishell	*__special_char_found__(t_minishell *minishell)
 	return (minishell);
 }
 
-t_minishell	*check_tokens_errors(t_minishell *minishell)
+t_minishell	*is_logic_input(t_minishell *minishell)
 {
 	if (is_pipeline_link_to_cmd(minishell->d_lk) == TRUE ||
 		check_special_chars(minishell->d_lk) == TRUE)

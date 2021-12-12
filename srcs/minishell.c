@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/11 18:27:14 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/12 12:27:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,95 @@ void    show_dlk(t_dlk_list *dlk)
 }
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
+// void	first_entry(t_dlk_list *dlk)
+// {
+// 	if (dlk->upper_rafter )
+// }
+
+void	pipe_failed(t_minishell *minishell)
+{
+	
+}
+
+static t_dlk_list	*__init_heredoc_pipes__(t_minishell *m, t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+	t_dlk_list	*keep;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->here_doc == 1)
+		{
+			pipe(tmp->heredoc_pipe);
+			if (tmp->heredoc_pipe == -1)
+				pipe_failed(m);
+			tmp->limiter = tmp->next->token;
+			keep = tmp->next->next;
+			free(tmp->next);
+			tmp->next = keep;
+		}
+		tmp = tmp->next;
+	}
+	return (dlk);
+}
+
+t_dlk_list	*__read_heredoc__(t_dlk_list *list)
+{
+	char	*buffer;
+	int		eof;
+
+	eof = read(0, &buffer, sizeof(buffer));
+	if (ft_strcmp(buffer, list->limiter) == TRUE)
+	{
+		close(fd())
+		return (list);
+	}
+	
+		
+	return (list);
+}
+
+static t_dlk_list	*__treat_heredoc__(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->here_doc == 1)
+			tmp = __read_heredoc__(tmp);
+		tmp = tmp->next;
+	}
+	return (dlk);
+}
+
+t_dlk_list	*is_there_heredoc(t_minishell *minishell, t_dlk_list *dlk)
+{
+	dlk = __init_heredoc_pipes__(minishell, dlk);
+	dlk = __treat_heredoc__(dlk);
+	return (dlk);
+}
+
+t_minishell	*treat_data(t_minishell *minishell, char **env)
+{
+	t_dlk_list	*dlk;
+
+	dlk = minishell->d_lk;
+	dlk = is_there_heredoc(minishell, dlk);
+	while (dlk != NULL)
+	{
+		if (dlk->previous == NULL)
+			first_entry(dlk);
+		// else if (dlk->next != NULL)
+			// second_entry();
+		// else
+			// last_entry();
+		dlk = dlk->next;
+	}
+	return (minishell);
+}
+
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
 	minishell->line = readline("minishell>$ ");
@@ -66,11 +155,12 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 			add_history(minishell->line);
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
-			minishell = check_tokens_errors(minishell);
+			minishell = is_logic_input(minishell);
 			if (minishell->line != NULL)
 			{
 				SMDLK
 				minishell = trim_token(minishell, env);
+				minishell = treat_data(minishell, env);
 				SMDLK
 				minishell->line = free_line(minishell->line);
 			}
