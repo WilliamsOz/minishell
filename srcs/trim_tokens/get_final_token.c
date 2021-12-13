@@ -6,17 +6,18 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 13:08:24 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/13 14:11:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	skip_expansion(char *token, int i)
+static int	unk_expansion(char *token, int i, char **env)
 {
+	(void)env;
 	i++;
-	while (token[i] != '\0' && is_it_a_quote(token[i]) == FALSE
-		&& token[i] != '$' && token[i] != ' ')
+	while (token[i] != '\0' && ((token[i] >= 'a' && token [i] <= 'z')
+		|| (token[i] >= 'A' && token[i] <= 'Z')))
 		i++;
 	return (i);
 }
@@ -64,7 +65,7 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 		}
 		else if (token[index->i] == '$' &&
 			existing_expand(token + index->i + 1, env, 0, 0) == FALSE)
-			index->i = skip_expansion(token, index->i);
+			index->i = unk_expansion(token, index->i, env);
 		else
 		{
 			tmp[index->j] = token[index->i];
@@ -96,7 +97,7 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 		}
 		else if (token[index.i] == '$' &&
 			existing_expand(token + index.i + 1, env, 0, 0) == FALSE)
-			index.i = skip_expansion(token, index.i);
+			index.i = unk_expansion(token, index.i, env);
 		else
 			tmp[index.j++] = token[index.i++];
 	}
