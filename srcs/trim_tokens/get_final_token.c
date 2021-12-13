@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 19:06:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/13 13:08:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	skip_expansion(char *token, int i)
+{
+	i++;
+	while (token[i] != '\0' && is_it_a_quote(token[i]) == FALSE
+		&& token[i] != '$' && token[i] != ' ')
+		i++;
+	return (i);
+}
 
 static t_index	get_index(int i)
 {
@@ -53,6 +62,9 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 				&index->j);
 			index->i += get_end_of_expansion(token + index->i + 1, env, 0, 0);
 		}
+		else if (token[index->i] == '$' &&
+			existing_expand(token + index->i + 1, env, 0, 0) == FALSE)
+			index->i = skip_expansion(token, index->i);
 		else
 		{
 			tmp[index->j] = token[index->i];
@@ -76,12 +88,15 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 		else if (token[index.i] == DOUBLE_COTE)
 			tmp = __get_dq__(token, tmp, &index, env);
 		else if (token[index.i] == '$' &&
-			existing_expand(token + index.i + 1, env, 0, 0) == TRUE)
+			existing_expand(token + index.i + 1, env, 0, 0) == TRUE) //skip expansion
 		{
 			tmp = copy_expanded_value(token + index.i + 1, env, tmp,
 				&index.j);
 			index.i += get_end_of_expansion(token + index.i + 1, env, 0, 0);
 		}
+		else if (token[index.i] == '$' &&
+			existing_expand(token + index.i + 1, env, 0, 0) == FALSE)
+			index.i = skip_expansion(token, index.i);
 		else
 			tmp[index.j++] = token[index.i++];
 	}

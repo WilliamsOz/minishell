@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 19:04:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/13 13:03:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ char	*get_hd_expansion(t_minishell *m, char *buffer, char **env, int i)
 		exit (EXIT_FAILURE);
 	}
 	tmp = get_new_heredoc(buffer, env, tmp, 0);
-	PD(tmp)
-	ex
+	// PD(tmp)
+	// ex
 	return (tmp);
 }
 

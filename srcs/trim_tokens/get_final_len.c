@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 19:06:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/13 12:57:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ static int inside_sc(char *token, int *ptr_i, int len)
 	return (len);
 }
 
+int	skip_expansion(char *token, int i)
+{
+	i++;
+	while (token[i] != '\0' && is_it_a_quote(token[i]) == FALSE
+		&& token[i] != '$')
+		i++;
+	return (i);
+}
+
 static int	inside_dc(char *token, int *ptr_i, int len, char **env)
 {
 	int	i;
@@ -40,10 +49,7 @@ static int	inside_dc(char *token, int *ptr_i, int len, char **env)
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
 			else
-			{
-				i++;
-				len++;
-			}
+				i = skip_expansion(token, i);
 		}
 		else
 		{
@@ -61,21 +67,14 @@ static void	inc_i_and_len(int *ptr_i, int *ptr_len)
 	*ptr_len += 1;
 }
 
-static int	skip_expansion(char *token, int i)
-{
-	i++;
-	while (token[i] != '\0' && token[i] != ' ' && token[i] != '$'
-		&& is_it_a_quote(token[i]) == FALSE)
-		i++;
-	return (i);
-}
+
 
 int	get_final_len(char *token, char **env, int i, int len)
 {
 	while (token[i] != '\0')
 	{
 		if (token[i] == SIMPLE_COTE)
-			len = inside_sc(token, &i, len);
+			len = inside_sc(token, &i, len); 
 		else if (token[i] == DOUBLE_COTE)
 			len = inside_dc(token, &i, len, env);
 		else if (token[i] == '$')
