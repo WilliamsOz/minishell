@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 12:57:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/13 18:01:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static int inside_sc(char *token, int *ptr_i, int len)
 int	skip_expansion(char *token, int i)
 {
 	i++;
-	while (token[i] != '\0' && is_it_a_quote(token[i]) == FALSE
-		&& token[i] != '$')
+	while (token[i] != '\0' && ((token[i] >= 'a' && token [i] <= 'z')
+		|| (token[i] >= 'A' && token[i] <= 'Z')))
 		i++;
 	return (i);
 }
@@ -82,7 +82,12 @@ int	get_final_len(char *token, char **env, int i, int len)
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
 			else
+			{
+				 PD(i)
+				 PC(token[i])
 				i = skip_expansion(token, i);
+				 PD(i)
+			}
 		}
 		else
 				inc_i_and_len(&i, &len);

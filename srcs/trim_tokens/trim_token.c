@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 12:57:44 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/13 18:02:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	*get_new_token(char *token, int *ptr_i, char **env)
 	i = *ptr_i;
 	tmp = NULL;
 	len = get_final_len(token, env, i, 0);
+	PD(len)
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp == NULL)
 		return (NULL);
