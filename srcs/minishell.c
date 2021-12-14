@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 13:03:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/14 12:24:06 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,96 +55,6 @@ void    show_dlk(t_dlk_list *dlk)
 }
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
-char	*expand_heredoc(char *buffer, int i)
-{
-	(void)i;
-	PS(buffer)
-	return (buffer);
-}
-
-int	expansion_needed(char *buffer, int i)
-{
-	while (buffer[i] != '\0')
-	{
-		if (buffer[i] == '$')
-			return (TRUE);
-		else
-			i++;
-	}
-	return (FALSE);
-}
-
-static int	get_new_heredoc_len(char *buffer, char **env, int i, int len)
-{
-	while (buffer[i] != '\0')
-	{
-		if (buffer[i] == '$'
-			&& existing_expand(buffer + i + 1, env, 0, 0) == TRUE)
-			len += get_expanded_len(buffer + i + 1, &i, 0, env);
-		else if (buffer[i] == '$')
-		{
-			i++;
-			while (buffer[i] != '\0' && buffer[i] != ' ' && buffer[i] != '$'
-				&& is_it_a_quote(buffer[i]) == FALSE)
-				i++;
-		}
-		else
-		{
-			i++;
-			len++;
-		}
-	}
-	return (len);
-}
-
-static char	*get_new_heredoc(char *buffer, char **env, char *tmp, int i)
-{
-	int	j;
-
-	j = 0;
-	while (buffer[i] != '\0')
-	{
-		if (buffer[i] == '$'
-			&& existing_expand(buffer + i + 1, env, 0, 0) == TRUE)
-		{
-			tmp = copy_expanded_value(buffer + i + 1, env, tmp, &j);
-			i += get_end_of_expansion(buffer + i + 1, env, 0, 0);
-		}
-		else if (buffer[i] == '$')
-		{
-			i++;
-			while (buffer[i] != '\0' && buffer[i] != ' '
-				&& is_it_a_quote(buffer[i]) == FALSE)
-				i++;
-		}
-	}
-
-	return (tmp);
-}
-
-char	*get_hd_expansion(t_minishell *m, char *buffer, char **env, int i)
-{
-	int		len;
-	char	*tmp;
-
-	tmp = NULL;
-	if (expansion_needed(buffer, i) == FALSE)
-		return (buffer);
-	len = get_new_heredoc_len(buffer, env, 0, 0);
-	tmp = (char *)malloc(sizeof(char) * (len + 1));
-	if (tmp == NULL)
-	{
-		strerror(errno);
-		close_heredoc_pipes(m->d_lk);
-		m = destroy_all_data(m);
-		exit (EXIT_FAILURE);
-	}
-	tmp = get_new_heredoc(buffer, env, tmp, 0);
-	// PD(tmp)
-	// ex
-	return (tmp);
-}
-
 t_dlk_list	*__read_hd__(t_minishell *m, t_dlk_list *dlk, char **env, int eof)
 {
 	char	*buffer;
@@ -152,16 +62,15 @@ t_dlk_list	*__read_hd__(t_minishell *m, t_dlk_list *dlk, char **env, int eof)
 	dup2(STDIN_FILENO ,dlk->heredoc_pipe[0]);
 	while (eof > 0)
 	{
+		buffer = NULL;
 		write(1, ">", 1);
 		eof = get_next_line(0, &buffer);
-		buffer = get_hd_expansion(m, buffer, env, 0);
+		buffer = get_new_hd(m, buffer, env, 0);
 		if (ft_strcmp(dlk->limiter, buffer) == TRUE)
 		{
 			D
 			ex
 		}
-		if (buffer != NULL)
-			buffer = expand_heredoc(buffer, 0);
 		// write();
 	}
 	ex

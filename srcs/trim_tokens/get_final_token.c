@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 17:58:18 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/14 12:32:05 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	unk_expansion(char *token, int i, char **env)
-{
-	(void)env;
-	i++;
-	while (token[i] != '\0' && ((token[i] >= 'a' && token [i] <= 'z')
-		|| (token[i] >= 'A' && token[i] <= 'Z')))
-		i++;
-	return (i);
-}
 
 static t_index	get_index(int i)
 {
@@ -65,7 +55,7 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 		}
 		else if (token[index->i] == '$' &&
 			existing_expand(token + index->i + 1, env, 0, 0) == FALSE)
-			index->i = unk_expansion(token, index->i, env);
+			index->i = skip_unk_exp(token, index->i);
 		else
 		{
 			tmp[index->j] = token[index->i];
@@ -89,7 +79,7 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 		else if (token[index.i] == DOUBLE_COTE)
 			tmp = __get_dq__(token, tmp, &index, env);
 		else if (token[index.i] == '$' &&
-			existing_expand(token + index.i + 1, env, 0, 0) == TRUE) //skip expansion
+			existing_expand(token + index.i + 1, env, 0, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index.i + 1, env, tmp,
 				&index.j);
@@ -97,7 +87,7 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 		}
 		else if (token[index.i] == '$' &&
 			existing_expand(token + index.i + 1, env, 0, 0) == FALSE)
-			index.i = unk_expansion(token, index.i, env);
+			index.i = skip_unk_exp(token, index.i);
 		else
 			tmp[index.j++] = token[index.i++];
 	}

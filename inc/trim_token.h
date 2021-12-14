@@ -6,13 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:11:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 12:10:16 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRIM_TOKEN_H
 # define TRIM_TOKEN_H
 
+int			skip_unk_exp(char *token, int i);
 char		*copy_expanded_value(char *token, char **env, char *tmp, int *p_j);
 int			get_expanded_len(char *token, int *ptr_i, int j, char **env);
 int			get_end_of_expansion(char *token, char **env, int i, int j);

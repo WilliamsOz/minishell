@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/13 18:01:47 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/14 12:11:17 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,6 @@ static int inside_sc(char *token, int *ptr_i, int len)
 	return (len);
 }
 
-int	skip_expansion(char *token, int i)
-{
-	i++;
-	while (token[i] != '\0' && ((token[i] >= 'a' && token [i] <= 'z')
-		|| (token[i] >= 'A' && token[i] <= 'Z')))
-		i++;
-	return (i);
-}
-
 static int	inside_dc(char *token, int *ptr_i, int len, char **env)
 {
 	int	i;
@@ -49,7 +40,7 @@ static int	inside_dc(char *token, int *ptr_i, int len, char **env)
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
 			else
-				i = skip_expansion(token, i);
+				i = skip_unk_exp(token, i);
 		}
 		else
 		{
@@ -67,8 +58,6 @@ static void	inc_i_and_len(int *ptr_i, int *ptr_len)
 	*ptr_len += 1;
 }
 
-
-
 int	get_final_len(char *token, char **env, int i, int len)
 {
 	while (token[i] != '\0')
@@ -82,12 +71,7 @@ int	get_final_len(char *token, char **env, int i, int len)
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
 			else
-			{
-				 PD(i)
-				 PC(token[i])
-				i = skip_expansion(token, i);
-				 PD(i)
-			}
+				i = skip_unk_exp(token, i);
 		}
 		else
 				inc_i_and_len(&i, &len);

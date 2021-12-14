@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memset_heredoc.c                                   :+:      :+:    :+:   */
+/*   skip_unknow_expansion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 17:14:28 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:21:49 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/14 12:08:29 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/14 12:33:00 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
-t_dlk_list	*memset_heredoc_pipe(t_dlk_list *dlk)
+int	skip_unk_exp(char *token, int i)
 {
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		tmp->heredoc_pipe[0] = -1;
-		tmp->heredoc_pipe[1] = -1;
-		tmp = tmp->next;
-	}
-	return (dlk);
+	i++;
+	while (token[i] != '\0'
+		&& ((token[i] >= 'a' && token [i] <= 'z')
+		|| (token[i] >= 'A' && token[i] <= 'Z') || token[i] == '_'))
+		i++;
+	return (i);
 }

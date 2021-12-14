@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_failed.c                                      :+:      :+:    :+:   */
+/*   strlen_new_hd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 17:14:03 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 12:13:04 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/14 12:16:31 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/14 12:23:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	close_heredoc_pipes(t_dlk_list *dlk)
+int	get_new_heredoc_len(char *buffer, char **env, int i, int len)
 {
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
+	while (buffer[i] != '\0')
 	{
-		if (tmp->heredoc_pipe[0] != -1)
-			close(tmp->heredoc_pipe[0]);
-		if (tmp->heredoc_pipe[1] != -1)
-			close(tmp->heredoc_pipe[1]);
-		tmp = tmp->next;
+		if (buffer[i] == '$'
+			&& existing_expand(buffer + i + 1, env, 0, 0) == TRUE)
+			len += get_expanded_len(buffer + i + 1, &i, 0, env);
+		else if (buffer[i] == '$')
+			i = skip_unk_exp(buffer, i);
+		else
+		{
+			i++;
+			len++;
+		}
 	}
-}
-
-void	pipe_failed(t_minishell *minishell)
-{
-	strerror(errno);
-	close_heredoc_pipes(minishell->d_lk);
-	minishell = destroy_all_data(minishell);
-	exit (EXIT_FAILURE);
+	return (len);
 }
