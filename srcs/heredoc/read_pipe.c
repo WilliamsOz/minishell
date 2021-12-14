@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_unknow_expansion.c                            :+:      :+:    :+:   */
+/*   read_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 12:08:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 13:06:17 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/14 17:03:18 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/14 17:03:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	skip_unk_exp(char *token, int i)
+char	*read_on_hd_pipe(t_minishell *m, char *buf, char **env, int *ptr_eof)
 {
-	i++;
-	while (token[i] != '\0'
-		&& ((token[i] >= 'a' && token [i] <= 'z')
-		|| (token[i] >= 'A' && token[i] <= 'Z') || token[i] == '_'))
-		i++;
-	return (i);
+	buf = NULL;
+	write(1, ">", 1);
+	*ptr_eof = get_next_line(0, &buf);
+	buf = get_new_hd(m, buf, env, 0);
+	return (buf);
 }

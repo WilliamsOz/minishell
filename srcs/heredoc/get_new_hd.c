@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 17:48:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 12:28:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:52:54 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static char	*cpy_new_hd(char *buffer, char **env, char *tmp, int i)
 			i += get_end_of_expansion(buffer + i + 1, env, 0, 0);
 		}
 		else if (buffer[i] == '$')
-		{
-			i++;
-			
-		}
+			i = skip_unk_exp(buffer, i);
 		else
 			tmp[j++] = buffer[i++];
 	}
@@ -56,7 +53,5 @@ char	*get_new_hd(t_minishell *m, char *buffer, char **env, int i)
 	tmp = cpy_new_hd(buffer, env, tmp, 0);
 	free(buffer);
 	buffer = tmp;
-	PS(buffer)
-	ex
 	return (buffer);
 }

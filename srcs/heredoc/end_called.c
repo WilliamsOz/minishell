@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_unknow_expansion.c                            :+:      :+:    :+:   */
+/*   end_called.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 12:08:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 13:06:17 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/14 16:58:37 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/14 17:21:22 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	skip_unk_exp(char *token, int i)
+t_dlk_list	*end_called(t_dlk_list *dlk, char *buffer)
 {
-	i++;
-	while (token[i] != '\0'
-		&& ((token[i] >= 'a' && token [i] <= 'z')
-		|| (token[i] >= 'A' && token[i] <= 'Z') || token[i] == '_'))
-		i++;
-	return (i);
+	free(buffer);
+	close(dlk->heredoc_pipe[1]);
+	return (dlk);
 }

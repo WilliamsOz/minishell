@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 12:10:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:53:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static char	*get_new_token(char *token, int *ptr_i, char **env)
 	i = *ptr_i;
 	tmp = NULL;
 	len = get_final_len(token, env, i, 0);
-	PD(len)
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp == NULL)
 		return (NULL);
@@ -31,10 +30,14 @@ static char	*get_new_token(char *token, int *ptr_i, char **env)
 	return (tmp);
 }
 
-static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
+char	*trim(t_minishell *minishell, char *token, int i, char **env)
 {
 	char	*tmp;
+	int		ind;
 
+	ind = 0;
+	if (i++ == -1)
+		ind = -1;
 	tmp = get_new_token(token, &i, env);
 	if (tmp == NULL)
 	{
@@ -42,7 +45,8 @@ static char	*__trim__(t_minishell *minishell, char *token, int i, char **env)
 		minishell = destroy_all_data(minishell);
 		exit (EXIT_FAILURE);
 	}
-	free(token);
+	if (ind != -1)
+		free(token);
 	token = tmp;
 	return (token);
 }
@@ -57,7 +61,7 @@ t_minishell	*trim_token(t_minishell *minishell, char **env)
 		if (tmp->token != NULL)
 		{
 			if (need_to_be_trim(tmp->token, 0) == TRUE)
-				tmp->token = __trim__(minishell, tmp->token, 0, env);
+				tmp->token = trim(minishell, tmp->token, 0, env);
 		}
 		tmp = tmp->next;
 	}

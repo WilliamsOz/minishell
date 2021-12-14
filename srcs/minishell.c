@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 12:24:06 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:20:04 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,49 +55,6 @@ void    show_dlk(t_dlk_list *dlk)
 }
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
-t_dlk_list	*__read_hd__(t_minishell *m, t_dlk_list *dlk, char **env, int eof)
-{
-	char	*buffer;
-
-	dup2(STDIN_FILENO ,dlk->heredoc_pipe[0]);
-	while (eof > 0)
-	{
-		buffer = NULL;
-		write(1, ">", 1);
-		eof = get_next_line(0, &buffer);
-		buffer = get_new_hd(m, buffer, env, 0);
-		if (ft_strcmp(dlk->limiter, buffer) == TRUE)
-		{
-			D
-			ex
-		}
-		// write();
-	}
-	ex
-	return (dlk);
-}
-
-static t_dlk_list	*__treat_hd__(t_minishell *m, t_dlk_list *dlk, char **env)
-{
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		if (tmp->here_doc == 1)
-			tmp = __read_hd__(m, tmp, env, 1);
-		tmp = tmp->next;
-	}
-	return (dlk);
-}
-
-t_dlk_list	*is_there_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
-{
-	dlk = __init_heredoc_pipes__(m, dlk, 0);
-	dlk = __treat_hd__(m, dlk, env);
-	return (dlk);
-}
-
 /*
 Redirection :
 < doit redigirer l'entree
@@ -121,7 +78,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 
 	dlk = minishell->d_lk;
 	(void)env;
-	dlk = is_there_heredoc(minishell, dlk, env);
+	dlk = heredoc(minishell, dlk, env);
 	// while (dlk != NULL)
 	// {
 		// if (dlk->previous == NULL)
@@ -146,7 +103,7 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 			add_history(minishell->line);
 			minishell->d_lk = double_lk_creator(minishell,
 				minishell->line, 0);
-			minishell = is_logic_input(minishell);
+			minishell = is_logic_input(minishell, env);
 			if (minishell->line != NULL)
 			{
 				SMDLK
