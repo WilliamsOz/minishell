@@ -6,11 +6,17 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 17:22:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:39:03 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	__eof_called__(void)
+{
+	ft_putstr_fd(" bash: warning: here-document delimited by", 2);
+	ft_putstr_fd(" end-of-file (wanted `end')\n", 2);
+}
 
 static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 {
@@ -19,12 +25,14 @@ static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 	while (ef > 0)
 	{
 		buffer = read_on_hd_pipe(m, buffer, env, &ef);
-		if (ef == 0 || ft_strcmp(dlk->limiter, buffer) == TRUE) //ajouter signal ici
+		if (ef == 0)
+			__eof_called__();
+		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE) //ajouter signal ici
 		{
 			dlk = end_called(dlk, buffer);
 			return (dlk);
 		}
-		else
+		else if (ef > 0)
 			write_hd_inside_pipe(dlk, buffer);
 	}
 	return (dlk);
