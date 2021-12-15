@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:03:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 23:39:06 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:39:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	hd_gnl(t_minishell *m, int fd, char **line)
 
 	buffer[0] = '\0';
 	(void)m;
-	m->sa.sa_handler = handler;
+	// m->sa.sa_handler = handler;
 	sigaction(SIGINT, &m->sa, NULL);
 	eof = read(fd, buffer, 1);
 	if (buffer[0] == '\n' || eof == 0)

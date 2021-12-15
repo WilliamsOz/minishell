@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_unknow_expansion.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 12:08:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 13:06:17 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:13:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	skip_unk_exp(char *token, int i)
 {
 	i++;
-	while (token[i] != '\0'
-		&& ((token[i] >= 'a' && token [i] <= 'z')
-		|| (token[i] >= 'A' && token[i] <= 'Z') || token[i] == '_'))
+	while (token[i] != '\0' && ((token[i] == '_')
+		|| ((token[i] >= 'a' && token [i] <= 'z')
+		|| (token[i] >= 'A' && token[i] <= 'Z'))))
 		i++;
 	return (i);
 }

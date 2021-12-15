@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 16:53:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 12:13:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*trim(t_minishell *minishell, char *token, int i, char **env)
 	ind = 0;
 	if (i++ == -1)
 		ind = -1;
+	else
+		i--;
 	tmp = get_new_token(token, &i, env);
 	if (tmp == NULL)
 	{

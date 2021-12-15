@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 02:30:27 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/15 12:14:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,25 +118,39 @@ void	handler1(int signum)
 {
 	if (signum == SIGINT)
 	{
+		write(1, "\n", 1);
+		rl_on_new_line();
 		rl_replace_line("", 0);
-		write(1, "\nminishell>$ ", 14);
+		rl_redisplay();
+		// write(1, "\nminishell>$ ", 14);
 		signal_handler = SIGINT;
 	}
+}
+
+void	eof_called(void)
+{
+	if (signal_handler == 0)
+		write(1, "exit\n", 5);
+	else
+		write(1, "exit", 5);
 }
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
 	while (1)
 	{
+		minishell->sa.sa_handler = handler1;
+		sigaction(SIGINT, &minishell->sa, NULL);
 		if (signal_handler != SIGINT)
 			minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
 		{
-			write(1, "exit", 5);
+			eof_called();
 			break ;
 		}
-		if (minishell->line != NULL && signal_handler != SIGINT)
+		if (minishell->line != NULL)
 			minishell = start_minishell(minishell, env);
+		signal_handler = 0;
 	}
 	(void)ac;
 	(void)av;
@@ -181,8 +195,6 @@ int	main(int ac, char **av, char **env)
 		minishell_destroyer(minishell);
 		exit (EXIT_FAILURE);
 	}
-	minishell->sa.sa_handler = handler1;
-	sigaction(SIGINT, &minishell->sa, NULL);
 	signal_handler = 0;
 	minishell_core(minishell, ac, av, env);
 	return (0);
