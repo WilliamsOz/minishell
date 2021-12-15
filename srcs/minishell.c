@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 01:05:05 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 02:30:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void	handler1(int signum)
 {
 	if (signum == SIGINT)
 	{
+		rl_replace_line("", 0);
 		write(1, "\nminishell>$ ", 14);
 		signal_handler = SIGINT;
 	}
@@ -127,21 +128,11 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
 	while (1)
 	{
-		minishell->sa.sa_handler = handler1;
-		sigaction(SIGINT, &minishell->sa, NULL);
-		minishell->line = readline("minishell>$ ");
-		sigaction(SIGINT, &minishell->sa, NULL);
-		if (minishell->line != NULL && signal_handler == SIGINT)
-		{
-			D
-			// ft_putchar('\n');
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
+		if (signal_handler != SIGINT)
+			minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
 		{
-			// write(1, "exit\n", 5);
+			write(1, "exit", 5);
 			break ;
 		}
 		if (minishell->line != NULL && signal_handler != SIGINT)
@@ -181,6 +172,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;
 
+	if (ac != 1)
+		exit (EXIT_FAILURE);
 	minishell = minishell_creator();
 	minishell->parsing_err = parsing_err_creator();
 	if (minishell->parsing_err == NULL)
@@ -188,6 +181,8 @@ int	main(int ac, char **av, char **env)
 		minishell_destroyer(minishell);
 		exit (EXIT_FAILURE);
 	}
+	minishell->sa.sa_handler = handler1;
+	sigaction(SIGINT, &minishell->sa, NULL);
 	signal_handler = 0;
 	minishell_core(minishell, ac, av, env);
 	return (0);
