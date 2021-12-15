@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 15:53:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 19:01:58 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	handler1(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		// write(1, "\nminishell>$ ", 14);
-		signal_handler = SIGINT;
+		signal_handler = 130;
 	}
 }
 
@@ -150,7 +150,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 		}
 		if (minishell->line != NULL)
 			minishell = start_minishell(minishell, env);
-		signal_handler = 0;
 	}
 	(void)ac;
 	(void)av;
@@ -158,9 +157,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 }
 
 /*
-
-Utiliser pas plus d'une variable global et justifier
-son utilisation lors de la correction
 
 Chercher et lancer le bonne executable (base sur la variable PATH ou
 en utilisant le chemin relatif ou absolu)

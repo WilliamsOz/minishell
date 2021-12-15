@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_structure.h                                :+:      :+:    :+:   */
+/*   copy_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:29:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 18:38:53 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/15 17:19:20 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/15 19:18:57 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_STRUCTURE_H
-# define PARSING_STRUCTURE_H
+#include "../../../inc/minishell.h"
 
-typedef struct	s_parsing_err
+char	*cpy_status(char *tmp, int s_h, int *ptr_i, int *ptr_j)
 {
-	int			simple_cote;
-	int			double_cote;
-	int			simple_pipe;
-	int			double_pipe;
-}				t_parsing_err;
+	char	*get_status;
+	int		i;
 
-#endif
+	get_status = NULL;
+	get_status = ft_itoa(s_h);
+	i = 0;
+	while (get_status[i] != '\0')
+	{
+		tmp[*ptr_j] = get_status[i];
+		*ptr_j += 1;
+		i++;
+	}
+	free(get_status);
+	*ptr_i += 2;
+	return (tmp);
+}

@@ -6,17 +6,18 @@
 #    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2021/12/14 12:13:02 by wiozsert         ###   ########.fr        #
+#    Updated: 2021/12/15 19:10:54 by wiozsert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-FLAGS = -Wall -Wextra -Werror #-ggdb3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -fcommon #-ggdb3 -fsanitize=address
 RLFLAGS = -lreadline
 
 #libft
 LIBFTLIB = libft.a
-LIBFTFILESO = ./libft/ft_pustr_fd.o ./libft/ft_strcmp.o ./libft/ft_strlen.o
+LIBFTFILESO = ./libft/ft_pustr_fd.o ./libft/ft_strcmp.o ./libft/ft_strlen.o \
+./libft/get_next_line.o ./libft/ft_putnbr_fd.o ./libft/ft_itoa.o
 
 # srcs
 # PATHSRCS = ./srcs/

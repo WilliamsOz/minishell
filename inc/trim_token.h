@@ -6,13 +6,15 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 16:37:02 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 17:19:52 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRIM_TOKEN_H
 # define TRIM_TOKEN_H
 
+char		*cpy_status(char *tmp, int s_h, int *ptr_i, int *ptr_j);
+int			get_status_len(int *ptr_i, int tmp);
 char		*trim(t_minishell *minishell, char *token, int i, char **env);
 int			skip_unk_exp(char *token, int i);
 char		*copy_expanded_value(char *token, char **env, char *tmp, int *p_j);

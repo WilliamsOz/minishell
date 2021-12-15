@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 12:52:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/15 19:02:27 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 		else if (ef > 0)
 			write_hd_inside_pipe(dlk, buffer, &dlk->hd_line_count);
 	}
-	write(dlk->heredoc_pipe[1], '\0', 1);
 	return (dlk);
 }
 
@@ -76,13 +75,7 @@ static t_dlk_list	*get_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 void	handler2(int signum)
 {
 	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		signal_handler = SIGINT;
-	}
+		signal_handler = 130;
 }
 
 t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
@@ -90,6 +83,5 @@ t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 	m->sa.sa_handler = handler2;
 	dlk = __init_heredoc_pipes__(m, dlk, 0);
 	dlk = get_heredoc(m, dlk, env);
-	signal_handler = 0;
 	return (dlk);
 }

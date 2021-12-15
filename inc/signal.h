@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_structure.h                                :+:      :+:    :+:   */
+/*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:29:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 18:38:53 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/15 17:01:49 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/15 17:38:52 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_STRUCTURE_H
-# define PARSING_STRUCTURE_H
-
-typedef struct	s_parsing_err
-{
-	int			simple_cote;
-	int			double_cote;
-	int			simple_pipe;
-	int			double_pipe;
-}				t_parsing_err;
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
 #endif

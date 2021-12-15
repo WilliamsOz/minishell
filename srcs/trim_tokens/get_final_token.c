@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 12:32:05 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 19:04:30 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 				&index->j);
 			index->i += get_end_of_expansion(token + index->i + 1, env, 0, 0);
 		}
-		else if (token[index->i] == '$' &&
-			existing_expand(token + index->i + 1, env, 0, 0) == FALSE)
+		else if (token[index->i] == '$' && token[index->i + 1] == '?')
+			tmp = cpy_status(tmp, signal_handler, &index->i, &index->j);
+		else if (token[index->i] == '$')
 			index->i = skip_unk_exp(token, index->i);
 		else
 		{
@@ -85,8 +86,9 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 				&index.j);
 			index.i += get_end_of_expansion(token + index.i + 1, env, 0, 0);
 		}
-		else if (token[index.i] == '$' &&
-			existing_expand(token + index.i + 1, env, 0, 0) == FALSE)
+		else if (token[index.i] == '$' && token[index.i + 1] == '?')
+			cpy_status(tmp, signal_handler, &index.i, &index.j);
+		else if (token[index.i] == '$')
 			index.i = skip_unk_exp(token, index.i);
 		else
 			tmp[index.j++] = token[index.i++];

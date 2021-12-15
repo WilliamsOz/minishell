@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 12:13:30 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/15 17:24:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	inside_dc(char *token, int *ptr_i, int len, char **env)
 		{
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
+			else if (token[i] == '$' && token[i + 1] == '?')
+				len += get_status_len(&i, signal_handler);
 			else
 				i = skip_unk_exp(token, i);
 		}
@@ -70,6 +72,8 @@ int	get_final_len(char *token, char **env, int i, int len)
 		{
 			if (existing_expand(token + i + 1, env, 0, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
+			else if (token[i] == '$' && token[i + 1] == '?')
+				len += get_status_len(&i, signal_handler);
 			else
 				i = skip_unk_exp(token, i);
 		}

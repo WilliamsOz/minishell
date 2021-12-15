@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_structure.h                                :+:      :+:    :+:   */
+/*   status_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:29:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 18:38:53 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/15 17:02:34 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/15 19:11:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_STRUCTURE_H
-# define PARSING_STRUCTURE_H
+#include "../../../inc/minishell.h"
 
-typedef struct	s_parsing_err
+int		get_status_len(int *ptr_i, int tmp)
 {
-	int			simple_cote;
-	int			double_cote;
-	int			simple_pipe;
-	int			double_pipe;
-}				t_parsing_err;
+	int	len;
 
-#endif
+	*ptr_i += 2;
+	len = 1;
+	while (tmp >= 10)
+	{
+		len++;
+		tmp /= 10;
+	}
+	return (len);
+}
