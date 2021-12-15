@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 18:07:42 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 23:22:10 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	__eof_called__(void)
 	ft_putstr_fd(" end-of-file (wanted `end')\n", 2);
 }
 
+//
 static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 {
 	char	*buffer;
@@ -27,7 +28,7 @@ static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 		buffer = read_on_hd_pipe(m, buffer, env, &ef);
 		if (ef == 0)
 			__eof_called__();
-		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE) //ajouter signal ici
+		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE)
 		{
 			dlk = end_called(dlk, buffer);
 			return (dlk);

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 17:20:04 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/15 01:05:05 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ pipe a l'entree de la prochaine commande
 // 	if (dlk->upper_rafter )
 // }
 
+
 t_minishell	*treat_data(t_minishell *minishell, char **env)
 {
 	t_dlk_list	*dlk;
@@ -92,28 +93,59 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 	return (minishell);
 }
 
+t_minishell	*start_minishell(t_minishell *minishell, char **env)
+{
+	minishell = are_quotes_closed(minishell, 0, minishell->line);
+	if (minishell->line != NULL && minishell->line[0] != '\0')
+	{
+		add_history(minishell->line);
+		minishell->d_lk = double_lk_creator(minishell,
+			minishell->line, 0);
+		minishell = is_logic_input(minishell, env);
+		if (minishell->line != NULL)
+		{
+			SMDLK
+			minishell = trim_token(minishell, env);
+			minishell = treat_data(minishell, env);
+			SMDLK
+			minishell->line = free_line(minishell->line);
+		}
+	}
+	return (minishell);
+}
+
+void	handler1(int signum)
+{
+	if (signum == SIGINT)
+	{
+		write(1, "\nminishell>$ ", 14);
+		signal_handler = SIGINT;
+	}
+}
+
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
-	minishell->line = readline("minishell>$ ");
-	while (minishell->line != NULL)
+	while (1)
 	{
-		minishell = are_quotes_closed(minishell, 0, minishell->line);
-		if (minishell->line != NULL && minishell->line[0] != '\0')
-		{
-			add_history(minishell->line);
-			minishell->d_lk = double_lk_creator(minishell,
-				minishell->line, 0);
-			minishell = is_logic_input(minishell, env);
-			if (minishell->line != NULL)
-			{
-				SMDLK
-				minishell = trim_token(minishell, env);
-				minishell = treat_data(minishell, env);
-				SMDLK
-				minishell->line = free_line(minishell->line);
-			}
-		}
+		minishell->sa.sa_handler = handler1;
+		sigaction(SIGINT, &minishell->sa, NULL);
 		minishell->line = readline("minishell>$ ");
+		sigaction(SIGINT, &minishell->sa, NULL);
+		if (minishell->line != NULL && signal_handler == SIGINT)
+		{
+			D
+			// ft_putchar('\n');
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+		if (minishell->line == NULL)
+		{
+			// write(1, "exit\n", 5);
+			break ;
+		}
+		if (minishell->line != NULL && signal_handler != SIGINT)
+			minishell = start_minishell(minishell, env);
 	}
 	(void)ac;
 	(void)av;
@@ -156,6 +188,7 @@ int	main(int ac, char **av, char **env)
 		minishell_destroyer(minishell);
 		exit (EXIT_FAILURE);
 	}
+	signal_handler = 0;
 	minishell_core(minishell, ac, av, env);
 	return (0);
 }

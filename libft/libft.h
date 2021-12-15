@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:32:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:44:10 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/14 21:55:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <signal.h> //del?
+# include <errno.h>
 
 int		get_next_line(int fd, char **line);
 void	ft_putstr_fd(char *str, int fd);
