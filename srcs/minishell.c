@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 15:48:23 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 17:04:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void    show_dlk(t_dlk_list *dlk)
 Redirection :
 < doit redigirer l'entree
 > doit rediriger la sortie en mode TRUNC
-<< read depuis une pipe
 >> doit rediriger la sortie en mode APPEND
 
 Pipes | :
@@ -74,15 +73,15 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 	dlk = minishell->d_lk;
 	(void)env;
 	dlk = heredoc(minishell, dlk, env);
-	//if error, ne pas oublier de fermer toute les pipes du heredoc
 	if (redirection_check(minishell, env) == TRUE)
 	{
+		close_heredoc_pipes(minishell->d_lk);
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		return (minishell);
 	}
 	minishell = trim_token(minishell, env);
 	SMDLK
-	// dlk = performs_redirection(dlk);
+	// dlk = performs_redirection(dlk); //next to-do
 	// while (dlk != NULL)
 	// {
 		// if (dlk->previous == NULL)

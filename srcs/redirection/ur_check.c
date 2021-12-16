@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lr_check.c                                         :+:      :+:    :+:   */
+/*   up_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 15:44:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 16:51:50 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/16 16:59:25 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/16 16:59:45 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,42 @@
 
 static int	missing_read_permission(char *file)
 {
-	int	ind;
-
-	ind = access(file, R_OK);
-	if (ind == -1)
-	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		signal_handler = 1;
-		return (TRUE);
-	}
-	return (FALSE);
-}
-
-static int	missing_file(char *file)
-{
+	int	fd;
 	int	ind;
 
 	ind = access(file, F_OK);
-	if (ind == -1)
+	if (ind != -1)
+	{
+		fd = open(file, O_RDWR);
+		if (fd == -1)
+		{
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(file, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			signal_handler = 1;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
+static int	is_directory(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_DIRECTORY);
+	if (fd != -1)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(file, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		ft_putstr_fd(": Is a directory\n", 2);
 		signal_handler = 1;
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-int	lr_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
+int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
 {
 	char	*file;
 
@@ -61,7 +66,7 @@ int	lr_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
 		file = dlk->next->token;
 	else
 		file = trim(m, dlk->next->token, -1, env);
-	if (missing_file(file) == TRUE || missing_read_permission(file) == TRUE)
+	if (is_directory(file) == TRUE || missing_read_permission(file) == TRUE)
 	{
 		signal_handler = 1;
 		free(file);
