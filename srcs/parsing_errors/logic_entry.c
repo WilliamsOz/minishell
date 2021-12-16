@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 13:04:39 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:28:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	__check_all_tokens_errors__(t_minishell *minishell)
 static t_minishell	*__special_char_found__(t_minishell *minishell)
 {
 	if (minishell->d_lk != NULL)
-		double_lk_destroyer(minishell->d_lk);
+		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 	if (minishell->line != NULL)
 		minishell->line = free_line(minishell->line);
 	return (minishell);
@@ -54,7 +54,7 @@ t_minishell	*is_logic_input(t_minishell *minishell)
 	if (__check_all_tokens_errors__(minishell) == TRUE)
 	{
 		if (minishell->d_lk != NULL)
-			double_lk_destroyer(minishell->d_lk);
+			minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		if (minishell->line != NULL)
 			minishell->line = free_line(minishell->line);
 	}

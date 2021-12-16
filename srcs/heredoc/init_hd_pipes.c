@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 17:22:03 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 13:11:08 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:30:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*__init_heredoc_pipes__(t_minishell *m, t_dlk_list *dlk, int ind)
+t_dlk_list	*init_heredoc_pipes(t_minishell *m, t_dlk_list *dlk, int ind)
 {
 	t_dlk_list	*tmp;
 	t_dlk_list	*keep;

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   eof_called.c                                       :+:      :+:    :+:   */
+/*   redirection.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/16 12:16:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 12:17:31 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/16 14:40:30 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/16 15:46:54 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef REDIRECTION_H
+# define REDIRECTION_H
 
-void	eof_called(void)
-{
-	if (signal_handler == 0)
-		write(1, "exit\n", 5);
-	else
-		write(1, "exit", 5);
-}
+int	lr_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env);
+int	redirection_check(t_minishell *m, char **env);
+
+#endif

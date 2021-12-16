@@ -6,31 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 13:21:29 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 14:30:42 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static void	__eof_called__(t_minishell *minishell, t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	int			count;
-
-	count = 0;
-	tmp = minishell->d_lk;
-	while (tmp != NULL)
-	{
-		if (tmp->here_doc == 1)
-			count += tmp->hd_line_count;
-		tmp = tmp->next;
-	}
-	ft_putstr_fd(" bash: warning: here-document at line ", 2);
-	ft_putnbr_fd(count, 2);
-	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
-	ft_putstr_fd(dlk->limiter, 2);
-	ft_putstr_fd("')\n", 2);
-}
 
 static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 {
@@ -42,7 +22,7 @@ static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 		if (signal_handler == SIGINT)
 			break ;
 		if (ef == 0)
-			__eof_called__(m, dlk);
+			eof_called(m, dlk);
 		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE)
 		{
 			dlk = end_called(dlk, buffer);
@@ -68,15 +48,14 @@ static t_dlk_list	*get_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 		}
 		tmp = tmp->next;
 	}
-	dlk = close_unused_pipe(dlk);
+	dlk = close_ununsed_pipes(dlk);
 	return (dlk);
 }
 
 t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 {
 	m->sa.sa_handler = handle_hd_sigint;
-	dlk = __init_heredoc_pipes__(m, dlk, 0);
+	dlk = init_heredoc_pipes(m, dlk, 0);
 	dlk = get_heredoc(m, dlk, env);
-	check_redirection(tmp);
 	return (dlk);
 }

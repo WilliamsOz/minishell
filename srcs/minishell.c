@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 13:21:35 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:48:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,6 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-// void	first_entry(t_dlk_list *dlk)
-// {
-// 	if (dlk->upper_rafter )
-// }
-
-// t_dlk_list	*performs_redirection(t_dlk_list *dlk)
-// {
-// 	t_dlk_list	*tmp;
-
-// 	tmp = 
-
-// 	return (dlk);
-// }
-
 t_minishell	*treat_data(t_minishell *minishell, char **env)
 {
 	t_dlk_list	*dlk;
@@ -88,6 +74,14 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 	dlk = minishell->d_lk;
 	(void)env;
 	dlk = heredoc(minishell, dlk, env);
+	//if error, ne pas oublier de fermer toute les pipes du heredoc
+	if (redirection_check(minishell, env) == TRUE)
+	{
+		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
+		return (minishell);
+	}
+	minishell = trim_token(minishell, env);
+	SMDLK
 	// dlk = performs_redirection(dlk);
 	// while (dlk != NULL)
 	// {
@@ -114,9 +108,7 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 		if (minishell->line != NULL)
 		{
 			SMDLK
-			minishell = trim_token(minishell, env);
 			minishell = treat_data(minishell, env);
-			SMDLK
 			minishell->line = free_line(minishell->line);
 		}
 	}
@@ -134,7 +126,7 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 			minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
 		{
-			eof_called();
+			minishell_eof_called();
 			break ;
 		}
 		else if (minishell->line != NULL)
@@ -144,28 +136,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	(void)av;
 	destroy_all_data(minishell);
 }
-
-/*
-
-Chercher et lancer le bonne executable (base sur la variable PATH ou
-en utilisant le chemin relatif ou absolu)
-
-$? doit etre receptionne et renvoyer le
-dernier status de la derniere commande
-
-Ctrl-C && Ctrl-D && ctrl-\ doivent fonctionner comme
-dans le bash (signaux)
-
-Lorsqu'il est interactif :
-Ctrl-C affiche un nouveau promt dans une nouvelle ligne
-Ctrl-D exit le shell
-Ctrl-\ ne fait rien
-
-//pour les built in pour setenv et unsetenv (export et unset)
-//regarder les fonctions qui existe
-//et les suivre pour les refaire
-
-*/
 
 int	main(int ac, char **av, char **env)
 {
@@ -184,3 +154,7 @@ int	main(int ac, char **av, char **env)
 	minishell_core(minishell, ac, av, env);
 	return (0);
 }
+
+//pour les built in pour setenv et unsetenv (export et unset)
+//regarder les fonctions qui existe
+//et les suivre pour les refaire

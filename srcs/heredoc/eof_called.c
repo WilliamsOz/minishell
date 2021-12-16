@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_unused_pipe.c                                :+:      :+:    :+:   */
+/*   eof_called.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 17:13:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 18:46:17 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/16 14:28:31 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/16 14:29:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*close_unused_pipe(t_dlk_list *dlk)
+void	eof_called(t_minishell *minishell, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
-	t_dlk_list	*keep;
+	int			count;
 
-	tmp = dlk;
+	count = 0;
+	tmp = minishell->d_lk;
 	while (tmp != NULL)
 	{
 		if (tmp->here_doc == 1)
-			keep = tmp;
+			count += tmp->hd_line_count;
 		tmp = tmp->next;
 	}
-	tmp = dlk;
-	while (tmp != keep)
-	{
-		if (tmp->here_doc == 1)
-			close(tmp->heredoc_pipe[0]);
-		tmp = tmp->next;
-	}
-	return (dlk);
+	ft_putstr_fd(" bash: warning: here-document at line ", 2);
+	ft_putnbr_fd(count, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd(dlk->limiter, 2);
+	ft_putstr_fd("')\n", 2);
 }

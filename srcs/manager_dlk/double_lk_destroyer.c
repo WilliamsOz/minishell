@@ -6,22 +6,25 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:29:51 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/09 16:44:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:28:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	double_lk_destroyer(t_dlk_list *d_lk)
+t_dlk_list	*double_lk_destroyer(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
-	while (d_lk != NULL)
+	while (dlk != NULL)
 	{
-		tmp = d_lk;
-		d_lk = d_lk->next;
+		tmp = dlk;
+		dlk = dlk->next;
 		if (tmp->token != NULL)
-			free(tmp->token);
+			tmp->token = NULL;
+		tmp->token = NULL;
 		free(tmp);
+		tmp = NULL;
 	}
+	return (dlk);
 }

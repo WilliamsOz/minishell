@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_all_data.c                                 :+:      :+:    :+:   */
+/*   minishell_eof_called.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 15:28:50 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/16 12:16:46 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/16 15:49:30 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*destroy_all_data(t_minishell *minishell)
+void	minishell_eof_called(void)
 {
-	if (minishell->parsing_err != NULL)
-		parsing_err_destroyer(minishell->parsing_err);
-	if (minishell->d_lk != NULL)
-		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
-	if (minishell->line != NULL)
-		minishell->line = free_line(minishell->line);
-	if (minishell != NULL)
-		minishell_destroyer(minishell);
-	return (minishell);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	write(1, "exit\n", 5);
 }

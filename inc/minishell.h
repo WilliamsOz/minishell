@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 12:51:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:48:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # include "./trim_token.h"
 # include "./heredoc.h"
 # include "./signal.h"
+# include "./redirection.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
@@ -74,12 +75,12 @@ void    show_dlk(t_dlk_list *dlk);
 
 int signal_handler;
 
-void			eof_called(void);
+void			minishell_eof_called(void);
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
 void			minishell_destroyer(t_minishell *minishell);
 t_minishell		*minishell_creator(void);
-void			double_lk_destroyer(t_dlk_list *d_lk);
+t_dlk_list		*double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
 t_minishell		*destroy_all_data(t_minishell *minishell);
 
