@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 19:01:58 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:21:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,14 @@ pipe a l'entree de la prochaine commande
 // 	if (dlk->upper_rafter )
 // }
 
+// t_dlk_list	*performs_redirection(t_dlk_list *dlk)
+// {
+// 	t_dlk_list	*tmp;
+
+// 	tmp = 
+
+// 	return (dlk);
+// }
 
 t_minishell	*treat_data(t_minishell *minishell, char **env)
 {
@@ -80,6 +88,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 	dlk = minishell->d_lk;
 	(void)env;
 	dlk = heredoc(minishell, dlk, env);
+	// dlk = performs_redirection(dlk);
 	// while (dlk != NULL)
 	// {
 		// if (dlk->previous == NULL)
@@ -101,7 +110,7 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 		add_history(minishell->line);
 		minishell->d_lk = double_lk_creator(minishell,
 			minishell->line, 0);
-		minishell = is_logic_input(minishell, env);
+		minishell = is_logic_input(minishell);
 		if (minishell->line != NULL)
 		{
 			SMDLK
@@ -114,41 +123,21 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 	return (minishell);
 }
 
-void	handler1(int signum)
-{
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		// write(1, "\nminishell>$ ", 14);
-		signal_handler = 130;
-	}
-}
-
-void	eof_called(void)
-{
-	if (signal_handler == 0)
-		write(1, "exit\n", 5);
-	else
-		write(1, "exit", 5);
-}
-
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
 	while (1)
 	{
-		minishell->sa.sa_handler = handler1;
+		minishell->line = NULL;
+		minishell->sa.sa_handler = handle_rl_sigint;
 		sigaction(SIGINT, &minishell->sa, NULL);
-		if (signal_handler != SIGINT)
+		if (minishell->line == NULL && signal_handler != SIGINT)
 			minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
 		{
 			eof_called();
 			break ;
 		}
-		if (minishell->line != NULL)
+		else if (minishell->line != NULL)
 			minishell = start_minishell(minishell, env);
 	}
 	(void)ac;

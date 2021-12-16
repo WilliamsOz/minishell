@@ -6,13 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 18:59:53 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:51:33 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define _GNU_SOURCE
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -37,6 +38,7 @@
 # include "./structures/trim_token_structure.h"
 # include "./trim_token.h"
 # include "./heredoc.h"
+# include "./signal.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
@@ -72,6 +74,7 @@ void    show_dlk(t_dlk_list *dlk);
 
 int signal_handler;
 
+void			eof_called(void);
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
 void			minishell_destroyer(t_minishell *minishell);

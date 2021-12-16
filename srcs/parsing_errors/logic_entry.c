@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 16:40:03 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 13:04:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	__check_all_tokens_errors__(t_minishell *minishell, char **env)
+static int	__check_all_tokens_errors__(t_minishell *minishell)
 {
 	t_dlk_list	*tmp;
 
@@ -24,7 +24,7 @@ static int	__check_all_tokens_errors__(t_minishell *minishell, char **env)
 		else if (tmp->pipeline == 1 && check_pipeline_errors(tmp) == 1)
 			return (TRUE);
 		else if ((tmp->lower_rafter == 1 || tmp->upper_rafter == 1) &&
-				check_rafter_errors(minishell, tmp, env) == 1)
+				check_rafter_errors(tmp) == 1)
 			return (TRUE);
 		else if (tmp->double_upper_rafter == 1 &&
 				check_double_upper_rafter(tmp) == 1)
@@ -43,15 +43,15 @@ static t_minishell	*__special_char_found__(t_minishell *minishell)
 	return (minishell);
 }
 
-t_minishell	*is_logic_input(t_minishell *minishell, char **env)
+t_minishell	*is_logic_input(t_minishell *minishell)
 {
-	if (is_pipeline_link_to_cmd(minishell->d_lk) == TRUE ||
+	if (is_pipeline_next_to_cmd(minishell->d_lk) == TRUE ||
 		check_special_chars(minishell->d_lk) == TRUE)
 	{
 		minishell = __special_char_found__(minishell);
 		return (minishell);
 	}
-	if (__check_all_tokens_errors__(minishell, env) == TRUE)
+	if (__check_all_tokens_errors__(minishell) == TRUE)
 	{
 		if (minishell->d_lk != NULL)
 			double_lk_destroyer(minishell->d_lk);

@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:26:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/07 16:46:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/16 12:43:03 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_pipeline_link_to_cmd(t_dlk_list *dlk)
+int	is_pipeline_next_to_cmd(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
