@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   up_check.c                                         :+:      :+:    :+:   */
+/*   ur_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:59:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 16:59:45 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:11:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ static int	missing_read_permission(char *file)
 
 static int	is_directory(char *file)
 {
-	int	fd;
+	struct stat	buf;
 
-	fd = open(file, O_DIRECTORY);
-	if (fd != -1)
+	stat(file, &buf);
+	if (S_ISDIR(buf.st_mode) == 1)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(file, 2);
@@ -49,10 +49,8 @@ static int	is_directory(char *file)
 	return (FALSE);
 }
 
-int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
+static int	check_ambiguous_redirect(t_dlk_list *dlk, char **env)
 {
-	char	*file;
-
 	if (dlk->next->token[0] == '$' && dlk->next->token[1] != '\0'
 		&& existing_expand(dlk->next->token + 1, env, 0, 0) == FALSE)
 	{
@@ -62,11 +60,26 @@ int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
 		signal_handler = 1;
 		return (TRUE);
 	}
+	return (FALSE);
+}
+
+int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
+{
+	char	*file;
+
+	if (check_ambiguous_redirect(dlk, env) == TRUE)
+		return (TRUE);
 	if (dlk->next->token[0] == '$' && dlk->next->token[1] == '\0')
 		file = dlk->next->token;
 	else
 		file = trim(m, dlk->next->token, -1, env);
-	if (is_directory(file) == TRUE || missing_read_permission(file) == TRUE)
+	if (is_directory(file) == TRUE)
+	{
+		signal_handler = 1;
+		free(file);
+		return (TRUE);
+	}
+	else if (missing_read_permission(file) == TRUE)
 	{
 		signal_handler = 1;
 		free(file);
