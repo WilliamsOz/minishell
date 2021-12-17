@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 14:30:42 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:39:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static t_dlk_list	*get_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (tmp->here_doc == 1)
+		if (tmp->here_doc == 1 && tmp->limiter != NULL)
 		{
 			tmp->hd_line_count = 1;
 			tmp = rd_hd(m, tmp, env, 1);

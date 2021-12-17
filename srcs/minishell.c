@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 17:04:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:39:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 
 	dlk = minishell->d_lk;
 	(void)env;
+	// if (is_there_heredoc)
 	dlk = heredoc(minishell, dlk, env);
 	if (redirection_check(minishell, env) == TRUE)
 	{
@@ -79,6 +80,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		return (minishell);
 	}
+	D
 	minishell = trim_token(minishell, env);
 	SMDLK
 	// dlk = performs_redirection(dlk); //next to-do
@@ -90,7 +92,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 			// second_entry();
 		// else
 			// last_entry();
-		// dlk = dlk->next;
+		// dlk = dlk->+next;
 	// }
 	return (minishell);
 }
@@ -103,7 +105,7 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 		add_history(minishell->line);
 		minishell->d_lk = double_lk_creator(minishell,
 			minishell->line, 0);
-		minishell = is_logic_input(minishell);
+		minishell = is_logic_input(minishell, env);
 		if (minishell->line != NULL)
 		{
 			SMDLK
@@ -135,6 +137,8 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	(void)av;
 	destroy_all_data(minishell);
 }
+
+//bug quand le programme se termine et qu'on retourne sur le bash (latence)
 
 int	main(int ac, char **av, char **env)
 {

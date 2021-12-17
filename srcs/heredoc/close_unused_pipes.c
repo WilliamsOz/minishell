@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:13:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 14:28:06 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 14:39:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk)
+static t_dlk_list	*get_last_hd(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 	t_dlk_list	*keep;
@@ -24,10 +24,22 @@ t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk)
 			keep = tmp;
 		tmp = tmp->next;
 	}
-	close(keep->heredoc_pipe[1]);
-	keep->heredoc_pipe[1] = -1;
+	if (keep != NULL)
+	{
+		close(keep->heredoc_pipe[1]);
+		keep->heredoc_pipe[1] = -1;
+	}
+	return (keep);
+}
+
+t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+	t_dlk_list	*keep;
+
+	keep = get_last_hd(dlk);
 	tmp = dlk;
-	while (tmp != keep)
+	while (tmp != NULL && tmp != keep)
 	{
 		if (tmp->here_doc == 1)
 		{
