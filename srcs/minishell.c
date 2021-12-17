@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 17:40:06 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 19:16:57 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		return (minishell);
 	}
-	D
 	minishell = trim_token(minishell, env);
 	SMDLK
 	// dlk = performs_redirection(dlk); //next to-do
@@ -118,20 +117,21 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
+	int xd = 0;
 	while (1)
 	{
 		minishell->line = NULL;
 		minishell->sa.sa_handler = handle_rl_sigint;
 		sigaction(SIGINT, &minishell->sa, NULL);
-		if (minishell->line == NULL && signal_handler != SIGINT)
-			minishell->line = readline("minishell>$ ");
+		minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
 		{
 			minishell_eof_called();
 			break ;
 		}
-		else if (minishell->line != NULL)
+		if (minishell->line != NULL)
 			minishell = start_minishell(minishell, env);
+		xd++;
 	}
 	(void)ac;
 	(void)av;

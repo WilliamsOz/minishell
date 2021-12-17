@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 17:22:03 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 14:39:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 19:20:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_dlk_list	*init_heredoc_pipes(t_minishell *m, t_dlk_list *dlk, int ind)
 	dlk = memset_heredoc_pipe(dlk);
 	while (tmp != NULL)
 	{
-		if (tmp->here_doc == 1)
+		if (tmp->here_doc && tmp->next != NULL && tmp->next->token != NULL)
 		{
 			ind = pipe(tmp->heredoc_pipe);
 			if (ind == -1)

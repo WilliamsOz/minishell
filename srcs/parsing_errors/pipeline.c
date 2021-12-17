@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:26:40 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 12:43:03 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 19:32:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	check_pipeline_errors(t_dlk_list *tmp)
 		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 		return (TRUE);
 	}
-	else if (tmp->next != NULL && tmp->next->token == NULL)
+	else if (tmp->next != NULL && tmp->next->pipeline == 0
+		&& tmp->next->token == NULL)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n",
 			2);

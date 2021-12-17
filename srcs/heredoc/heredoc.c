@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 14:39:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 19:35:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
+t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 {
 	char	*buffer;
 

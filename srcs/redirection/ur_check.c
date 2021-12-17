@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:59:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 18:11:31 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/17 18:24:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	missing_read_permission(char *file)
 			signal_handler = 1;
 			return (TRUE);
 		}
+		close(fd);
 	}
 	return (FALSE);
 }
@@ -73,13 +74,7 @@ int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
 		file = dlk->next->token;
 	else
 		file = trim(m, dlk->next->token, -1, env);
-	if (is_directory(file) == TRUE)
-	{
-		signal_handler = 1;
-		free(file);
-		return (TRUE);
-	}
-	else if (missing_read_permission(file) == TRUE)
+	if (is_directory(file) == TRUE || missing_read_permission(file) == TRUE)
 	{
 		signal_handler = 1;
 		free(file);
