@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 19:16:57 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/19 14:58:20 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
-	int xd = 0;
+		minishell->sa.sa_handler = handle_rl_sigint;
+		sigaction(SIGQUIT, &minishell->sa, NULL);
 	while (1)
 	{
 		minishell->line = NULL;
-		minishell->sa.sa_handler = handle_rl_sigint;
-		sigaction(SIGINT, &minishell->sa, NULL);
 		minishell->line = readline("minishell>$ ");
+		signal(SIGQUIT, SIG_IGN);
 		if (minishell->line == NULL)
 		{
 			minishell_eof_called();
@@ -131,7 +131,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 		}
 		if (minishell->line != NULL)
 			minishell = start_minishell(minishell, env);
-		xd++;
 	}
 	(void)ac;
 	(void)av;
