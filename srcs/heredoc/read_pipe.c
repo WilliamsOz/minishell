@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:03:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 19:03:31 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:02:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	hd_gnl(t_minishell *m, int fd, char **line)
 char	*read_on_hd_pipe(t_minishell *m, char *buf, char **env, int *ptr_eof)
 {
 	buf = NULL;
-	write(1, ">", 1);
+	write(1, "> ", 2);
 	*ptr_eof = hd_gnl(m, 0, &buf);
 	if (*ptr_eof > 0)
 		buf = get_new_hd(m, buf, env, 0);

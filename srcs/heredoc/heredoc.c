@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 19:35:08 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:02:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,27 @@ static t_dlk_list	*get_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 	return (dlk);
 }
 
+static int	is_there_heredoc(t_minishell *minishell)
+{
+	t_dlk_list	*tmp;
+
+	tmp = minishell->d_lk;
+	while (tmp != NULL)
+	{
+		if (tmp->here_doc == 1)
+			return (TRUE);
+		tmp = tmp->next;
+	}
+	return (FALSE);
+}
+
 t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
 {
-	m->sa.sa_handler = handle_hd_sigint;
-	dlk = init_heredoc_pipes(m, dlk, 0);
-	dlk = get_heredoc(m, dlk, env);
+	m->sa.sa_handler = hd_handler;
+	if (is_there_heredoc(m) == TRUE)
+	{
+		dlk = init_heredoc_pipes(m, dlk, 0);
+		dlk = get_heredoc(m, dlk, env);
+	}
 	return (dlk);
 }

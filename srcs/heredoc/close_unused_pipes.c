@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:13:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 19:13:23 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:15:25 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static t_dlk_list	*get_last_hd(t_dlk_list *dlk)
 	t_dlk_list	*keep;
 
 	tmp = dlk;
+	keep = NULL;
 	while (tmp != NULL)
 	{
 		if (tmp->here_doc == 1)
