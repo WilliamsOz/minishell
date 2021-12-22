@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 19:04:30 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:07:53 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 	while (token[index->i] != DOUBLE_COTE)
 	{
 		if (token[index->i] == '$' &&
-			existing_expand(token + index->i + 1, env, 0, 0) == TRUE)
+			dc_existing_expand(token + index->i + 1, env, 0, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index->i + 1, env, tmp,
 				&index->j);

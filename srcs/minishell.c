@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 15:19:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 18:00:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,67 +66,6 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-t_dlk_list	*redirect_ur(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	t_dlk_list	*keep;
-
-	keep = dlk->next->next;
-	tmp = dlk->next;
-	dlk->file = tmp->token;
-	free(tmp);
-	dlk->next = keep;
-	dlk->fd_file = open(dlk->file, O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	return (dlk);
-}
-
-t_dlk_list	*init_dlk_redirect(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		tmp->file = NULL;
-		tmp->fd_file = -1;
-		tmp = tmp->next;
-	}
-	return (dlk);
-}
-
-t_dlk_list	*redirect_d_ur(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	t_dlk_list	*keep;
-
-	keep = dlk->next->next;
-	tmp = dlk->next;
-	dlk->file = tmp->token;
-	free(tmp);
-	dlk->next = keep;
-	dlk->fd_file = open(dlk->file, O_CREAT | O_APPEND,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	return (dlk);
-}
-
-t_dlk_list	*performs_redirection(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	dlk = init_dlk_redirect(dlk);
-	while (tmp != NULL)
-	{
-		if (tmp->upper_rafter == 1)
-			tmp = redirect_ur(tmp);
-		else if (tmp->double_upper_rafter == 1)
-			tmp = redirect_d_ur(tmp);
-		tmp = tmp->next;
-	}
-	return (dlk);
-}
-
 t_minishell	*treat_data(t_minishell *minishell, char **env)
 {
 	t_dlk_list	*dlk;
@@ -177,8 +116,6 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 
 void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 {
-	minishell->sa.sa_handler = rl_handler;
-	sigaction(SIGINT, &minishell->sa, NULL);
 	while (1)
 	{
 		minishell->line = NULL;
@@ -196,8 +133,6 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 	destroy_all_data(minishell);
 }
 
-//bug quand le programme se termine et qu'on retourne sur le bash (latence)
-
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;
@@ -212,10 +147,8 @@ int	main(int ac, char **av, char **env)
 		exit (EXIT_FAILURE);
 	}
 	signal_handler = 0;
+	signal(SIGINT, rl_handler);
+	signal(SIGQUIT, rl_handler);
 	minishell_core(minishell, ac, av, env);
 	return (0);
 }
-
-//pour les built in pour setenv et unsetenv (export et unset)
-//regarder les fonctions qui existe
-//et les suivre pour les refaire

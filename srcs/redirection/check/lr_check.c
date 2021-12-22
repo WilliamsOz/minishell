@@ -6,11 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:44:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 16:51:50 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:21:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 static int	missing_read_permission(char *file)
 {

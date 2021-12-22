@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:17:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 14:07:26 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:34:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	rl_handler(int signum)
 		rl_redisplay();
 		signal_handler = 130;
 	}
-	if (signum == SIGQUIT)
+	else if (signum == SIGQUIT)
 	{
+		ft_putstr_fd("\b\b  \b\b", 2);
 		signal_handler = 0;
 	}
 }
@@ -31,5 +32,11 @@ void	rl_handler(int signum)
 void	hd_handler(int signum)
 {
 	if (signum == SIGINT)
-		signal_handler = 130;
+	{
+		if (signal_handler == -1)
+		{
+			signal_handler = 130;
+			exit (130);
+		}
+	}
 }

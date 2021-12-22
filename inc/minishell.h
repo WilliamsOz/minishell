@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 16:50:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 21:00:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 # define CYANCLR printf("\033[0;36m");
 # define WHITECLR printf("\033[0;37m");
 # define STOPCLR printf("\033[0m");
-# define D printf("ICI\n");
+# define ICI printf("ICI\n");
 # define PS(x) printf("%s\n", x);
 # define PC(x) printf("%c\n", x);
 # define PD(x) printf("%d\n", x);

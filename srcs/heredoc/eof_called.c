@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 14:28:31 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/16 14:29:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/22 20:39:34 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	eof_called(t_minishell *minishell, t_dlk_list *dlk)
 			count += tmp->hd_line_count;
 		tmp = tmp->next;
 	}
-	ft_putstr_fd(" bash: warning: here-document at line ", 2);
+	ft_putstr_fd("bash: warning: here-document at line ", 2);
 	ft_putnbr_fd(count, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(dlk->limiter, 2);
