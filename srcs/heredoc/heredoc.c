@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 21:35:19 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 00:34:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
 		if (signal_handler == 130)
 			break ;
 		if (ef == 0)
-			eof_called(m, dlk);
+			m = eof_called(m, dlk);
 		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE)
 		{
 			dlk = end_called(dlk, buffer);
@@ -76,11 +76,9 @@ t_minishell	*write_inside_child(t_minishell *m, t_dlk_list *tmp, char *limiter)
 	{
 		line = NULL;
 		line = readline("> ");
-		// write(1, "> ", 2);
-		// eof = get_next_line(0, &line);
 		if (line == NULL)
 		{
-			eof_called(m, m->d_lk);
+			m = eof_called(m, m->d_lk);
 			return (m);
 		}
 		else if (line != NULL)
@@ -107,13 +105,14 @@ t_dlk_list	*child_called(t_minishell *m, t_dlk_list *tmp, char **env, int sts)
 		// fork_failed();
 	if (pid == 0)
 	{
+		signal_handler = -1;
 		close(tmp->heredoc_pipe[1]);
 		dup2(STDIN_FILENO, tmp->heredoc_pipe[0]);
 		m = write_inside_child(m, tmp, tmp->limiter);
+		exit (EXIT_SUCCESS);
 	}
 	else
 	{
-		PD(signal_handler)
 		close(tmp->heredoc_pipe[0]);
 		waitpid(pid, &sts, WUNTRACED);
 	}

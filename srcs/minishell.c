@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 18:00:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 00:24:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;
 
-	if (ac != 1)
-		exit (EXIT_FAILURE);
+	// att = isatty(STDIN_FILENO);
+	// if (ac != 1)
 	minishell = minishell_creator();
 	minishell->parsing_err = parsing_err_creator();
 	if (minishell->parsing_err == NULL)

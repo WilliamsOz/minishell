@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:17:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 21:34:19 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 00:23:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	hd_handler(int signum)
 		{
 			signal_handler = 130;
 			exit (130);
+		}
+		else
+		{
+			signal_handler = 130;
 		}
 	}
 }
