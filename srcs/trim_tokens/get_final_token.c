@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 20:07:53 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:23:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ static char	*__get_sq__(char *token, char *tmp, int *ptr_i, int *ptr_j)
 	return (tmp);
 }
 
-static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
+static char	*__get_dq__(char *token, char *tmp, t_index *index, t_env *env)
 {
 	index->i += 1;
 	while (token[index->i] != DOUBLE_COTE)
 	{
-		if (token[index->i] == '$' &&
-			dc_existing_expand(token + index->i + 1, env, 0, 0) == TRUE)
+		if (token[index->i] == '$' && token[index->i + 1] == '?')
+			tmp = cpy_status(tmp, signal_handler, &index->i, &index->j);
+		else if (token[index->i] == '$' &&
+			existing_expand(token + index->i + 1, env, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index->i + 1, env, tmp,
 				&index->j);
-			index->i += get_end_of_expansion(token + index->i + 1, env, 0, 0);
+			index->i += get_end_of_expansion(token + index->i + 1, 0);
 		}
-		else if (token[index->i] == '$' && token[index->i + 1] == '?')
-			tmp = cpy_status(tmp, signal_handler, &index->i, &index->j);
 		else if (token[index->i] == '$')
 			index->i = skip_unk_exp(token, index->i);
 		else
@@ -68,7 +68,7 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, char **env)
 	return (tmp);
 }
 
-char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
+char	*get_trimed_token(char *token, char *tmp, t_env *env, int *ptr_i)
 {
 	t_index	index;
 
@@ -80,11 +80,11 @@ char	*get_trimed_token(char *token, char *tmp, char **env, int *ptr_i)
 		else if (token[index.i] == DOUBLE_COTE)
 			tmp = __get_dq__(token, tmp, &index, env);
 		else if (token[index.i] == '$' &&
-			existing_expand(token + index.i + 1, env, 0, 0) == TRUE)
+			existing_expand(token + index.i + 1, env, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index.i + 1, env, tmp,
 				&index.j);
-			index.i += get_end_of_expansion(token + index.i + 1, env, 0, 0);
+			index.i += get_end_of_expansion(token + index.i + 1, 0);
 		}
 		else if (token[index.i] == '$' && token[index.i + 1] == '?')
 			cpy_status(tmp, signal_handler, &index.i, &index.j);

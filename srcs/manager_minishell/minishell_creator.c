@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_creator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:17:19 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/04 11:14:57 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:47:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*minishell_creator(void)
+t_minishell	*minishell_creator(char **env)
 {
 	t_minishell	*minishell;
 
@@ -26,5 +26,7 @@ t_minishell	*minishell_creator(void)
 	minishell->line = NULL;
 	minishell->parsing_err = NULL;
 	minishell->d_lk = NULL;
+	minishell->env = NULL;
+	minishell->env = env_creator(minishell, env);
 	return (minishell);
 }

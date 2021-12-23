@@ -3,32 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_expansion_index.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:14:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 18:10:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:25:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int	get_expanded_index(char *token, char **env, int i, int j)
+int	get_expanded_index(char *token, t_env *env, int i)
 {
-	while (env[i] != NULL)
+	while (env != NULL)
 	{
-		while (env[i][j] != '\0')
-		{
-			if (j == 0 && env[i][j] == token[j])
-			{
-				while (env[i][j] == token[j])
-					j++;
-				if (env[i][j] == '=')
-					return (i);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
+		if (i == 0 && env->var[i] == token[i])
+			while (env->var[i] == token[i])
+				i++;
+		if (env->var[i] == '=')
+			return (i);
+		env = env->next;
 	}
 	return (i);
 }

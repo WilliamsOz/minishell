@@ -3,33 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   get_expansion_len.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:10:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:58:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:47:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int	get_expanded_len(char *token, int *ptr_i, int j, char **env)
+static int	get_key(char *key, int i)
 {
-	int	i;
 	int	len;
 
 	len = 0;
-	*ptr_i += 1;
-	i = get_expanded_index(token, env, 0, 0);
-	while (env[i][j] != '=')
+	i += 1;
+	while (key[i] != '\0')
 	{
-		j++;
-		*ptr_i += 1;
-	}
-	while (env[i][j] != '\0')
-	{
-		j++;
-		if (env[i][j] != '\0')
-			len++;
+		i += 1;
+		len++;
 	}
 	return (len);
+}
+
+int	get_expanded_len(char *token, int *ptr_i, int i, t_env *env)
+{
+	t_env	*tmp;
+	int		len;
+
+	*ptr_i += 1;
+	tmp = env;
+	while (tmp != NULL)
+	{
+		if (token[i] == tmp->var[i])
+		{
+			while (token[i] != '\0' && env->var[i] != '\0'
+				&& token[i] == tmp->var[i])
+				i++;
+			if (tmp->var[i] == '=')
+			{
+				*ptr_i += i;
+				len = get_key(tmp->var, i);
+				return (len);
+			}
+			else
+				i = 0;
+		}
+		tmp = tmp->next;
+	}
+	return (i);
 }

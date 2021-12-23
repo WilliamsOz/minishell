@@ -6,67 +6,93 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 00:34:20 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/23 18:47:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*rd_hd(t_minishell *m, t_dlk_list *dlk, char **env, int ef)
+void	write_hd_inside_pipe(t_dlk_list *dlk, char *buffer, int *ptr_count)
 {
-	char	*buffer;
-
-	while (ef > 0)
-	{
-		buffer = read_on_hd_pipe(m, buffer, env, &ef);
-		if (signal_handler == 130)
-			break ;
-		if (ef == 0)
-			m = eof_called(m, dlk);
-		if (ef > 0 && ft_strcmp(dlk->limiter, buffer) == TRUE)
-		{
-			dlk = end_called(dlk, buffer);
-			return (dlk);
-		}
-		else if (ef > 0)
-			write_hd_inside_pipe(dlk, buffer, &dlk->hd_line_count);
-	}
-	return (dlk);
+	write(dlk->heredoc_pipe[1], buffer, ft_strlen(buffer));
+	write(dlk->heredoc_pipe[1], "\n", 1);
+	*ptr_count += 1;
+	free(buffer);
 }
 
-// static t_dlk_list	*get_heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
-// {
-// 	t_dlk_list	*tmp;
+static int	get_len(t_minishell *m, char *line, int i, int len)
+{
+	while (line[i] != '\0')
+	{
+		if (line[i] == '$' && line[i + 1] == '?')
+			len += get_status_len(&i, signal_handler);
+		else if (line[i] == SIMPLE_COTE || line[i] == DOUBLE_COTE)
+		{
+			i++;
+			len++;
+		}
+		if (line[i] == '$'
+			&& existing_expand(line + i + 1, m->env, 0) == TRUE)
+			len += get_expanded_len(line + i + 1, &i, 0, m->env);
+		else
+			i = skip_unk_exp(line, i);
+	}
+	return (len);
+}
 
-// 	tmp = dlk;
-// 	while (tmp != NULL)
-// 	{
-// 		if (tmp->here_doc == 1 && tmp->limiter != NULL)
-// 		{
-// 			tmp->hd_line_count = 1;
-// 			tmp = rd_hd(m, tmp, env, 1);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	dlk = close_ununsed_pipes(dlk);
-// 	return (dlk);
-// }
+static char	*get_new_line(char *line, char *new_line, t_env *env, int i)
+{
+	int	j;
 
-// static int	is_there_heredoc(t_minishell *minishell)
-// {
-// 	t_dlk_list	*tmp;
+	j = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '$' && line[i + 1] == '?')
+			new_line = cpy_status(new_line, signal_handler, &i, &j);
+		else if (line[i] == '$' &&
+			existing_expand(line + i + 1, env, 0) == TRUE)
+		{
+			new_line = copy_expanded_value(line + i + 1, env, new_line,
+				&j);
+			i += get_end_of_expansion(line + i + 1, 0);
+		}
+		else if (line[i] == '$')
+			i = skip_unk_exp(line, i);
+		else
+		{
+			new_line[j] = line[i];
+			i += 1;
+			j += 1;
+		}
+	}
+	return (new_line);
+}
 
-// 	tmp = minishell->d_lk;
-// 	while (tmp != NULL)
-// 	{
-// 		if (tmp->here_doc == 1)
-// 			return (TRUE);
-// 		tmp = tmp->next;
-// 	}
-// 	return (FALSE);
-// }
+static void	mall_trimed_line_failed(t_minishell *m)
+{
+	strerror(errno);
+	env_destructor(m->env);
+	m = destroy_all_data(m);
+	exit (EXIT_FAILURE);
+}
 
-t_minishell	*write_inside_child(t_minishell *m, t_dlk_list *tmp, char *limiter)
+static char	*trim_line(t_minishell *m, char *line, t_env *env)
+{
+	char	*new_line;
+	int		len;
+
+	new_line = NULL;
+	len = get_len(m, line, 0, 0);
+	new_line = (char *)malloc(sizeof(char) * (len + 1));
+	if (new_line == NULL)
+		mall_trimed_line_failed(m);
+	new_line[len] = '\0';
+	new_line = get_new_line(line, new_line, env, 0);
+	free(line);
+	return (new_line);
+}
+
+t_minishell	*w_inside_child(t_minishell *m, char *limiter)
 {
 	char	*line;
 	int		eof;
@@ -83,75 +109,68 @@ t_minishell	*write_inside_child(t_minishell *m, t_dlk_list *tmp, char *limiter)
 		}
 		else if (line != NULL)
 		{
-			tmp->hd_line_count++;
 			if (ft_strcmp(line, limiter) == TRUE)
 				return (m);
+			else
+				line = trim_line(m, line, m->env);
 		}
 	}
 	return (m);
 }
 
-t_dlk_list	*child_called(t_minishell *m, t_dlk_list *tmp, char **env, int sts)
+void	fork_failed(t_minishell *m)
+{
+	strerror(errno);
+	env_destructor(m->env);
+	m = destroy_all_data(m);
+	exit (EXIT_FAILURE);
+}
+
+t_dlk_list	*call_child(t_minishell *m, t_dlk_list *tmp, int sts)
 {
 	pid_t	pid;
 	int		ret;
+	
 
-	(void)env;
 	ret = pipe(tmp->heredoc_pipe);
 	if (ret == -1)
 		pipe_failed(m);
 	pid = fork();
-	// if (pid == -1)
-		// fork_failed();
+	if (pid == -1)
+		fork_failed(m);
 	if (pid == 0)
 	{
 		signal_handler = -1;
 		close(tmp->heredoc_pipe[1]);
 		dup2(STDIN_FILENO, tmp->heredoc_pipe[0]);
-		m = write_inside_child(m, tmp, tmp->limiter);
+		m = w_inside_child(m, tmp->limiter);
 		exit (EXIT_SUCCESS);
 	}
 	else
 	{
 		close(tmp->heredoc_pipe[0]);
 		waitpid(pid, &sts, WUNTRACED);
+		PD(sts)
 	}
 	return (tmp);
 }
 
-t_dlk_list	*hd_prepare_dlk(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	t_dlk_list	*keep;
-
-	tmp = dlk->next;
-	keep = tmp->next;
-	dlk->limiter = tmp->token;
-	free(tmp);
-	dlk->next = keep;
-	return (dlk);
-}
-
-// les cotes son garder dans tout les cas dans le HD
-t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk, char **env)
+t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
 	signal(SIGINT, hd_handler);
 	tmp = dlk;
 	signal_handler = 0;
-	while (tmp != NULL && signal_handler != 130)
+	while (tmp != NULL)
 	{
 		if (tmp->here_doc == 1)
 		{
 			tmp = hd_prepare_dlk(tmp);
-			dlk = child_called(m, tmp, env, 0);
+			dlk = call_child(m, tmp, 0);
 		}
 		tmp = tmp->next;
 	}
-		// if (is_there_heredoc(m) == TRUE)
-		// 	dlk = init_heredoc_pipes(m, dlk, 0);
-		// dlk = get_heredoc(m, dlk, env);
 	signal(SIGINT, rl_handler);
 	signal(SIGQUIT, rl_handler);
 	return (dlk);

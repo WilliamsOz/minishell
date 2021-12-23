@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_needed.c                                 :+:      :+:    :+:   */
+/*   manager_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 12:14:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/14 16:52:18 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/23 18:43:12 by user42            #+#    #+#             */
+/*   Updated: 2021/12/23 18:45:36 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	expansion_needed(char *buffer, int i)
+void	env_destructor(t_env *env)
 {
-	while (buffer[i] != '\0')
+	t_env	*tmp;
+
+	while (env != NULL)
 	{
-		if (buffer[i] == '$')
-			return (TRUE);
-		else
-			i++;
+		tmp = env;
+		env = env->next;
+		free(tmp->var);
+		free(tmp);
 	}
-	return (FALSE);
+}
+
+t_env	*env_creator(t_minishell *m, char **env)
+{
+	t_env	*root;
+
+	m->env = create_root(m, &root, env);
+	root = create_var(m, env, 0, 0);
+	return (root);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ur_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:59:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 15:21:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 16:22:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static int	is_directory(char *file)
 	return (FALSE);
 }
 
-static int	check_ambiguous_redirect(t_dlk_list *dlk, char **env)
+static int	ambiguous_redirect(t_minishell *m, t_dlk_list *dlk)
 {
 	if (dlk->next->token[0] == '$' && dlk->next->token[1] != '\0'
-		&& existing_expand(dlk->next->token + 1, env, 0, 0) == FALSE)
+		&& existing_expand(dlk->next->token + 1, m->env, 0) == FALSE)
 	{
 		ft_putstr_fd("bash: ", 2);
 		ft_putstr_fd(dlk->next->token, 2);
@@ -64,16 +64,16 @@ static int	check_ambiguous_redirect(t_dlk_list *dlk, char **env)
 	return (FALSE);
 }
 
-int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk, char **env)
+int	ur_bad_redirection(t_minishell *m, t_dlk_list *dlk)
 {
 	char	*file;
 
-	if (check_ambiguous_redirect(dlk, env) == TRUE)
+	if (ambiguous_redirect(m, dlk) == TRUE)
 		return (TRUE);
 	if (dlk->next->token[0] == '$' && dlk->next->token[1] == '\0')
 		file = dlk->next->token;
 	else
-		file = trim(m, dlk->next->token, -1, env);
+		file = trim(m, dlk->next->token, -1);
 	if (is_directory(file) == TRUE || missing_read_permission(file) == TRUE)
 	{
 		signal_handler = 1;

@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_expansion_end.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:15:12 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/12 17:58:48 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 17:59:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int	get_end_of_expansion(char *token, char **env, int i, int j)
+int	get_end_of_expansion(char *token, int i)
 {
-	i = get_expanded_index(token, env, 0, 0);
-	while (env[i][j] == token[j])
-		j++;
-	j++;
-	return (j);
+	while (token[i] != '\0' && still_env_key(token[i]) == TRUE)
+		i++;
+	i++;
+	return (i);
 }
-
-//peut etre inutile

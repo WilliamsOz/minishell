@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_in_pipe.c                                    :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 16:56:03 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 14:37:21 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/23 12:29:01 by user42            #+#    #+#             */
+/*   Updated: 2021/12/23 18:45:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#ifndef ENV_H
+# define ENV_H
 
-void	write_hd_inside_pipe(t_dlk_list *dlk, char *buffer, int *ptr_count)
-{
-	write(dlk->heredoc_pipe[1], buffer, ft_strlen(buffer));
-	write(dlk->heredoc_pipe[1], "\n", 1);
-	*ptr_count += 1;
-	free(buffer);
-}
+t_env	*create_var(t_minishell *m, char **env, int i, int j);
+t_env	*create_root(t_minishell *m, t_env **root, char **env);
+void	env_destructor(t_env *env);
+t_env	*env_creator(t_minishell *m, char **env);
+
+#endif

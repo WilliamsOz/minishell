@@ -3,53 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   existing_exansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 16:15:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 20:05:31 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 18:05:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int	dc_existing_expand(char *token, char **env, int i, int j)
+int	still_env_key(char c)
 {
-	while (env[i] != NULL)
-	{
-		while (env[i][j] != '\0')
-		{
-			if (j == 0 && env[i][j] == token[j])
-			{
-				while (env[i][j] == token[j] && env[i][j] != '=')
-					j++;
-				if (env[i][j] == '=' && token[j] == DOUBLE_COTE)
-					return (TRUE);
-			}
-			j++;
-		}
-		j = 0;
-		i++;
-	}
+	if (c >= 'a' && c <= 'z')
+		return (TRUE);
+	else if (c >= 'A' && c <= 'Z')
+		return (TRUE);
+	else if (c >= '0' && c <= '9')
+		return (TRUE);
+	else if (c == '_')
+		return (TRUE);
 	return (FALSE);
 }
 
-int	existing_expand(char *token, char **env, int i, int j)
+int	existing_expand(char *token, t_env *env, int i)
 {
-	while (env[i] != NULL)
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp != NULL)
 	{
-		while (env[i][j] != '\0')
+		i = 0;
+		if (tmp->var[i] == token[i] && i == 0)
 		{
-			if (j == 0 && env[i][j] == token[j])
-			{
-				while (env[i][j] == token[j] && env[i][j] != '=')
-					j++;
-				if (env[i][j] == '=' && token[j] == '\0')
-					return (TRUE);
-			}
-			j++;
+			while (tmp->var[i] != '\0' && token[i] != '\0'
+				&& tmp->var[i] == token[i])
+				i++;
+			if (tmp->var[i] == '=' && still_env_key(token[i]) == TRUE)
+				return (FALSE);
+			else if (tmp->var[i] == '=')
+				return (TRUE);
 		}
-		j = 0;
-		i++;
+		tmp = tmp->next;
 	}
 	return (FALSE);
 }

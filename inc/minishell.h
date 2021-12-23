@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 21:00:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:29:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@
 # include <errno.h>
 # include <sys/ioctl.h>
 # include "../libft/libft.h"
+# include "./structures/env_structure.h"
 # include "./structures/parsing_structure.h"
 # include "./structures/double_linked_list_structure.h"
 # include "./structures/minishell_structure.h"
+# include "./env.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
 # include "./double_lk.h"
@@ -79,7 +81,7 @@ void			minishell_eof_called(void);
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);
 void			minishell_destroyer(t_minishell *minishell);
-t_minishell		*minishell_creator(void);
+t_minishell		*minishell_creator(char **env);
 t_dlk_list		*double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
 t_minishell		*destroy_all_data(t_minishell *minishell);

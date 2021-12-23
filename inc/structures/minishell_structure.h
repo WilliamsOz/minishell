@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_structure.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 17:14:53 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 12:28:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct	s_minishell
 	t_parsing_err	*parsing_err;
 	t_dlk_list		*d_lk;
 	void			*singleton;
+	t_env			*env;
 }				t_minishell;
 
 #endif

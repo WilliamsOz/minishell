@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_errors.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 14:42:14 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/17 14:29:07 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/23 14:40:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int				check_rafter_errors(t_dlk_list *dlk);
 int				check_pipeline_errors(t_dlk_list *tmp);
 int				check_here_doc_errors(t_dlk_list *tmp);
 int				check_special_chars(t_dlk_list *dlk);
-t_minishell		*is_logic_input(t_minishell *minishell, char **env);
+t_minishell		*is_logic_input(t_minishell *minishell);
 t_minishell		*special_char_found(t_minishell *minishell);
 int				is_pipeline_next_to_cmd(t_dlk_list *dlk);
 t_minishell		*are_quotes_closed(t_minishell*minishell, int i, char *line);

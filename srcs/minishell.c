@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 00:24:52 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/23 18:07:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,19 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-t_minishell	*treat_data(t_minishell *minishell, char **env)
+t_minishell	*treat_data(t_minishell *minishell)
 {
 	t_dlk_list	*dlk;
 
 	dlk = minishell->d_lk;
-	(void)env;
-	dlk = heredoc(minishell, dlk, env);
-	if (redirection_check(minishell, env) == TRUE)
+	dlk = heredoc(minishell, dlk);
+	if (redirection_check(minishell) == TRUE)
 	{
 		close_heredoc_pipes(minishell->d_lk);
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		return (minishell);
 	}
-	minishell = trim_token(minishell, env);
+	minishell = trim_token(minishell);
 	SMDLK
 	dlk = performs_redirection(dlk);
 	// while (dlk != NULL)
@@ -95,7 +94,7 @@ t_minishell	*treat_data(t_minishell *minishell, char **env)
 	return (minishell);
 }
 
-t_minishell	*start_minishell(t_minishell *minishell, char **env)
+t_minishell	*start_minishell(t_minishell *minishell)
 {
 	minishell = are_quotes_closed(minishell, 0, minishell->line);
 	if (minishell->line != NULL && minishell->line[0] != '\0')
@@ -103,18 +102,18 @@ t_minishell	*start_minishell(t_minishell *minishell, char **env)
 		add_history(minishell->line);
 		minishell->d_lk = double_lk_creator(minishell,
 			minishell->line, 0);
-		minishell = is_logic_input(minishell, env);
+		minishell = is_logic_input(minishell);
 		if (minishell->line != NULL)
 		{
 			SMDLK
-			minishell = treat_data(minishell, env);
+			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);
 		}
 	}
 	return (minishell);
 }
 
-void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
+void	minishell_core(t_minishell *minishell)
 {
 	while (1)
 	{
@@ -126,20 +125,20 @@ void	minishell_core(t_minishell *minishell, int ac, char **av, char **env)
 			break ;
 		}
 		if (minishell->line != NULL)
-			minishell = start_minishell(minishell, env);
+			minishell = start_minishell(minishell);
 	}
-	(void)ac;
-	(void)av;
 	destroy_all_data(minishell);
 }
-
+//ajouter free_env dans destroy all data et free le var 1 meme si il est == NULL
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;
 
 	// att = isatty(STDIN_FILENO);
-	// if (ac != 1)
-	minishell = minishell_creator();
+	(void)av;
+	if (ac != 1)
+		return (0);
+	minishell = minishell_creator(env);
 	minishell->parsing_err = parsing_err_creator();
 	if (minishell->parsing_err == NULL)
 	{
@@ -149,6 +148,6 @@ int	main(int ac, char **av, char **env)
 	signal_handler = 0;
 	signal(SIGINT, rl_handler);
 	signal(SIGQUIT, rl_handler);
-	minishell_core(minishell, ac, av, env);
+	minishell_core(minishell);
 	return (0);
 }
