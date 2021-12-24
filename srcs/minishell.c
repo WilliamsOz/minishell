@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 18:07:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/24 20:40:00 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_minishell	*treat_data(t_minishell *minishell)
 	t_dlk_list	*dlk;
 
 	dlk = minishell->d_lk;
-	dlk = heredoc(minishell, dlk);
 	if (redirection_check(minishell) == TRUE)
 	{
 		close_heredoc_pipes(minishell->d_lk);
@@ -103,6 +102,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 		minishell->d_lk = double_lk_creator(minishell,
 			minishell->line, 0);
 		minishell = is_logic_input(minishell);
+		minishell = heredoc(minishell, minishell->d_lk);
 		if (minishell->line != NULL)
 		{
 			SMDLK
@@ -117,6 +117,8 @@ void	minishell_core(t_minishell *minishell)
 {
 	while (1)
 	{
+		signal_handler = 0;
+		handle_rl_signal();
 		minishell->line = NULL;
 		minishell->line = readline("minishell>$ ");
 		if (minishell->line == NULL)
@@ -146,8 +148,6 @@ int	main(int ac, char **av, char **env)
 		exit (EXIT_FAILURE);
 	}
 	signal_handler = 0;
-	signal(SIGINT, rl_handler);
-	signal(SIGQUIT, rl_handler);
 	minishell_core(minishell);
 	return (0);
 }

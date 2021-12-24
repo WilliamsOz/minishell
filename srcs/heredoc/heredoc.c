@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 18:47:48 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/24 20:29:24 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	write_hd_inside_pipe(t_dlk_list *dlk, char *buffer, int *ptr_count)
-{
-	write(dlk->heredoc_pipe[1], buffer, ft_strlen(buffer));
-	write(dlk->heredoc_pipe[1], "\n", 1);
-	*ptr_count += 1;
-	free(buffer);
-}
 
 static int	get_len(t_minishell *m, char *line, int i, int len)
 {
@@ -68,15 +60,7 @@ static char	*get_new_line(char *line, char *new_line, t_env *env, int i)
 	return (new_line);
 }
 
-static void	mall_trimed_line_failed(t_minishell *m)
-{
-	strerror(errno);
-	env_destructor(m->env);
-	m = destroy_all_data(m);
-	exit (EXIT_FAILURE);
-}
-
-static char	*trim_line(t_minishell *m, char *line, t_env *env)
+static void	trim_line(t_minishell *m, char *line, t_env *env, int fd)
 {
 	char	*new_line;
 	int		len;
@@ -89,48 +73,39 @@ static char	*trim_line(t_minishell *m, char *line, t_env *env)
 	new_line[len] = '\0';
 	new_line = get_new_line(line, new_line, env, 0);
 	free(line);
-	return (new_line);
+	write(fd, new_line, ft_strlen(new_line));
+	write(fd, "\n", 1);
+	free(new_line);
 }
 
-t_minishell	*w_inside_child(t_minishell *m, char *limiter)
+t_minishell	*w_inside_child(t_minishell *m, t_dlk_list *tmp)
 {
 	char	*line;
-	int		eof;
 
-	eof = 1;
-	while (eof > 0)
+	while (1)
 	{
 		line = NULL;
 		line = readline("> ");
 		if (line == NULL)
 		{
-			m = eof_called(m, m->d_lk);
+			m = eof_called(m, tmp);
 			return (m);
 		}
 		else if (line != NULL)
 		{
-			if (ft_strcmp(line, limiter) == TRUE)
+			if (ft_strcmp(line, tmp->limiter) == TRUE)
 				return (m);
 			else
-				line = trim_line(m, line, m->env);
+				trim_line(m, line, m->env, tmp->heredoc_pipe[1]);
 		}
 	}
 	return (m);
 }
 
-void	fork_failed(t_minishell *m)
-{
-	strerror(errno);
-	env_destructor(m->env);
-	m = destroy_all_data(m);
-	exit (EXIT_FAILURE);
-}
-
-t_dlk_list	*call_child(t_minishell *m, t_dlk_list *tmp, int sts)
+t_dlk_list	*call_child(t_minishell *m, t_dlk_list *tmp, int status)
 {
 	pid_t	pid;
 	int		ret;
-	
 
 	ret = pipe(tmp->heredoc_pipe);
 	if (ret == -1)
@@ -141,37 +116,42 @@ t_dlk_list	*call_child(t_minishell *m, t_dlk_list *tmp, int sts)
 	if (pid == 0)
 	{
 		signal_handler = -1;
+		close(tmp->heredoc_pipe[0]);
+		m = w_inside_child(m, tmp);
 		close(tmp->heredoc_pipe[1]);
-		dup2(STDIN_FILENO, tmp->heredoc_pipe[0]);
-		m = w_inside_child(m, tmp->limiter);
 		exit (EXIT_SUCCESS);
 	}
 	else
 	{
-		close(tmp->heredoc_pipe[0]);
-		waitpid(pid, &sts, WUNTRACED);
-		PD(sts)
+		close(tmp->heredoc_pipe[1]);
+		waitpid(pid, &status, 0);
 	}
 	return (tmp);
 }
 
-t_dlk_list	*heredoc(t_minishell *m, t_dlk_list *dlk)
+t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
 	signal(SIGINT, hd_handler);
 	tmp = dlk;
 	signal_handler = 0;
-	while (tmp != NULL)
+	while (tmp != NULL && signal_handler != 130)
 	{
-		if (tmp->here_doc == 1)
+		if (tmp->here_doc == 1 && signal_handler != 130)
 		{
 			tmp = hd_prepare_dlk(tmp);
-			dlk = call_child(m, tmp, 0);
+			tmp = call_child(m, tmp, 0);
 		}
 		tmp = tmp->next;
 	}
-	signal(SIGINT, rl_handler);
-	signal(SIGQUIT, rl_handler);
-	return (dlk);
+	if (signal_handler == 130)
+	{
+		m->d_lk = double_lk_destroyer(m->d_lk);
+		m->line = free_line(m->line);
+		close_heredoc_pipes(m->d_lk);
+	}
+	else
+		dlk = close_ununsed_pipes(dlk);
+	return (m);
 }

@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memset_hd_pipes.c                                  :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/12 17:14:28 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 12:09:22 by user42           ###   ########.fr       */
+/*   Created: 2021/12/24 18:28:48 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/24 19:08:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*memset_heredoc_pipe(t_dlk_list *dlk)
+void	handle_rl_signal()
 {
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		tmp->heredoc_pipe[0] = -1;
-		tmp->heredoc_pipe[1] = -1;
-		tmp = tmp->next;
-	}
-	return (dlk);
+	signal(SIGINT, rl_handler);
+	signal(SIGQUIT, rl_handler);
 }

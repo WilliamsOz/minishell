@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logic_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 14:42:35 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/24 20:56:59 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,21 @@ static void	heredoc_before_errors(t_minishell *m, t_dlk_list *keep)
 	t_dlk_list	*tmp;
 
 	tmp = m->d_lk;
+	signal(SIGINT, hd_handler);
+	signal(SIGQUIT, hd_handler);
 	while (tmp != NULL && tmp != keep)
 	{
-		if (tmp->here_doc == 1 && tmp->limiter != NULL)
+		signal_handler = 0;
+		if (tmp->here_doc == 1)
 		{
+			signal_handler = 0;
 			tmp = hd_prepare_dlk(tmp);
-			// dlk = call_child(m, tmp, 0);
+			tmp = call_child(m, tmp, 0);
+			close(tmp->heredoc_pipe[0]);
+			close(tmp->heredoc_pipe[1]);
 		}
+		if (signal_handler == 130)
+			break ;
 		tmp = tmp->next;
 	}
 }
@@ -70,7 +78,6 @@ t_minishell	*is_logic_input(t_minishell *minishell)
 	else if (_check_all_tokens_errors_(minishell, &keep) == TRUE)
 	{
 		heredoc_before_errors(minishell, keep);
-		// close all pipes
 		if (minishell->d_lk != NULL)
 			minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 		if (minishell->line != NULL)

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:15:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 20:34:57 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/24 16:43:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef struct    s_dlk_list
 {
 	char				*token;
 	int					heredoc_pipe[2];
-	int					hd_line_count;
 	char				*limiter;
 	char				*file;
 	int					fd_file;
