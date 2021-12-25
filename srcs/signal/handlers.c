@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:17:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 20:59:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/25 13:01:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	hd_handler(int signum)
 		else
 			signal_handler = 130;
 	}
-	if (signum == SIGQUIT)
-		
+	else if (signum == SIGQUIT)
+	{
+		if (signal_handler == -1)
+			ft_putstr_fd("\b\b  \b\b", 2);
+	}
 }

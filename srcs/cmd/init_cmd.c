@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/25 13:59:31 by user42           ###   ########.fr       */
+/*   Created: 2021/12/25 15:14:12 by user42            #+#    #+#             */
+/*   Updated: 2021/12/25 15:14:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct	s_minishell
+t_dlk_list	*init_cmd(t_dlk_list *dlk)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*d_lk;
-	void			*singleton;
-	t_env			*env;
-}				t_minishell;
+	t_dlk_list	*tmp;
 
-#endif
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		tmp->cmd = NULL;
+		tmp = tmp->next;
+	}
+	return (dlk);
+}

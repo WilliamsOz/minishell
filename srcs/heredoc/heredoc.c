@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 20:29:24 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/25 12:40:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 	t_dlk_list	*tmp;
 
 	signal(SIGINT, hd_handler);
+	signal(SIGQUIT, hd_handler);
 	tmp = dlk;
 	signal_handler = 0;
 	while (tmp != NULL && signal_handler != 130)

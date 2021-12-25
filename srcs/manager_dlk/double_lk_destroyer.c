@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:29:51 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 14:41:11 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/25 13:25:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ t_dlk_list	*double_lk_destroyer(t_dlk_list *dlk)
 		tmp = dlk;
 		dlk = dlk->next;
 		if (tmp->token != NULL)
+		{
+			free(tmp->token);
 			tmp->token = NULL;
-		tmp->token = NULL;
+		}
 		free(tmp);
 		tmp = NULL;
 	}

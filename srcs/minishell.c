@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 20:40:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/25 15:24:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,13 @@ t_minishell	*treat_data(t_minishell *minishell)
 		return (minishell);
 	}
 	minishell = trim_token(minishell);
-	SMDLK
 	dlk = performs_redirection(dlk);
+	dlk = init_cmd(dlk);
+	dlk = get_tab_cmd(minishell, dlk);
+
+	ex
+	SMDLK
+	// get_cmd();
 	// while (dlk != NULL)
 	// {
 		// if (dlk->previous == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   performs_rdcts.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:22:04 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/22 15:23:57 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/25 13:41:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ t_dlk_list	*performs_redirection(t_dlk_list *dlk)
 			tmp = redirect_d_ur(tmp);
 		tmp = tmp->next;
 	}
+	
 	return (dlk);
 }

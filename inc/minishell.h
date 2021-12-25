@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 16:44:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/25 13:11:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # include "./structures/parsing_structure.h"
 # include "./structures/double_linked_list_structure.h"
 # include "./structures/minishell_structure.h"
+# include "./structures/command_structure.h"
 # include "./env.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
@@ -42,6 +43,7 @@
 # include "./heredoc.h"
 # include "./signal.h"
 # include "./redirection.h"
+# include "./cmd.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
