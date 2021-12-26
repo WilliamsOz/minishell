@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   init_rdrct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 17:13:16 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/26 15:26:55 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/26 15:27:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct	s_minishell
+t_dlk_list	*init_dlk_redirect(t_dlk_list *dlk)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*d_lk;
-	t_env			*env;
-	t_cmd			*cmd;
-}				t_minishell;
+	t_dlk_list	*tmp;
 
-#endif
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		tmp->file = NULL;
+		tmp->fd_file = -1;
+		tmp = tmp->next;
+	}
+	return (dlk);
+}

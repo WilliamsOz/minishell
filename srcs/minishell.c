@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/25 15:24:14 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/26 17:14:01 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,34 @@ void    show_dlk(t_dlk_list *dlk)
 		tmp = tmp->next;
 	}
 }
+
+void	print_cmd(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+	int			i;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		i = 0;
+		if (tmp->cmd != NULL)
+		{
+			while (tmp->cmd[i] != NULL)
+			{
+				REDCLR
+				if (i == 0)
+					printf("Command 1 : ");
+				else
+					printf("Command %d : ", i + 1);
+				printf("|%s|\n", tmp->cmd[i]);
+				STOPCLR
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
 /*
@@ -66,6 +94,29 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
+t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk, int len)
+{
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->cmd != NULL)
+			len += 1;
+		tmp = tmp->next;
+	}
+	PD(len)
+	return (m->cmd);
+}
+
+t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk)
+{
+	dlk = memset_cmd(dlk);
+	dlk = get_tab_cmd(m, dlk);
+	m->cmd = init_cmd(m, dlk, 0);
+	return (m);
+}
+
 t_minishell	*treat_data(t_minishell *minishell)
 {
 	t_dlk_list	*dlk;
@@ -78,23 +129,10 @@ t_minishell	*treat_data(t_minishell *minishell)
 		return (minishell);
 	}
 	minishell = trim_token(minishell);
+	minishell = get_cmd(minishell, dlk);
+	dlk = leave_one_token(dlk);
 	dlk = performs_redirection(dlk);
-	dlk = init_cmd(dlk);
-	dlk = get_tab_cmd(minishell, dlk);
 
-	ex
-	SMDLK
-	// get_cmd();
-	// while (dlk != NULL)
-	// {
-		// if (dlk->previous == NULL)
-			// first_entry(dlk);
-		// else if (dlk->next != NULL)
-			// second_entry();
-		// else
-			// last_entry();
-		// dlk = dlk->+next;
-	// }
 	return (minishell);
 }
 

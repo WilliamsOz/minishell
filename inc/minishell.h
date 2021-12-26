@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/25 13:11:25 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/26 17:13:15 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # include "./structures/env_structure.h"
 # include "./structures/parsing_structure.h"
 # include "./structures/double_linked_list_structure.h"
+# include "./structures/cmd_structure.h"
 # include "./structures/minishell_structure.h"
-# include "./structures/command_structure.h"
 # include "./env.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
@@ -74,6 +74,7 @@
 void    show_dlk(t_dlk_list *dlk);
 # define SMDLK show_dlk(minishell->d_lk);
 # define SDLK show_dlk(dlk);
+# define PRTC print_cmd(dlk);
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 

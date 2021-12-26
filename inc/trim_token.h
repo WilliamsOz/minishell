@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   trim_token.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 17:57:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/26 15:35:57 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TRIM_TOKEN_H
 # define TRIM_TOKEN_H
 
+t_dlk_list	*leave_one_token(t_dlk_list *dlk);
 int			still_env_key(char c);
 char		*cpy_status(char *tmp, int s_h, int *ptr_i, int *ptr_j);
 int			get_status_len(int *ptr_i, int tmp);

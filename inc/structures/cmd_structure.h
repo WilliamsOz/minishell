@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   cmd_structure.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 17:13:16 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
+/*   Updated: 2021/12/26 17:12:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#ifndef CMD_STRUCTURE_H
+# define CMD_STRUCTURE_H
 
-typedef struct	s_minishell
+typedef struct g_cmd
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*d_lk;
-	t_env			*env;
-	t_cmd			*cmd;
-}				t_minishell;
+	char			**cmd;
+	int				input;
+	int				output;
+	struct g_cmd	*next;
+}				t_cmd;
 
 #endif

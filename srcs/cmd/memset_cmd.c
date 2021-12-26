@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_structure.h                                :+:      :+:    :+:   */
+/*   memset_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2021/12/25 13:09:47 by user42           ###   ########.fr       */
+/*   Created: 2021/12/25 15:14:12 by user42            #+#    #+#             */
+/*   Updated: 2021/12/26 17:15:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_STRUCTURE_H
-# define  COMMAND_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-
-typedef struct g_cmd
+t_dlk_list	*memset_cmd(t_dlk_list *dlk)
 {
-	char			**cmd;
-	int				input;
-	int				output;
-	struct g_cmd	*next;
-}				t_cmd;
+	t_dlk_list	*tmp;
 
-#endif
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		tmp->cmd = NULL;
+		tmp = tmp->next;
+	}
+	return (dlk);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:56:07 by user42            #+#    #+#             */
-/*   Updated: 2021/12/25 15:22:40 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/26 15:47:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ t_dlk_list	*get_tab_cmd(t_minishell *m, t_dlk_list *dlk)
 	{
 		if (tmp->token != NULL)
 		{
-			if (tmp->next == NULL)
+			if (tmp->next == NULL
+				|| (tmp->next != NULL && tmp->next->token == NULL))
 			{
 				tmp = get_one_cmd_tab(m, tmp);
 				tmp = tmp->next;

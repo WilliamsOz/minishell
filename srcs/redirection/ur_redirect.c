@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   ur_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 17:13:16 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/26 15:28:27 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/26 15:28:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct	s_minishell
+t_dlk_list	*redirect_ur(t_dlk_list *dlk, t_cmd *cmd)
 {
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*d_lk;
-	t_env			*env;
-	t_cmd			*cmd;
-}				t_minishell;
+	t_dlk_list	*tmp;
+	t_dlk_list	*keep;
 
-#endif
+	keep = dlk->next->next;
+	tmp = dlk->next;
+	dlk->file = tmp->token;
+	free(tmp);
+	dlk->next = keep;
+	dlk->fd_file = open(dlk->file, O_CREAT | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	cmd->output = dlk->fd_file;
+	return (dlk);
+}
