@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 14:53:44 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:00:28 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # include "./signal.h"
 # include "./redirection.h"
 # include "./cmd.h"
+# include "builtins.h"
 # define TRUE 1
 # define FALSE 0
 # define BACKSLASH_CHAR 92
