@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:32:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 19:10:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:59:15 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@ int		get_next_line(int fd, char **line);
 void	ft_putstr_fd(char *str, int fd);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strlen(char *str);
+int		ft_atoi(const char *str);
+int		ft_isdigit(int c);
+char	**ft_split(char *s, char c);
+
 
 #endif
