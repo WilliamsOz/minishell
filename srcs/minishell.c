@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 16:15:20 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:18:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,50 +90,10 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-t_cmd	*get_new_node_cmd(t_minishell *m, t_cmd *root)
-{
-	t_cmd	*new;
-	t_cmd	*tmp;
-
-	new = (t_cmd *)malloc(sizeof(t_cmd));
-	if (new == NULL)
-		mall_new_cmd_failed(m);
-	new->next = NULL;
-	new->cmd = NULL;
-	new->input = -1;
-	tmp = root;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
-	return (root);
-}
-
-t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	t_cmd		*root;
-
-	root = (t_cmd *)malloc(sizeof(t_cmd));
-	if (root == NULL)
-		mall_root_cmd_failed(m);
-	root->next = NULL;
-	root->cmd = NULL;
-	root->input = -1;
-	root->output = -1;
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		if (tmp->pipeline)
-			root = get_new_node_cmd(m, root);
-		tmp = tmp->next;
-	}
-	return (root);
-}
-
 t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk)
 {
 	m->cmd = init_cmd(m, dlk);
-	// m = performs_redirection(m);
+	m = performs_redirection(m);
 	// dlk = memset_dlk_cmd(dlk);
 	// dlk = get_dlk_cmd(m, dlk);
 	ex
@@ -170,7 +130,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 		minishell = heredoc(minishell, minishell->d_lk);
 		if (minishell->line != NULL)
 		{
-			SMDLK
+			// SMDLK
 			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);
 		}

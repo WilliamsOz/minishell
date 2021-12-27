@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:26:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:35:54 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 17:25:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_dlk_list	*init_dlk_redirect(t_dlk_list *dlk)
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		tmp->file = NULL;
 		tmp->fd_file = -1;
 		tmp = tmp->next;
 	}
