@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_structure.h                                    :+:      :+:    :+:   */
+/*   init_cmd_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2021/12/27 21:44:26 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 21:55:23 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 21:55:41 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_STRUCTURE_H
-# define CMD_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct g_cmd
+t_cmd	*init_cmd_path(t_cmd *cmd)
 {
-	char			**cmd;
-	char			*path;
-	int				input;
-	int				output;
-	struct g_cmd	*next;
-}				t_cmd;
+	t_cmd	*tmp;
 
-#endif
+	tmp = cmd;
+	while (tmp != NULL)
+	{
+		tmp->path = NULL;
+		tmp = tmp->next;
+	}
+	return (cmd);
+}

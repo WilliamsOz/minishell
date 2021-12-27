@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ur_redirect.c                                      :+:      :+:    :+:   */
+/*   lr_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 15:28:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:17:00 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 20:14:59 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 20:58:52 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ static t_dlk_list	*previous_not_null(t_dlk_list *dlk)
 	return (dlk);
 }
 
-t_minishell	*redirect_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
+t_minishell *redirect_l_r(t_minishell *m, t_dlk_list **dlk, t_cmd **cmd)
 {
-	(*dlk)->fd_file = open((*dlk)->next->token, O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if ((*tmp_cmd)->output != STDOUT_FILENO)
-		close((*tmp_cmd)->output);
-	(*tmp_cmd)->output = (*dlk)->fd_file;
+	(*dlk)->fd_file = open((*dlk)->next->token, O_RDWR);
+	if ((*cmd)->input != STDIN_FILENO)
+		close((*cmd)->input);
+	(*cmd)->input = (*dlk)->fd_file;
 	if ((*dlk)->previous == NULL)
 	{
 		(*dlk) = previous_null((*dlk));

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:13:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 19:19:58 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 20:54:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_dlk_list	*get_last_hd(t_dlk_list *dlk)
 	return (keep);
 }
 
-t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk)
+t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk) //maybe useless
 {
 	t_dlk_list	*tmp;
 	t_dlk_list	*keep;

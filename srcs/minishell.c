@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 18:18:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:59:29 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,39 @@ void    show_dlk(t_dlk_list *dlk)
 	}
 }
 
-void	print_cmd(t_dlk_list *dlk)
+void	print_dlk_cmd(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 	int			i;
 
 	tmp = dlk;
+	while (tmp != NULL)
+	{
+		i = 0;
+		if (tmp->cmd != NULL)
+		{
+			while (tmp->cmd[i] != NULL)
+			{
+				REDCLR
+				if (i == 0)
+					printf("Command 1 : ");
+				else
+					printf("Command %d : ", i + 1);
+				printf("|%s|\n", tmp->cmd[i]);
+				STOPCLR
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	print_cmd(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int			i;
+
+	tmp = cmd;
 	while (tmp != NULL)
 	{
 		i = 0;
@@ -90,16 +117,6 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk)
-{
-	m->cmd = init_cmd(m, dlk);
-	m = performs_redirection(m);
-	// dlk = memset_dlk_cmd(dlk);
-	// dlk = get_dlk_cmd(m, dlk);
-	ex
-	return (m);
-}
-
 t_minishell	*treat_data(t_minishell *minishell)
 {
 	t_dlk_list	*dlk;
@@ -114,7 +131,6 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell, dlk);
 	// dlk = leave_one_token(dlk);
-
 	return (minishell);
 }
 
@@ -157,6 +173,8 @@ void	minishell_core(t_minishell *minishell)
 	destroy_all_data(minishell);
 }
 //ajouter free_env dans destroy all data et free le var 1 meme si il est == NULL
+//close all hd pipes dans destroy all data
+//ne pas faire l'expansion si il y a des cotes dans le limiter du heredoc
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;

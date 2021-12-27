@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_structure.h                                    :+:      :+:    :+:   */
+/*   cpy_cmd_from_dlk.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2021/12/27 21:44:26 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 21:47:12 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 21:47:37 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_STRUCTURE_H
-# define CMD_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct g_cmd
+t_cmd	*cpy_cmd_from_dlk(t_cmd *cmd, t_dlk_list *dlk)
 {
-	char			**cmd;
-	char			*path;
-	int				input;
-	int				output;
-	struct g_cmd	*next;
-}				t_cmd;
+	t_dlk_list	*tmp_dlk;
+	t_cmd		*tmp_cmd;
 
-#endif
+	tmp_dlk = dlk;
+	tmp_cmd = cmd;
+	while (tmp_dlk != NULL)
+	{
+		if (tmp_dlk->cmd != NULL)
+		{
+			tmp_cmd->cmd = tmp_dlk->cmd;
+			tmp_cmd = tmp_cmd->next;
+		}
+		tmp_dlk = tmp_dlk->next;
+	}
+	return (cmd);
+}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ur_redirect.c                                      :+:      :+:    :+:   */
+/*   hd_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 15:28:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:17:00 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 20:19:19 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 21:21:25 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ static t_dlk_list	*previous_null(t_dlk_list *dlk)
 
 	tmp = dlk;
 	dlk = dlk->next;
-	free(tmp);
-	tmp = dlk;
-	dlk = dlk->next;
-	free(tmp->token);
+	free(tmp->limiter);
 	free(tmp);
 	if (dlk != NULL)
 		dlk->previous = NULL;
@@ -36,23 +33,15 @@ static t_dlk_list	*previous_not_null(t_dlk_list *dlk)
 	tmp = dlk;
 	keep = dlk->next;
 	dlk = dlk->previous;
-	free(tmp);
-	dlk->next = keep;
-	tmp = keep;
-	keep = keep->next;
-	free(tmp->token);
+	free(tmp->limiter);
 	free(tmp);
 	dlk->next = keep;
 	return (dlk);
 }
 
-t_minishell	*redirect_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
+t_minishell	*redirect_hd(t_minishell *m, t_dlk_list **dlk, t_cmd **cmd)
 {
-	(*dlk)->fd_file = open((*dlk)->next->token, O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if ((*tmp_cmd)->output != STDOUT_FILENO)
-		close((*tmp_cmd)->output);
-	(*tmp_cmd)->output = (*dlk)->fd_file;
+	(*cmd)->input = (*dlk)->heredoc_pipe[0];
 	if ((*dlk)->previous == NULL)
 	{
 		(*dlk) = previous_null((*dlk));

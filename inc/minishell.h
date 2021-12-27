@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 16:02:33 by oozsertt         ###   ########.fr       */
+/*   Updated: 2021/12/27 21:29:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@
 void    show_dlk(t_dlk_list *dlk);
 # define SMDLK show_dlk(minishell->d_lk);
 # define SDLK show_dlk(dlk);
-# define PRTC print_cmd(dlk);
+# define PRTDLKCMD print_dlk_cmd(dlk);
+# define PRTCMD print_cmd(cmd);
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 

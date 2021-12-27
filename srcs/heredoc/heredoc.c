@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/25 12:40:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/27 20:53:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,5 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 		m->line = free_line(m->line);
 		close_heredoc_pipes(m->d_lk);
 	}
-	else
-		dlk = close_ununsed_pipes(dlk);
 	return (m);
 }
