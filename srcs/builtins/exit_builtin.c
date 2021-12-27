@@ -10,34 +10,25 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-// //There are four types of exit, each write exit in terminal:
-// //exit : exit and set exit status to 0; // DOOOOOOOOOOOOOOOOOOOOONE
-// //exit (num) : exit and set exit status to num
-// //exit (num alpha) : exit and set exit status to 2 + a error message // DOOOOOOOOOOOOOOOOOOOOOONE
-// //exit (num) (num) (num) : doesn't exit and set exit status to 1 + a error message // DOOOOOOOOOOOOOONE
+//There are four types of exit, each write exit in terminal:
+//exit : exit and set exit status to 0;
+//exit (num) : exit and set exit status to num
+//exit (num alpha) : exit and set exit status to 2 + a error message
+//exit (num) (num) (num) : doesn't exit and set exit status to 1 + a error message
 
 // static int	count_args(t_dlk_list *dlk)
 // {
 // 	int	count;
 
 // 	count = 0;
-// 	while (dlk != NULL || dlk->here_doc == 0 || dlk->lower_rafter == 0
-// 	|| dlk->upper_rafter == 0 || dlk->double_upper_rafter == 0
-// 	|| dlk->pipeline == 0)
+// 	while (dlk != NULL)
 // 	{
 // 		count++;
 // 		dlk = dlk->next;
 // 	}
 // 	return (count);
-// }
-
-// static void	multiple_args()
-// {
-// 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-// 	ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
-// 	signal_handler = 1;
 // }
 
 // static void	arg_is_ascii(char *arg)
@@ -58,6 +49,12 @@
 // 	exit(nbr);// TO FREE + check if signal handler is 0
 // }
 
+// static void	no_args()
+// {
+// 	ft_putstr_fd("exit\n", STDOUT_FILENO);
+// 	exit(0); // TO FREE + check if signal handler is 0
+// }
+
 // void	exit_builtin(t_dlk_list *dlk)
 // {
 // 	int			i;
@@ -67,9 +64,12 @@
 // 	tmp = dlk;
 // 	args_nbr = count_args(dlk);
 // 	if (args_nbr == 0)
-// 		exit(0); // TO FREE + check if signal handler is 0
+// 		no_args();
 // 	else if (args_nbr > 1)
-// 		multiple_args();
+// 	{
+// 		ft_putstr_fd("exit\nbash: exit: too many arguments\n", STDERR_FILENO);
+// 		signal_handler = 1;
+// 	}
 // 	else if (args_nbr == 1)
 // 	{
 // 		i = 0;
