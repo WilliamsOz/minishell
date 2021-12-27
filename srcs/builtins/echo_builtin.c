@@ -10,23 +10,25 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 // typedef int	t_bool;
 // // maybe add echo $? command ?
 
-// static t_bool	is_n_option(char *token)
+// static t_bool	is_n_option(t_dlk_list *dlk)
 // {
 // 	int	i;
 
-// 	if (token[0] != '-')
+// 	if (dlk == NULL)
 // 		return (FALSE);
-// 	if (token[1] != 'n')
+// 	if (dlk->token[0] != '-')
+// 		return (FALSE);
+// 	if (dlk->token[1] != 'n')
 // 		return (FALSE);
 // 	i = 2;
-// 	while (token[i] != '\0')
+// 	while (dlk->token[i] != '\0')
 // 	{
-// 		if (token[i] != 'n')
+// 		if (dlk->token[i] != 'n')
 // 			return (FALSE);
 // 		i++;
 // 	}
@@ -35,7 +37,7 @@
 
 // static t_dlk_list	*skip_option(t_dlk_list *dlk)
 // {
-// 	while (is_n_option(dlk->token) == TRUE)
+// 	while (is_n_option(dlk) == TRUE)
 // 		dlk = dlk->next;
 // 	return (dlk);
 // }
@@ -45,23 +47,24 @@
 // 	t_dlk_list	*tmp;
 // 	t_bool		option;
 
-// 	option = 0;
-// 	if (is_n_option(dlk->token) == TRUE)
+// 	if (is_n_option(dlk) == TRUE)
 // 		option = 1;
-// 	tmp = dlk;
+// 	else
+// 		option = 0;
 // 	if (option == 1)
 // 		dlk = skip_option(dlk);
-// 	if (dlk != NULL || dlk->here_doc == 0 || dlk->lower_rafter == 0
-// 	|| dlk->upper_rafter == 0 || dlk->double_upper_rafter == 0
-// 	|| dlk->pipeline == 0)
+// 	tmp = dlk;
+// 	if (dlk != NULL)
 // 	{
 // 		if (option == 0)
 // 		{
 // 			ft_putstr_fd(dlk->token, STDOUT_FILENO);
-// 			write(STDOUT_FILENO, '\n', 1);
+// 			write(STDOUT_FILENO, "\n", 1);
 // 		}
 // 		else
 // 			ft_putstr_fd(dlk->token, STDOUT_FILENO);
 // 	}
+// 	else
+// 		write(STDOUT_FILENO, "\n", 1);
 // 	dlk = tmp;
 // }
