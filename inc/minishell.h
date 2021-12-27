@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 16:00:28 by oozsertt         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:02:33 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@
 # include "./redirection.h"
 # include "./cmd.h"
 # include "builtins.h"
-# define TRUE 1
-# define FALSE 0
 # define BACKSLASH_CHAR 92
 # define SEMICOLON 59
 # define SIMPLE_COTE 39

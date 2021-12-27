@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
+#    By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2021/12/24 19:13:21 by wiozsert         ###   ########.fr        #
+#    Updated: 2021/12/27 16:04:41 by oozsertt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ RLFLAGS = -lreadline
 #libft
 LIBFTLIB = libft.a
 LIBFTFILESO = ./libft/ft_pustr_fd.o ./libft/ft_strcmp.o ./libft/ft_strlen.o \
-./libft/get_next_line.o ./libft/ft_putnbr_fd.o ./libft/ft_itoa.o
+./libft/get_next_line.o ./libft/ft_putnbr_fd.o ./libft/ft_itoa.o \
+./libft/ft_isdigit.o ./libft/ft_split.o ./libft/ft_atoi.o \
 
 # srcs
 # PATHSRCS = ./srcs/

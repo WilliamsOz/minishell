@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:32:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:59:15 by oozsertt         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:03:11 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <signal.h> //del?
 # include <errno.h>
+
+# define TRUE 1
+# define FALSE 0
 
 char	*ft_itoa(int n);
 void	ft_putnbr_fd(int n, int fd);
@@ -27,6 +29,5 @@ int		ft_strlen(char *str);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	**ft_split(char *s, char c);
-
 
 #endif
