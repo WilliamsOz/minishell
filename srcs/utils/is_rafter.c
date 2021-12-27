@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   memset_cmd.c                                       :+:      :+:    :+:   */
+/*   is_rafter.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 15:14:12 by user42            #+#    #+#             */
-/*   Updated: 2021/12/26 17:15:39 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 14:51:37 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 14:58:54 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*memset_cmd(t_dlk_list *dlk)
+int	is_rafter(t_dlk_list *dlk)
 {
-	t_dlk_list	*tmp;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		tmp->cmd = NULL;
-		tmp = tmp->next;
-	}
-	return (dlk);
+	if (dlk != NULL && (dlk->upper_rafter || dlk->double_upper_rafter
+		|| dlk->lower_rafter || dlk->here_doc))
+		return (TRUE);
+	return (FALSE);
 }

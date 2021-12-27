@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 17:13:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 14:53:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void    show_dlk(t_dlk_list *dlk);
 
 int signal_handler;
 
+int				is_rafter(t_dlk_list *dlk);
 void			minishell_eof_called(void);
 t_parsing_err	*parsing_err_creator();
 void			parsing_err_destroyer(t_parsing_err *parsing_err);

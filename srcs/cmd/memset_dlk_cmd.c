@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_rdrct.c                                       :+:      :+:    :+:   */
+/*   memset_dlk_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 15:26:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:35:54 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/25 15:14:12 by user42            #+#    #+#             */
+/*   Updated: 2021/12/27 14:47:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*init_dlk_redirect(t_dlk_list *dlk)
+t_dlk_list	*memset_dlk_cmd(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		tmp->file = NULL;
-		tmp->fd_file = -1;
+		tmp->cmd = NULL;
 		tmp = tmp->next;
 	}
 	return (dlk);

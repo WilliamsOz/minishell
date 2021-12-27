@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_to_cmd.c                                     :+:      :+:    :+:   */
+/*   get_dlk_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:56:07 by user42            #+#    #+#             */
-/*   Updated: 2021/12/26 15:47:46 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:08:25 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,28 +66,34 @@ t_dlk_list	*get_cmd_and_flag_tab(t_minishell *m, t_dlk_list *dlk)
 	return (dlk);
 }
 
-t_dlk_list	*get_tab_cmd(t_minishell *m, t_dlk_list *dlk)
+t_dlk_list	*cpy_cmd(t_minishell *m, t_dlk_list *tmp)
+{
+	if (tmp->next == NULL
+		|| (tmp->next != NULL && tmp->next->token == NULL))
+	{
+		tmp = get_one_cmd_tab(m, tmp);
+		tmp = tmp->next;
+	}
+	else if (tmp->next != NULL && tmp->next->token != NULL)
+	{
+		tmp = get_cmd_and_flag_tab(m, tmp);
+		while (tmp != NULL && tmp->token != NULL)
+			tmp = tmp->next;
+	}
+	return (tmp);
+}
+
+t_dlk_list	*get_dlk_cmd(t_minishell *m, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (tmp->token != NULL)
-		{
-			if (tmp->next == NULL
-				|| (tmp->next != NULL && tmp->next->token == NULL))
-			{
-				tmp = get_one_cmd_tab(m, tmp);
-				tmp = tmp->next;
-			}
-			else if (tmp->next != NULL && tmp->next->token != NULL)
-			{
-				tmp = get_cmd_and_flag_tab(m, tmp);
-				while (tmp != NULL && tmp->token != NULL)
-					tmp = tmp->next;
-			}
-		}
+		if (is_rafter(tmp) == TRUE)
+			tmp = tmp->next->next;
+		else if (tmp->token != NULL)
+			tmp = cpy_cmd(m, tmp);
 		else
 			tmp = tmp->next;
 	}

@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_rdrct.c                                       :+:      :+:    :+:   */
+/*   mall_cmd_failed.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 15:26:55 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:35:54 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/27 15:18:44 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/27 15:19:13 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_dlk_list	*init_dlk_redirect(t_dlk_list *dlk)
+void	mall_root_cmd_failed(t_minishell *m)
 {
-	t_dlk_list	*tmp;
+	strerror(errno);
+	env_destructor(m->env);
+	m = destroy_all_data(m);
+	exit (errno);
+}
 
-	tmp = dlk;
-	while (tmp != NULL)
+void	mall_new_cmd_failed(t_minishell *m)
+{
+	t_cmd	*tmp;
+
+	strerror(errno);
+	while (m->cmd != NULL)
 	{
-		tmp->file = NULL;
-		tmp->fd_file = -1;
-		tmp = tmp->next;
+		tmp = m->cmd;
+		m->cmd = m->cmd->next;
+		free(tmp);
 	}
-	return (dlk);
+	env_destructor(m->env);
+	m = destroy_all_data(m);
+	exit (errno);
 }

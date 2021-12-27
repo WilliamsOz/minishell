@@ -6,13 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 17:14:01 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:38:16 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
+
 void    show_dlk(t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
@@ -81,39 +82,61 @@ void	print_cmd(t_dlk_list *dlk)
 	}
 }
 
-//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
+//DELDELDELDELDELDELDELDELDELDELDELDELDsELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
 /*
-Redirection :
-< doit redigirer l'entree
-> doit rediriger la sortie en mode TRUNC
->> doit rediriger la sortie en mode APPEND
-
 Pipes | :
 La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk, int len)
+t_cmd	*get_new_node_cmd(t_minishell *m, t_cmd *root)
+{
+	t_cmd	*new;
+	t_cmd	*tmp;
+
+	new = (t_cmd *)malloc(sizeof(t_cmd));
+	if (new == NULL)
+		mall_new_cmd_failed(m);
+	new->next = NULL;
+	new->cmd = NULL;
+	new->input = -1;
+	tmp = root;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
+	return (root);
+}
+
+t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
+	t_cmd		*root;
 
+	root = (t_cmd *)malloc(sizeof(t_cmd));
+	if (root == NULL)
+		mall_root_cmd_failed(m);
+	root->next = NULL;
+	root->cmd = NULL;
+	root->input = -1;
+	root->output = -1;
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (tmp->cmd != NULL)
-			len += 1;
+		if (tmp->pipeline)
+			root = get_new_node_cmd(m, root);
 		tmp = tmp->next;
 	}
-	PD(len)
-	return (m->cmd);
+	return (root);
 }
 
 t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk)
 {
-	dlk = memset_cmd(dlk);
-	dlk = get_tab_cmd(m, dlk);
-	m->cmd = init_cmd(m, dlk, 0);
+	m->cmd = init_cmd(m, dlk);
+	m = performs_redirection(m);
+	// dlk = memset_dlk_cmd(dlk);
+	// dlk = get_dlk_cmd(m, dlk);
+	ex
 	return (m);
 }
 
@@ -131,7 +154,6 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell, dlk);
 	dlk = leave_one_token(dlk);
-	dlk = performs_redirection(dlk);
 
 	return (minishell);
 }

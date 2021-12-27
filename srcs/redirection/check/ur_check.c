@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ur_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 16:59:25 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 16:22:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/27 15:05:13 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ static int	missing_read_permission(char *file)
 static int	is_directory(char *file)
 {
 	struct stat	buf;
+	int			ind;
 
+	ind = access(file, F_OK);
+	if (ind == -1)
+		return (FALSE);
 	stat(file, &buf);
 	if (S_ISDIR(buf.st_mode) == 1)
 	{
