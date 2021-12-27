@@ -12,6 +12,23 @@
 
 // #include "../../inc/minishell.h"
 
+// int		find_pwd(char *var, char *pwd_header)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (pwd_header[i] != '\0')
+// 	{
+// 		if (var[i] != pwd_header[i] && var[i] != '\0')
+// 			return (FALSE);
+// 		i++;
+// 	}
+// 	if (pwd_header[i] == '\0')
+// 		return (TRUE);
+// 	else
+// 		return (FALSE);
+// }
+
 // void	pwd_builtin(t_env *env)
 // {
 // 	int		i;
@@ -20,12 +37,12 @@
 // 	tmp = env;
 // 	while (env != NULL)
 // 	{
-// 		if (ft_strcmp(env->var, "PWD=") == 1)
+// 		if (find_pwd(env->var, "PWD=") == TRUE)
 // 		{
 // 			i = 0;
 // 			while (env->var[i] != '=')
 // 				i++;
-// 			ft_putstr_fd(&env->var[i], STDOUT_FILENO);
+// 			ft_putstr_fd(&env->var[++i], STDOUT_FILENO);
 // 			ft_putstr_fd("\n", STDOUT_FILENO);
 // 		}
 // 		env = env->next;
