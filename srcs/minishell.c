@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:38:16 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:15:20 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk)
 t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk)
 {
 	m->cmd = init_cmd(m, dlk);
-	m = performs_redirection(m);
+	// m = performs_redirection(m);
 	// dlk = memset_dlk_cmd(dlk);
 	// dlk = get_dlk_cmd(m, dlk);
 	ex
@@ -153,7 +153,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	}
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell, dlk);
-	dlk = leave_one_token(dlk);
+	// dlk = leave_one_token(dlk);
 
 	return (minishell);
 }
