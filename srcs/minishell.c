@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/28 19:05:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/28 19:41:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,58 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
+// int	is_builtin(char *cmd)
+// {
+// 	if (ft_strcmp("echo", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("cd", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("pwd", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("export", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("unset", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("env", cmd) == TRUE)
+// 		return (TRUE);
+// 	else if (ft_strcmp("exit", cmd) == TRUE)
+// 		return (TRUE);
+// 	return (FALSE);
+// }
+
+// void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
+// {
+// 	if (ft_strcmp("echo", cmd->cmd[0]) == TRUE)
+// 		echo_builtin();
+// 	else if (ft_strcmp("cd", cmd->cmd[0]) == TRUE)
+// 		cd_builtin();
+// 	else if (ft_strcmp("pwd", cmd->cmd[0]) == TRUE)
+// 		pwd_builtin();
+// 	else if (ft_strcmp("export", cmd->cmd[0]) == TRUE)
+// 		export_builtin();
+// 	else if (ft_strcmp("unset", cmd->cmd[0]) == TRUE)
+// 		unset_builtin();
+// 	else if (ft_strcmp("env", cmd->cmd[0]) == TRUE)
+// 		env_builtin();
+// 	else if (ft_strcmp("exit", cmd->cmd[0]) == TRUE)
+// 		exit_builtin();
+// }
+
+void	execute_cmd(t_minishell *minishell)
+{
+	t_cmd	*tmp;
+
+	tmp = minishell->cmd;
+	while (tmp != NULL)
+	{
+		// if (is_builtin(tmp->cmd[0]) == TRUE)
+		// 	execute_builtin(minishell, tmp->cmd);
+		// else
+			// execute_cmd(minishell);
+		tmp = tmp->next;
+	}
+}
+
 t_minishell	*treat_data(t_minishell *minishell)
 {
 	t_dlk_list	*dlk;
@@ -130,7 +182,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	}
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell, dlk);
-	// dlk = leave_one_token(dlk);
+	execute_cmd(minishell);
 	return (minishell);
 }
 
