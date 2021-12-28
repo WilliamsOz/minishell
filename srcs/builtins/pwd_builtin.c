@@ -34,7 +34,7 @@ static int	is_flag_error(t_cmd *cmd)
 	char *flag;
 
 	flag = cmd->cmd[1];
-	if (flag != NULL && flag[0] != '-')
+	if (flag != NULL && flag[0] == '-')
 	{
 		if (flag[1] == 'L' || flag[1] == 'P')
 			ft_putstr_fd("pwd does not support any option\n", cmd->output);
@@ -49,13 +49,13 @@ static int	is_flag_error(t_cmd *cmd)
 		return (FALSE);
 }
 
-int	pwd_builtin(t_cmd *cmd, t_env *env)
+void	pwd_builtin(t_cmd *cmd, t_env *env)
 {
 	int		i;
 	t_env	*tmp;
 
 	if (is_flag_error(cmd) == TRUE)
-		return (2);
+		signal_handler = 2;
 	else
 	{
 		tmp = env;
@@ -72,6 +72,6 @@ int	pwd_builtin(t_cmd *cmd, t_env *env)
 			env = env->next;
 		}
 		env = tmp;
-		return (0);
+		signal_handler = 0;
 	}
 }
