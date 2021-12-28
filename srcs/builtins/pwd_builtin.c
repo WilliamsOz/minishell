@@ -29,7 +29,7 @@ int		find_pwd(char *var, char *pwd_header)
 		return (FALSE);
 }
 
-static int	is_flag_error(t_cmd **cmd)
+static int	is_flag_error(t_cmd *cmd)
 {
 	char *flag;
 
