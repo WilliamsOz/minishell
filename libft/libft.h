@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:32:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 16:03:11 by oozsertt         ###   ########.fr       */
+/*   Updated: 2021/12/28 16:34:13 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		ft_strlen(char *str);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	**ft_split(char *s, char c);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
