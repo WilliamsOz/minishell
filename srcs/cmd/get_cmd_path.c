@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/28 18:00:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/28 19:07:40 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_len(char *env, int **ptr_i)
 		len++;
 	}
 	if (env[**ptr_i] == ':')
-		*ptr_i += 1;
+		**ptr_i += 1;
 	return (len);
 }
 
@@ -80,7 +80,6 @@ static char	*get_new_path(t_minishell *m, char *path, char *env, int *ptr_i)
 	path[len] = '/';
 	path[len + 1] = '\0';
 	path = cpy_new_path(env, path, tmp, 0);
-	PS(path)
 	return (path);
 }
 
@@ -97,10 +96,9 @@ static char	*get_cmd_path(t_minishell *m, char *cmd, t_env *tmp_env, int i)
 		{
 			path = get_new_path(m, path, tmp_env->var, &i);
 			path_cmd = ft_strjoin(path, cmd);
+			PS(path_cmd)
 			if (access(path_cmd, F_OK | X_OK) == 0)
 			{
-				PS(path_cmd)
-				ex
 				free(path);
 				free(cmd);
 				return (path_cmd);
@@ -125,6 +123,7 @@ t_cmd	*find_and_get_path_cmd(t_minishell *m, t_cmd *cmd, t_env *env)
 	{
 		tmp_env = env;
 		tmp_cmd->path = get_cmd_path(m, tmp_cmd->cmd[0], tmp_env, 0);
+		PS(tmp_cmd->path)
 		tmp_cmd = tmp_cmd->next;
 	}
 	return (cmd);
