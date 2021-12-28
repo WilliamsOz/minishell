@@ -6,11 +6,32 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:47:04 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:52:17 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/28 17:19:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	cmd_destructor(t_cmd *cmd)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	while (cmd != NULL)
+	{
+		i = 0;
+		tmp = cmd;
+		cmd = cmd->next;
+		while (tmp->cmd[i] != NULL)
+		{
+			free(tmp->cmd[i]);
+			i++;
+		}
+		if (tmp->path != NULL)
+			free(tmp->path);
+		free(tmp);
+	}
+}
 
 static t_cmd	*get_new_node_cmd(t_minishell *m, t_cmd *root)
 {
