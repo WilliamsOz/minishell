@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 02:05:06 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/29 11:52:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,14 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 // 		exit_builtin();
 }
 
+void	child_execute(t_minishell *minishell, t_cmd *cmd)
+{
+	pid_t	pid;
+	(void)minishell;
+	(void)cmd;
+
+}
+
 void	execute_cmd(t_minishell *minishell)
 {
 	t_cmd	*tmp;
@@ -163,8 +171,8 @@ void	execute_cmd(t_minishell *minishell)
 	{
 		if (is_builtin(tmp->cmd[0]) == TRUE)
 			execute_builtin(minishell, tmp);
-		// else
-			// execute_cmd(minishell);
+		else
+			child_execute(minishell, tmp);
 		tmp = tmp->next;
 	}
 }
@@ -195,7 +203,6 @@ t_minishell	*start_minishell(t_minishell *minishell)
 		minishell = heredoc(minishell, minishell->d_lk);
 		if (minishell->line != NULL)
 		{
-			// SMDLK
 			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);
 		}
@@ -218,7 +225,7 @@ void	minishell_core(t_minishell *minishell)
 		}
 		if (minishell->line != NULL)
 			minishell = start_minishell(minishell);
-		double_lk_destroyer(minishell->d_lk);
+		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 	}
 	destroy_all_data(minishell);
 }

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 15:22:04 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 02:03:49 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/29 11:45:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_minishell	*performs_redirection(t_minishell *m)
 	t_dlk_list	*tmp_dlk;
 	t_cmd		*tmp_cmd;
 
+	m->d_lk = init_dlk_redirect(m->d_lk);
 	tmp_dlk = m->d_lk;
 	tmp_cmd = m->cmd;
-	tmp_dlk = init_dlk_redirect(tmp_dlk);
 	while (tmp_dlk != NULL)
 	{
 		if (tmp_dlk->pipeline == 1)

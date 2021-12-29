@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:14:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 02:02:32 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/29 11:47:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static t_dlk_list	*previous_not_null(t_dlk_list *dlk)
 	free(tmp->token);
 	free(tmp);
 	dlk->next = keep;
+	if (keep != NULL)
+		keep->previous = dlk;
 	return (dlk);
 }
 
