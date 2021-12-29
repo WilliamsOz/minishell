@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 13:55:33 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/29 19:14:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,28 +154,36 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 // 		exit_builtin();
 }
 
-void	child_execute(t_minishell *minishell, t_cmd *cmd)
-{
-	pid_t	pid;
-	(void)minishell;
-	(void)cmd;
+// void	child_execute(t_minishell *minishell, t_cmd *cmd)
+// {
+// 	pid_t	pid;
 
-}
+	
+// }
 
-void	execute_cmd(t_minishell *minishell)
-{
-	t_cmd	*tmp;
+// void	execute_cmd(t_minishell *minishell)
+// {
+// 	t_cmd	*tmp;
 
-	tmp = minishell->cmd;
-	while (tmp != NULL)
-	{
-		if (is_builtin(tmp->cmd[0]) == TRUE)
-			execute_builtin(minishell, tmp);
-		else
-			child_execute(minishell, tmp);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = minishell->cmd;
+// 	// execute_first_cmd();
+// 	//si (tmp->next == NULL) : une seule commande, => output = stdout
+// 	//sinon : plusieurs commandes, => output = pipe
+	
+// 	// while (tmp->next != NULL)
+// 	//tant qu'on est entre pipeline, input = last_output et output = next pipe
+// 	{
+// 		// if (is_builtin(tmp->cmd[0]) == TRUE)
+// 			// execute_builtin(minishell, tmp);
+// 		// else
+// 			// child_execute(minishell, tmp);
+// 		// tmp = tmp->next;
+// 	// }
+	
+// 	// if (tmp  != NULL)
+// 		// execute_last_cmd();
+// 	//intput = last_pipe_output et output = cmd_output
+// }
 
 t_minishell	*treat_data(t_minishell *minishell)
 {
@@ -187,7 +195,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	}
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell);
-	execute_cmd(minishell);
+	// execute_cmd(minishell);
 	return (minishell);
 }
 
@@ -230,7 +238,7 @@ void	minishell_core(t_minishell *minishell)
 	destroy_all_data(minishell);
 }
 //ajouter free_env dans destroy all data et free le var 1 meme si il est == NULL
-//close all hd pipes dans destroy all data
+//close les pipes de la commandes
 //ne pas faire l'expansion si il y a des cotes dans le limiter du heredoc
 int	main(int ac, char **av, char **env)
 {

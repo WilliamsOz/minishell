@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2021/12/27 22:18:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/29 19:24:02 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ typedef struct g_cmd
 	char			*path;
 	int				input;
 	int				output;
+	int				pipes[2];
 	struct g_cmd	*next;
+	struct g_cmd	*previous;
 }				t_cmd;
 
 #endif
