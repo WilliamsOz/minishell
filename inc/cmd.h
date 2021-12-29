@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:10:57 by user42            #+#    #+#             */
-/*   Updated: 2021/12/28 17:19:20 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/29 01:55:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void		mall_root_cmd_failed(t_minishell *m);
 void		mall_new_cmd_failed(t_minishell *m);
 void		cmd_destructor(t_cmd *cmd);
 t_cmd		*init_cmd(t_minishell *m, t_dlk_list *dlk);
-t_minishell	*get_cmd(t_minishell *m, t_dlk_list *dlk);
+t_minishell	*get_cmd(t_minishell *m);
 
 #endif

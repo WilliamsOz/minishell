@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lr_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:14:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:58:52 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/29 02:02:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ t_minishell *redirect_l_r(t_minishell *m, t_dlk_list **dlk, t_cmd **cmd)
 	}
 	else
 		(*dlk) = previous_not_null((*dlk));
+	m->d_lk = *dlk;
+	m->cmd = *cmd;
 	return (m);
 }

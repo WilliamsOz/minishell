@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/28 19:41:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/29 02:05:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,33 +117,33 @@ La sortie de chaque commande est connecter via
 pipe a l'entree de la prochaine commande
 */
 
-// int	is_builtin(char *cmd)
-// {
-// 	if (ft_strcmp("echo", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("cd", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("pwd", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("export", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("unset", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("env", cmd) == TRUE)
-// 		return (TRUE);
-// 	else if (ft_strcmp("exit", cmd) == TRUE)
-// 		return (TRUE);
-// 	return (FALSE);
-// }
+int	is_builtin(char *cmd)
+{
+	if (ft_strcmp("echo", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("cd", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("pwd", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("export", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("unset", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("env", cmd) == TRUE)
+		return (TRUE);
+	else if (ft_strcmp("exit", cmd) == TRUE)
+		return (TRUE);
+	return (FALSE);
+}
 
-// void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
-// {
+void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
+{
 // 	if (ft_strcmp("echo", cmd->cmd[0]) == TRUE)
 // 		echo_builtin();
 // 	else if (ft_strcmp("cd", cmd->cmd[0]) == TRUE)
 // 		cd_builtin();
-// 	else if (ft_strcmp("pwd", cmd->cmd[0]) == TRUE)
-// 		pwd_builtin();
+	if (ft_strcmp("pwd", cmd->cmd[0]) == TRUE)
+		pwd_builtin(minishell->cmd, minishell->env);
 // 	else if (ft_strcmp("export", cmd->cmd[0]) == TRUE)
 // 		export_builtin();
 // 	else if (ft_strcmp("unset", cmd->cmd[0]) == TRUE)
@@ -152,7 +152,7 @@ pipe a l'entree de la prochaine commande
 // 		env_builtin();
 // 	else if (ft_strcmp("exit", cmd->cmd[0]) == TRUE)
 // 		exit_builtin();
-// }
+}
 
 void	execute_cmd(t_minishell *minishell)
 {
@@ -161,8 +161,8 @@ void	execute_cmd(t_minishell *minishell)
 	tmp = minishell->cmd;
 	while (tmp != NULL)
 	{
-		// if (is_builtin(tmp->cmd[0]) == TRUE)
-		// 	execute_builtin(minishell, tmp->cmd);
+		if (is_builtin(tmp->cmd[0]) == TRUE)
+			execute_builtin(minishell, tmp);
 		// else
 			// execute_cmd(minishell);
 		tmp = tmp->next;
@@ -171,9 +171,6 @@ void	execute_cmd(t_minishell *minishell)
 
 t_minishell	*treat_data(t_minishell *minishell)
 {
-	t_dlk_list	*dlk;
-
-	dlk = minishell->d_lk;
 	if (redirection_check(minishell) == TRUE)
 	{
 		close_heredoc_pipes(minishell->d_lk);
@@ -181,7 +178,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 		return (minishell);
 	}
 	minishell = trim_token(minishell);
-	minishell = get_cmd(minishell, dlk);
+	minishell = get_cmd(minishell);
 	execute_cmd(minishell);
 	return (minishell);
 }
@@ -221,6 +218,7 @@ void	minishell_core(t_minishell *minishell)
 		}
 		if (minishell->line != NULL)
 			minishell = start_minishell(minishell);
+		double_lk_destroyer(minishell->d_lk);
 	}
 	destroy_all_data(minishell);
 }

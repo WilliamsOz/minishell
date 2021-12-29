@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ur_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:28:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:17:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/29 02:02:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ static t_dlk_list	*previous_not_null(t_dlk_list *dlk)
 
 t_minishell	*redirect_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
 {
-	(*dlk)->fd_file = open((*dlk)->next->token, O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if ((*tmp_cmd)->output != STDOUT_FILENO)
 		close((*tmp_cmd)->output);
+	(*dlk)->fd_file = open((*dlk)->next->token, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	(*tmp_cmd)->output = (*dlk)->fd_file;
 	if ((*dlk)->previous == NULL)
 	{
@@ -60,5 +59,7 @@ t_minishell	*redirect_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
 	}
 	else
 		(*dlk) = previous_not_null((*dlk));
+	m->d_lk = *dlk;
+	m->cmd = *tmp_cmd;
 	return (m);
 }

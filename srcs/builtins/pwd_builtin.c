@@ -45,8 +45,7 @@ static int	is_flag_error(t_cmd *cmd)
 		}
 		return (TRUE);
 	}
-	else
-		return (FALSE);
+	return (FALSE);
 }
 
 void	pwd_builtin(t_cmd *cmd, t_env *env)
@@ -66,8 +65,8 @@ void	pwd_builtin(t_cmd *cmd, t_env *env)
 				i = 0;
 				while (env->var[i] != '=')
 					i++;
-				ft_putstr_fd(&env->var[++i], STDOUT_FILENO);
-				ft_putstr_fd("\n", STDOUT_FILENO);
+				ft_putstr_fd(&env->var[++i], cmd->output);
+				ft_putstr_fd("\n", cmd->output);
 			}
 			env = env->next;
 		}
