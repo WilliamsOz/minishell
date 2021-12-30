@@ -6,13 +6,14 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:10:57 by user42            #+#    #+#             */
-/*   Updated: 2021/12/29 01:55:55 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/30 09:26:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CMD_H
 # define CMD_H
 
+t_minishell	*open_pipes(t_minishell *m);
 t_cmd		*find_and_get_path_cmd(t_minishell *m, t_cmd *cmd, t_env *env);
 t_cmd		*init_cmd_path(t_cmd *cmd);
 t_cmd		*cpy_cmd_from_dlk(t_cmd *cmd, t_dlk_list *dlk);

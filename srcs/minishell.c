@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 19:14:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 09:40:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,36 +154,55 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 // 		exit_builtin();
 }
 
-// void	child_execute(t_minishell *minishell, t_cmd *cmd)
-// {
-// 	pid_t	pid;
+// si (tmp->next == NULL) : une seule commande, => output = stdout
+// sinon : plusieurs commandes, => output = pipe
 
-	
-// }
+void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd)
+{
+	pid_t	pid;
 
-// void	execute_cmd(t_minishell *minishell)
-// {
-// 	t_cmd	*tmp;
+	pid = fork();
+	if (pid == -1)
+		fork_failed(m);
+	if (pid == 0)
+	{
+		
+	}
+	else
+	{
+		
+	}
+}
 
-// 	tmp = minishell->cmd;
-// 	// execute_first_cmd();
-// 	//si (tmp->next == NULL) : une seule commande, => output = stdout
-// 	//sinon : plusieurs commandes, => output = pipe
+void	first_entry(t_minishell *minishell, t_cmd *tmp_cmd)
+{
+	if (tmp_cmd->next == NULL)
+		exec_one_cmd(minishell, tmp_cmd);
+	// else
+		// exec_first_cmd();
+}
+
+void	execute_cmd(t_minishell *minishell)
+{
+	t_cmd	*tmp_cmd;
+
+	tmp_cmd = minishell->cmd;
+	first_entry(minishell, tmp_cmd);
 	
-// 	// while (tmp->next != NULL)
-// 	//tant qu'on est entre pipeline, input = last_output et output = next pipe
-// 	{
-// 		// if (is_builtin(tmp->cmd[0]) == TRUE)
-// 			// execute_builtin(minishell, tmp);
-// 		// else
-// 			// child_execute(minishell, tmp);
-// 		// tmp = tmp->next;
-// 	// }
+	// while (tmp->next != NULL)
+	//tant qu'on est entre pipeline, input = last_output et output = next pipe
+	// {
+		// if (is_builtin(tmp->cmd[0]) == TRUE)
+			// execute_builtin(minishell, tmp);
+		// else
+			// child_execute(minishell, tmp);
+		// tmp = tmp->next;
+	// }
 	
-// 	// if (tmp  != NULL)
-// 		// execute_last_cmd();
-// 	//intput = last_pipe_output et output = cmd_output
-// }
+	// if (tmp  != NULL)
+		// execute_last_cmd();
+	//intput = last_pipe_output et output = cmd_output
+}
 
 t_minishell	*treat_data(t_minishell *minishell)
 {
@@ -195,7 +214,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	}
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell);
-	// execute_cmd(minishell);
+	execute_cmd(minishell);
 	return (minishell);
 }
 

@@ -1,44 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd.c                                          :+:      :+:    :+:   */
+/*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/27 21:45:08 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 09:39:26 by user42           ###   ########.fr       */
+/*   Created: 2021/12/30 09:25:48 by user42            #+#    #+#             */
+/*   Updated: 2021/12/30 09:39:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_cmd	*get_previous(t_cmd *cmd)
+static t_cmd	*memset_pipes(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	t_cmd	*next;
 
 	tmp = cmd;
-	if (tmp != NULL)
-		tmp->previous = NULL;
 	while (tmp != NULL)
 	{
-		next = tmp->next;
-		if (next != NULL)
-			next->previous = tmp;
+		tmp->pipes[0] = -1;
+		tmp->pipes[1] = -1;
 		tmp = tmp->next;
 	}
 	return (cmd);
 }
 
-t_minishell	*get_cmd(t_minishell *m)
+static void	pipes_opening_failed(t_minishell *m)
 {
-	m->cmd = init_cmd(m, m->d_lk);
-	m = open_pipes(m);
-	m = performs_redirection(m);
-	m->d_lk = memset_dlk_cmd(m->d_lk);
-	m->d_lk = get_dlk_cmd(m, m->d_lk);
-	m->cmd = cpy_cmd_from_dlk(m->cmd, m->d_lk);
-	m->cmd = get_previous(m->cmd);
-	m->cmd = find_and_get_path_cmd(m, m->cmd, m->env);
+	strerror(errno);
+	env_destructor(m->env);
+	cmd_destructor(m->cmd);
+	m = destroy_all_data(m);
+	exit (errno);
+}
+
+t_minishell	*open_pipes(t_minishell *m)
+{
+	t_cmd	*tmp;
+	int		ind;
+
+	m->cmd = memset_pipes(m->cmd);
+	tmp = m->cmd;
+	while (tmp != NULL)
+	{
+		ind = pipe(tmp->pipes);
+		if (ind == -1)
+			pipes_opening_failed(m);
+		tmp = tmp->next;
+	}
 	return (m);
 }
