@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_all_data.c                                 :+:      :+:    :+:   */
+/*   mall_tab_env_failed.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 12:39:24 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/30 12:49:22 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/30 12:55:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*destroy_all_data(t_minishell *minishell)
+void	mall_str_tab_env_failed(t_minishell *m)
 {
-	if (minishell->parsing_err != NULL)
-		parsing_err_destroyer(minishell->parsing_err);
-	if (minishell->d_lk != NULL)
-		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
-	if (minishell->line != NULL)
-		minishell->line = free_line(minishell->line);
-	if (minishell != NULL)
-		minishell_destroyer(minishell);
-	return (minishell);
+	int i;
+
+	strerror(errno);
+	i = 0;
+	while (m->tab_env[i] != NULL)
+	{
+		free(m->tab_env[i]);
+		i++;
+	}
+	free(m->tab_env);
+	env_destructor(m->env);
+	cmd_destructor(m->cmd);
+	m = destroy_all_data(m);
+	exit (errno);
+}
+
+void	mall_tab_env_failed(t_minishell *m)
+{
+	strerror(errno);
+	env_destructor(m->env);
+	cmd_destructor(m->cmd);
+	m = destroy_all_data(m);
+	exit (errno);
 }

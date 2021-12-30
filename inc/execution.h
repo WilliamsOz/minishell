@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_structure.h                              :+:      :+:    :+:   */
+/*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 12:39:33 by wiozsert         ###   ########.fr       */
+/*   Created: 2021/12/30 13:06:38 by wiozsert          #+#    #+#             */
+/*   Updated: 2021/12/30 13:07:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_STRUCTURE_H
-# define MINISHELL_STRUCTURE_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
-typedef struct	s_minishell
-{
-	char			*line;
-	t_parsing_err	*parsing_err;
-	t_dlk_list		*d_lk;
-	t_env			*env;
-	t_cmd			*cmd;
-	char			**tab_env;
-}				t_minishell;
+void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env);
 
 #endif

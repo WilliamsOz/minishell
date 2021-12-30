@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/28 22:33:34 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/30 13:38:09 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@
 # include "./signal.h"
 # include "./redirection.h"
 # include "./cmd.h"
-# include "builtins.h"
+# include "./builtins.h"
+# include "./execution.h"
 # define BACKSLASH_CHAR 92
 # define SEMICOLON 59
 # define SIMPLE_COTE 39
@@ -71,10 +72,10 @@
 # define PP(x) printf("%p\n", x);
 # define ex exit(EXIT_SUCCESS);
 void    show_dlk(t_dlk_list *dlk);
-# define SMDLK show_dlk(minishell->d_lk);
-# define SDLK show_dlk(dlk);
+# define SMDLK(x) show_dlk(x);
 # define PRTDLKCMD print_dlk_cmd(dlk);
-# define PRTCMD print_cmd(cmd);
+void	print_cmd(t_cmd *cmd);
+# define PRTCMD(x) print_cmd(x);
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 

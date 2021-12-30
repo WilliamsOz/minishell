@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   d_ur_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:29:03 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 11:45:45 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/30 13:38:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,5 @@ t_minishell	*redirect_d_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
 	}
 	else
 		(*dlk) = previous_not_null((*dlk));
-	m->d_lk = *dlk;
-	m->cmd = *tmp_cmd;
 	return (m);
 }

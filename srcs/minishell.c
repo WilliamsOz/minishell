@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 09:40:10 by user42           ###   ########.fr       */
+/*   Updated: 2021/12/30 13:34:17 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,38 +157,23 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 // si (tmp->next == NULL) : une seule commande, => output = stdout
 // sinon : plusieurs commandes, => output = pipe
 
-void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		fork_failed(m);
-	if (pid == 0)
-	{
-		
-	}
-	else
-	{
-		
-	}
-}
-
-void	first_entry(t_minishell *minishell, t_cmd *tmp_cmd)
+t_cmd	*first_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 {
 	if (tmp_cmd->next == NULL)
-		exec_one_cmd(minishell, tmp_cmd);
+		exec_one_cmd(minishell, tmp_cmd, env);
 	// else
 		// exec_first_cmd();
+	tmp_cmd = tmp_cmd->next;
+	return (tmp_cmd);
 }
 
-void	execute_cmd(t_minishell *minishell)
+void	execute_cmd(t_minishell *minishell, char **env)
 {
 	t_cmd	*tmp_cmd;
 
 	tmp_cmd = minishell->cmd;
-	first_entry(minishell, tmp_cmd);
 	
+	tmp_cmd = first_entry(minishell, tmp_cmd, env);
 	// while (tmp->next != NULL)
 	//tant qu'on est entre pipeline, input = last_output et output = next pipe
 	// {
@@ -214,7 +199,8 @@ t_minishell	*treat_data(t_minishell *minishell)
 	}
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell);
-	execute_cmd(minishell);
+	minishell = tab_env_creator(minishell);
+	execute_cmd(minishell, minishell->tab_env);
 	return (minishell);
 }
 
@@ -256,8 +242,9 @@ void	minishell_core(t_minishell *minishell)
 	}
 	destroy_all_data(minishell);
 }
+//ne pas oublier de free char **env
 //ajouter free_env dans destroy all data et free le var 1 meme si il est == NULL
-//close les pipes de la commandes
+//close les pipes de la commandes pour tout les fails de malloc et a la fin
 //ne pas faire l'expansion si il y a des cotes dans le limiter du heredoc
 int	main(int ac, char **av, char **env)
 {
