@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 13:34:17 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:39:27 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,9 +198,11 @@ t_minishell	*treat_data(t_minishell *minishell)
 		return (minishell);
 	}
 	minishell = trim_token(minishell);
-	minishell = get_cmd(minishell);
-	minishell = tab_env_creator(minishell);
+	minishell = get_cmd(minishell); /* cmd && pipes */
+	minishell = tab_env_creator(minishell); /* tab_env */
+	signal(SIGQUIT, cmd_handlers);
 	execute_cmd(minishell, minishell->tab_env);
+	handle_rl_signal();
 	return (minishell);
 }
 
@@ -211,9 +213,9 @@ t_minishell	*start_minishell(t_minishell *minishell)
 	{
 		add_history(minishell->line);
 		minishell->d_lk = double_lk_creator(minishell,
-			minishell->line, 0);
+			minishell->line, 0); /* d_lk */
 		minishell = is_logic_input(minishell);
-		minishell = heredoc(minishell, minishell->d_lk);
+		minishell = heredoc(minishell, minishell->d_lk); /*hd_pipes */
 		if (minishell->line != NULL)
 		{
 			minishell = treat_data(minishell);
@@ -254,8 +256,8 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (ac != 1)
 		return (0);
-	minishell = minishell_creator(env);
-	minishell->parsing_err = parsing_err_creator();
+	minishell = minishell_creator(env); /* minishell && env */
+	minishell->parsing_err = parsing_err_creator(); /* parsing */
 	if (minishell->parsing_err == NULL)
 	{
 		minishell_destroyer(minishell);

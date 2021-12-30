@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 13:44:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:39:50 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ static void	close_fd(t_cmd *tmp_cmd)
 		close(tmp_cmd->output);
 }
 
+static void	execve_failed()
+{
+	strerror(errno);
+	signal_handler = 127;
+	exit (127);
+}
+
 void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 {
 	pid_t	pid;
@@ -44,9 +51,10 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 		fork_failed(m);
 	if (pid == 0)
 	{
+		signal_handler = -1;
 		link_child(tmp_cmd);
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
-		signal_handler = 127;
+		execve_failed();
 	}
 	else
 	{
