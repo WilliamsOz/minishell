@@ -10,20 +10,20 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 // env -i condition
 
-// void	env_builtin(t_env *env)
-// {
-// 	t_env	*tmp;
+void	env_builtin(t_env *env)
+{
+	t_env	*tmp;
 
-// 	tmp = env;
-// 	while (env != NULL)
-// 	{
-// 		ft_putstr_fd(env->var, STDOUT_FILENO);
-// 		ft_putstr_fd("\n", STDOUT_FILENO);
-// 		env = env->next;
-// 	}
-// 	env = tmp;
-// }
+	tmp = env;
+	while (env != NULL)
+	{
+		ft_putstr_fd(env->var, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		env = env->next;
+	}
+	env = tmp;
+}

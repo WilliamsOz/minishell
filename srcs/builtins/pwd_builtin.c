@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-int		find_pwd(char *var, char *pwd_header)
+static int		find_pwd(char *var, char *pwd_header)
 {
 	int	i;
 

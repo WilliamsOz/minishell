@@ -12,59 +12,61 @@
 
 #include "../../inc/minishell.h"
 
-// typedef int	t_bool;
-// // maybe add echo $? command ?
+typedef int	t_bool;
+// maybe add echo $? command ?
 
-// static t_bool	is_n_option(t_dlk_list *dlk)
-// {
-// 	int	i;
+static t_bool	is_n_option(char *option)
+{
+	int	i;
 
-// 	if (dlk == NULL)
-// 		return (FALSE);
-// 	if (dlk->token[0] != '-')
-// 		return (FALSE);
-// 	if (dlk->token[1] != 'n')
-// 		return (FALSE);
-// 	i = 2;
-// 	while (dlk->token[i] != '\0')
-// 	{
-// 		if (dlk->token[i] != 'n')
-// 			return (FALSE);
-// 		i++;
-// 	}
-// 	return (TRUE);
-// }
+	if (option == NULL)
+		return (FALSE);
+	if (option[0] != '-')
+		return (FALSE);
+	if (option[1] != 'n')
+		return (FALSE);
+	i = 2;
+	while (option[i] != '\0')
+	{
+		if (option[i] != 'n')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
-// static t_dlk_list	*skip_option(t_dlk_list *dlk)
-// {
-// 	while (is_n_option(dlk) == TRUE)
-// 		dlk = dlk->next;
-// 	return (dlk);
-// }
+static int	skip_option(char **cmd)
+{
+	int	i;
 
-// void	echo_builtin(t_dlk_list *dlk)
-// {
-// 	t_dlk_list	*tmp;
-// 	t_bool		option;
+	i = 1;
+	while (is_n_option(cmd[i]) == TRUE)
+		i++;
+	return (i);
+}
 
-// 	if (is_n_option(dlk) == TRUE)
-// 		option = 1;
-// 	else
-// 		option = 0;
-// 	if (option == 1)
-// 		dlk = skip_option(dlk);
-// 	tmp = dlk;
-// 	if (dlk != NULL)
-// 	{
-// 		if (option == 0)
-// 		{
-// 			ft_putstr_fd(dlk->token, STDOUT_FILENO);
-// 			write(STDOUT_FILENO, "\n", 1);
-// 		}
-// 		else
-// 			ft_putstr_fd(dlk->token, STDOUT_FILENO);
-// 	}
-// 	else
-// 		write(STDOUT_FILENO, "\n", 1);
-// 	dlk = tmp;
-// }
+void	echo_builtin(t_cmd *cmd)
+{
+	int			i;
+	t_bool		option;
+
+	if (is_n_option(cmd->cmd[1]) == TRUE)
+		option = 1;
+	else
+		option = 0;
+	i = 1;
+	if (option == 1)
+		i = skip_option(cmd->cmd);
+	if (cmd->cmd[i] != NULL)
+	{
+		if (option == 0)
+		{
+			ft_putstr_fd(cmd->cmd[i], cmd->output);
+			write(cmd->output, "\n", 1);
+		}
+		else
+			ft_putstr_fd(cmd->cmd[i], cmd->output);
+	}
+	else
+		write(cmd->output, "\n", 1);
+}

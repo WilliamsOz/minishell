@@ -18,67 +18,62 @@
 //exit (num alpha) : exit and set exit status to 2 + a error message
 //exit (num) (num) (num) : doesn't exit and set exit status to 1 + a error message
 
-// static int	count_args(t_dlk_list *dlk)
-// {
-// 	int	count;
+static int	count_args(char **cmd)
+{
+	int	i;
 
-// 	count = 0;
-// 	while (dlk != NULL)
-// 	{
-// 		count++;
-// 		dlk = dlk->next;
-// 	}
-// 	return (count);
-// }
+	i = 0;
+	while (cmd[i] != NULL)
+		i++;
+	return (i);
+}
 
-// static void	arg_is_ascii(char *arg)
-// {
-// 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-// 	ft_putstr_fd("bash: exit: ", STDERR_FILENO);
-// 	ft_putstr_fd(arg, STDERR_FILENO);
-// 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-// 	exit(2);// TO FREE + check if signal handler is 0
-// }
+static void	arg_is_ascii(t_cmd *cmd, char *arg)
+{
+	ft_putstr_fd("exit\n", cmd->output);
+	ft_putstr_fd("bash: exit: ", cmd->output);
+	ft_putstr_fd(arg, cmd->output);
+	ft_putstr_fd(": numeric argument required\n", cmd->output);
+	exit(2);// TO FREE + check if signal handler is 0
+}
 
-// static void	arg_is_num(char *str_nbr)
-// {
-// 	int	nbr;
+static void	arg_is_num(t_cmd *cmd, char *str_nbr)
+{
+	int	nbr;
 	
-// 	nbr = ft_atoi(str_nbr);
-// 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-// 	exit(nbr);// TO FREE + check if signal handler is 0
-// }
+	nbr = ft_atoi(str_nbr);
+	ft_putstr_fd("exit\n", cmd->output);
+	exit(nbr);// TO FREE + check if signal handler is 0
+}
 
-// static void	no_args()
-// {
-// 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-// 	exit(0); // TO FREE + check if signal handler is 0
-// }
+static void	no_args(t_cmd *cmd)
+{
+	ft_putstr_fd("exit\n", cmd->output);
+	exit(0); // TO FREE + check if signal handler is 0
+}
 
-// void	exit_builtin(t_dlk_list *dlk)
-// {
-// 	int			i;
-// 	t_dlk_list *tmp;
-// 	int			args_nbr;
+void	exit_builtin(t_cmd *cmd)
+{
+	int			i;
+	int			args_nbr;
 
-// 	tmp = dlk;
-// 	args_nbr = count_args(dlk);
-// 	if (args_nbr == 0)
-// 		no_args();
-// 	else if (args_nbr > 1)
-// 	{
-// 		ft_putstr_fd("exit\nbash: exit: too many arguments\n", STDERR_FILENO);
-// 		signal_handler = 1;
-// 	}
-// 	else if (args_nbr == 1)
-// 	{
-// 		i = 0;
-// 		while (dlk->token[i] != '\0')
-// 		{
-// 			if (ft_isdigit(dlk->token[i]) == FALSE)
-// 				arg_is_ascii(dlk->token);
-// 			i++;
-// 		}
-// 		arg_is_num(dlk->token);
-// 	}
-// }
+	args_nbr = count_args(cmd->cmd);
+	if (args_nbr == 1)
+		no_args(cmd);
+	else if (args_nbr > 2)
+	{
+		ft_putstr_fd("exit\nbash: exit: too many arguments\n", cmd->output);
+		signal_handler = 1;
+	}
+	else if (args_nbr == 2)
+	{
+		i = 0;
+		while (cmd->cmd[1][i] != '\0')
+		{
+			if (ft_isdigit(cmd->cmd[1][i]) == FALSE)
+				arg_is_ascii(cmd, cmd->cmd[1]);
+			i++;
+		}
+		arg_is_num(cmd, cmd->cmd[1]);
+	}
+}
