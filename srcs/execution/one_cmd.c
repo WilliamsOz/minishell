@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 16:39:50 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:53:33 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	pid_t	pid;
 	int		status;
 
+	signal(SIGQUIT, cmd_handlers);
 	pid = fork();
 	if (pid == -1)
 		fork_failed(m);
@@ -59,6 +60,11 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	else
 	{
 		waitpid(0, &status, 0);
+		//statue value :
+		// 131 = SIGQUIT
+		// 2 = SIGINT
+		// 32512 = UNKNOW_CMD
+		PD(status)
 		close_fd(tmp_cmd);
 	}
 }

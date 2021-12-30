@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 16:34:18 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 16:36:30 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 16:48:57 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cmd_handlers(int signum)
 {
-	if (signum == SIGQUIT)
+	if (SIGQUIT == signum)
 	{
 		if (signal_handler == -1)
 		{
