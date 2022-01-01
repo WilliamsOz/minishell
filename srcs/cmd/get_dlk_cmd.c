@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:56:07 by user42            #+#    #+#             */
-/*   Updated: 2021/12/27 15:08:25 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 19:38:58 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void init_cmd_failed(t_minishell *m)
 {
 	strerror(errno);
 	m = destroy_all_data(m);
-	exit (EXIT_FAILURE);
+	exit (errno);
 }
 
 t_dlk_list	*get_one_cmd_tab(t_minishell *m, t_dlk_list *dlk)

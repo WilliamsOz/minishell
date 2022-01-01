@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:17:19 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 16:24:14 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 19:39:26 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_minishell	*minishell_creator(char **env)
 	if (minishell == NULL)
 	{
 		strerror(errno);
-		exit (EXIT_FAILURE);
+		exit (errno);
 	}
 	minishell->line = NULL;
 	minishell->parsing_err = NULL;

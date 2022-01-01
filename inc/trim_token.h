@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:44:07 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 13:22:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 18:44:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_dlk_list	*leave_one_token(t_dlk_list *dlk);
 int			still_env_key(char c);
-char		*cpy_status(char *tmp, int s_h, int *ptr_i, int *ptr_j);
+char		*cpy_status(char *tmp, int *ptr_i, int *ptr_j);
 int			get_status_len(int *ptr_i, int tmp);
 char		*trim(t_minishell *minishell, char *token, int i);
 int			skip_unk_exp(char *token, int i);

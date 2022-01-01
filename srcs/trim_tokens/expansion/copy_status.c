@@ -6,19 +6,19 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:20 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/15 19:18:57 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 18:50:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-char	*cpy_status(char *tmp, int s_h, int *ptr_i, int *ptr_j)
+char	*cpy_status(char *tmp, int *ptr_i, int *ptr_j)
 {
 	char	*get_status;
 	int		i;
 
 	get_status = NULL;
-	get_status = ft_itoa(s_h);
+	get_status = ft_itoa(signal_handler);
 	i = 0;
 	while (get_status[i] != '\0')
 	{

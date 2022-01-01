@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trim_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/25 13:23:25 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 19:39:30 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*trim(t_minishell *minishell, char *token, int i)
 	{
 		strerror(errno);
 		minishell = destroy_all_data(minishell);
-		exit (EXIT_FAILURE);
+		exit (errno);
 	}
 	if (ind != -1)
 		free(token);

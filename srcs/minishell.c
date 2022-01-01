@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 11:01:19 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:23:15 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,20 +138,20 @@ int	is_builtin(char *cmd)
 
 void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 {
-// 	if (ft_strcmp("echo", cmd->cmd[0]) == TRUE)
-// 		echo_builtin();
-// 	else if (ft_strcmp("cd", cmd->cmd[0]) == TRUE)
-// 		cd_builtin();
+	// if (ft_strcmp("echo", cmd->cmd[0]) == TRUE)
+		// echo_builtin();
+	// else if (ft_strcmp("cd", cmd->cmd[0]) == TRUE)
+		// cd_builtin();
 	if (ft_strcmp("pwd", cmd->cmd[0]) == TRUE)
 		pwd_builtin(minishell->cmd, minishell->env);
-// 	else if (ft_strcmp("export", cmd->cmd[0]) == TRUE)
-// 		export_builtin();
-// 	else if (ft_strcmp("unset", cmd->cmd[0]) == TRUE)
-// 		unset_builtin();
-// 	else if (ft_strcmp("env", cmd->cmd[0]) == TRUE)
-// 		env_builtin();
-// 	else if (ft_strcmp("exit", cmd->cmd[0]) == TRUE)
-// 		exit_builtin();
+	// else if (ft_strcmp("export", cmd->cmd[0]) == TRUE)
+	// 	export_builtin();
+	// else if (ft_strcmp("unset", cmd->cmd[0]) == TRUE)
+	// 	unset_builtin();
+	// else if (ft_strcmp("env", cmd->cmd[0]) == TRUE)
+	// 	env_builtin();
+	// else if (ft_strcmp("exit", cmd->cmd[0]) == TRUE)
+	// 	exit_builtin();
 }
 
 // si (tmp->next == NULL) : une seule commande, => output = stdout
@@ -160,7 +160,12 @@ void	execute_builtin(t_minishell *minishell, t_cmd *cmd)
 t_cmd	*first_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 {
 	if (tmp_cmd->next == NULL)
-		exec_one_cmd(minishell, tmp_cmd, env);
+	{
+		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
+			execute_builtin(minishell, tmp_cmd);
+		else
+			exec_one_cmd(minishell, tmp_cmd, env);
+	}
 	// else
 		// exec_first_cmd();
 	tmp_cmd = tmp_cmd->next;
@@ -200,7 +205,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = get_cmd(minishell); /* cmd && pipes */
 	minishell = tab_env_creator(minishell); /* tab_env */
 	execute_cmd(minishell, minishell->tab_env);
-	handle_rl_signal();
+	tab_env_destructor(minishell);
 	return (minishell);
 }
 
@@ -227,7 +232,6 @@ void	minishell_core(t_minishell *minishell)
 {
 	while (1)
 	{
-		signal_handler = 0;
 		handle_rl_signal();
 		minishell->line = NULL;
 		minishell->line = readline("minishell>$ ");
@@ -236,14 +240,13 @@ void	minishell_core(t_minishell *minishell)
 			minishell_eof_called();
 			break ;
 		}
-		if (minishell->line != NULL)
+		else
 			minishell = start_minishell(minishell);
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 	}
 	destroy_all_data(minishell);
 }
 //ne pas oublier de free char **env
-//ajouter free_env dans destroy all data et free le var 1 meme si il est == NULL
 //close les pipes de la commandes pour tout les fails de malloc et a la fin
 //ne pas faire l'expansion si il y a des cotes dans le limiter du heredoc
 int	main(int ac, char **av, char **env)
@@ -259,7 +262,7 @@ int	main(int ac, char **av, char **env)
 	if (minishell->parsing_err == NULL)
 	{
 		minishell_destroyer(minishell);
-		exit (EXIT_FAILURE);
+		exit (errno);
 	}
 	signal_handler = 0;
 	minishell_core(minishell);

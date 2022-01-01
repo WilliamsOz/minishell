@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 16:48:22 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 20:19:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_new_line(char *line, char *new_line, t_env *env, int i)
 	while (line[i] != '\0')
 	{
 		if (line[i] == '$' && line[i + 1] == '?')
-			new_line = cpy_status(new_line, signal_handler, &i, &j);
+			new_line = cpy_status(new_line, &i, &j);
 		else if (line[i] == '$' &&
 			existing_expand(line + i + 1, env, 0) == TRUE)
 		{
@@ -136,7 +136,6 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 	signal(SIGINT, hd_handler);
 	signal(SIGQUIT, hd_handler);
 	tmp = dlk;
-	signal_handler = 0;
 	while (tmp != NULL && signal_handler != 130)
 	{
 		if (tmp->here_doc == 1 && signal_handler != 130)
@@ -145,12 +144,14 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 			tmp = call_child(m, tmp, 0);
 		}
 		tmp = tmp->next;
-	}
-	if (signal_handler == 130)
-	{
-		m->d_lk = double_lk_destroyer(m->d_lk);
-		m->line = free_line(m->line);
-		close_heredoc_pipes(m->d_lk);
+		if (signal_handler == 130)
+		{
+			m->d_lk = double_lk_destroyer(m->d_lk);
+			m->line = free_line(m->line);
+			close_heredoc_pipes(m->d_lk);
+			signal_handler = 0;
+			break ;
+		}
 	}
 	return (m);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_var.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 13:49:58 by user42            #+#    #+#             */
-/*   Updated: 2021/12/23 16:38:46 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:15:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		mall_var_failed(t_minishell *m, t_env *keep)
 		tmp = keep;
 	}
 	m = destroy_all_data(m);
-	exit (EXIT_FAILURE);
+	exit (errno);
 }
 
 static char	*cpy_var(char *src, char *dest)
@@ -52,8 +52,6 @@ t_env	*create_var(t_minishell *m, char **env, int i, int j)
 	t_env	*tmp;
 
 	tmp = m->env;
-	if (env[i] != NULL)
-		free(m->env->var);
 	while (env[i] != NULL)
 	{
 		j = 0;

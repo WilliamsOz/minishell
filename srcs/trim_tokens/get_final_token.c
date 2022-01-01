@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_final_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 18:23:21 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 18:45:06 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, t_env *env)
 	while (token[index->i] != DOUBLE_COTE)
 	{
 		if (token[index->i] == '$' && token[index->i + 1] == '?')
-			tmp = cpy_status(tmp, signal_handler, &index->i, &index->j);
+			tmp = cpy_status(tmp, &index->i, &index->j);
 		else if (token[index->i] == '$' &&
 			existing_expand(token + index->i + 1, env, 0) == TRUE)
 		{
@@ -87,7 +87,7 @@ char	*get_trimed_token(char *token, char *tmp, t_env *env, int *ptr_i)
 			index.i += get_end_of_expansion(token + index.i + 1, 0);
 		}
 		else if (token[index.i] == '$' && token[index.i + 1] == '?')
-			cpy_status(tmp, signal_handler, &index.i, &index.j);
+			cpy_status(tmp, &index.i, &index.j);
 		else if (token[index.i] == '$')
 			index.i = skip_unk_exp(token, index.i);
 		else

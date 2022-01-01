@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/31 21:04:56 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:23:09 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,23 @@ static void	close_fd(t_cmd *tmp_cmd)
 		close(tmp_cmd->output);
 }
 
-static void	execve_failed()
+void	interpret_status(char *cmd, int status)
 {
-	strerror(errno);
-	signal_handler = 127;
-	exit (127);
+	if (status == 131)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", 2);
+		signal_handler = 131;
+	}
+	else if (status == 512)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		signal_handler = 127;
+	}
+	else if (status == 256)
+		signal_handler = 1;
+	else if (status == 0)
+		signal_handler = 0;
 }
 
 void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
@@ -46,7 +58,6 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	pid_t	pid;
 	int		status;
 
-	signal(SIGQUIT, cmd_handlers);
 	pid = fork();
 	if (pid == -1)
 		fork_failed(m);
@@ -55,15 +66,12 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 		signal_handler = -1;
 		link_child(tmp_cmd);
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
-		execve_failed();
+		exit (errno);
 	}
 	else
 	{
-		waitpid(0, &status, WNOHANG);
-		//statue value :
-		// 131 = SIGQUIT
-		// 2 = SIGINT
-		// 32512 = UNKNOW_CMD
+		waitpid(0, &status, 0);
+		interpret_status(tmp_cmd->cmd[0], status);
 		close_fd(tmp_cmd);
 	}
 }

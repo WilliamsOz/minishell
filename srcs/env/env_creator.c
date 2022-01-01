@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_creator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 13:47:37 by user42            #+#    #+#             */
-/*   Updated: 2021/12/23 18:45:35 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/01 20:15:33 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		mall_root_var_failed(t_minishell *m)
 	strerror(errno);
 	free(m->env);
 	m = destroy_all_data(m);
-	exit (EXIT_FAILURE);
+	exit (errno);
 }
 
 t_env	*create_root(t_minishell *m, t_env **root, char **env)
@@ -76,18 +76,20 @@ t_env	*create_root(t_minishell *m, t_env **root, char **env)
 	{
 		strerror(errno);
 		m = destroy_all_data(m);
-		exit (EXIT_FAILURE);
+		exit (errno);
 	}
 	if (env[0] == NULL)
 	{
 		(*root)->var = (char*)malloc(sizeof(char));
 		if ((*root)->var == NULL)
 			mall_root_var_failed(m);
+		(*root)->var = NULL;
 	}
 	else
 	{
 		m->env = *root;
 		*root = get_node(m, env, 1);
+		*root = create_var(m, env, 0, 0);
 	}
 	return (*root);
 }
