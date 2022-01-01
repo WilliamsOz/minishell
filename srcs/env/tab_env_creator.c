@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tab_env_creator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 12:35:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 12:57:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/01 11:06:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,13 @@
 static int	get_env_len(t_env *env)
 {
 	t_env	*tmp;
-	int		i;
 	int		len;
 
 	tmp = env;
 	len = 0;
 	while (tmp != NULL)
 	{
-		while (tmp->var[i] != '\0')
-		{
-			i++;
-			len++;
-		}
-		i = 0;
+		len++;
 		tmp = tmp->next;
 	}
 	return (len);
