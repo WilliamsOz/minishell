@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 14:59:14 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:19:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,6 @@ void	print_cmd(t_cmd *cmd)
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDsELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
-/*
-Pipes | :
-La sortie de chaque commande est connecter via
-pipe a l'entree de la prochaine commande
-*/
-
-// si (tmp->next == NULL) : une seule commande, => output = stdout
-// sinon : plusieurs commandes, => output = pipe
-
 void	execute_cmd(t_minishell *minishell, char **env)
 {
 	t_cmd	*tmp_cmd;
@@ -193,8 +184,9 @@ void	minishell_core(t_minishell *minishell)
 		else
 			minishell = start_minishell(minishell);
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
+		cmd_destructor(minishell->cmd);
 	}
-	destroy_all_data(minishell);
+	minishell = destroy_all_data(minishell);
 }
 //ne pas oublier de free char **env
 //close les pipes de la commandes pour tout les fails de malloc et a la fin
