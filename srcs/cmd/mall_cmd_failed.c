@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 15:18:44 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:19:13 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:19:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	mall_root_cmd_failed(t_minishell *m)
 {
 	strerror(errno);
-	env_destructor(m->env);
+	m->env = env_destructor(m->env);
 	m = destroy_all_data(m);
 	exit (errno);
 }
@@ -31,7 +31,7 @@ void	mall_new_cmd_failed(t_minishell *m)
 		m->cmd = m->cmd->next;
 		free(tmp);
 	}
-	env_destructor(m->env);
+	m->env = env_destructor(m->env);
 	m = destroy_all_data(m);
 	exit (errno);
 }

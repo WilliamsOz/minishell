@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/24 14:38:37 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 19:39:16 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:21:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	mall_trimed_line_failed(t_minishell *m)
 {
 	strerror(errno);
-	env_destructor(m->env);
+	m->env = env_destructor(m->env);
 	m = destroy_all_data(m);
 	exit (errno);
 }

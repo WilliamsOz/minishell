@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 12:35:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 19:45:32 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:20:03 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*cpy_env(char *src, char *dest, int i)
 	return (dest);
 }
 
-void	tab_env_destructor(t_minishell *m)
+t_minishell	*tab_env_destructor(t_minishell *m)
 {
 	int	i;
 
@@ -57,9 +57,12 @@ void	tab_env_destructor(t_minishell *m)
 	while (m->tab_env[i] != NULL)
 	{
 		free(m->tab_env[i]);
+		m->tab_env[i] = NULL;
 		i++;
 	}
 	free(m->tab_env);
+	m->tab_env = NULL;
+	return (m);
 }
 
 t_minishell	*tab_env_creator(t_minishell *m)

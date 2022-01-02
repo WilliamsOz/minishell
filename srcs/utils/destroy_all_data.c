@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 16:18:45 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:27:45 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 t_minishell	*destroy_all_data(t_minishell *minishell)
 {
 	if (minishell->env != NULL)
-		env_destructor(minishell->env);
+		minishell->env = env_destructor(minishell->env);
 	if (minishell->parsing_err != NULL)
-		parsing_err_destroyer(minishell->parsing_err);
+		minishell->parsing_err = parsing_err_destroyer(minishell->parsing_err);
 	if (minishell->d_lk != NULL)
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
 	if (minishell->line != NULL)
 		minishell->line = free_line(minishell->line);
 	if (minishell != NULL)
-		minishell_destroyer(minishell);
+		minishell = minishell_destroyer(minishell);
 	return (minishell);
 }

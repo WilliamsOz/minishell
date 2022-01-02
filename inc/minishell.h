@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 00:23:04 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 18:24:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int signal_handler;
 int				is_rafter(t_dlk_list *dlk);
 void			minishell_eof_called(void);
 t_parsing_err	*parsing_err_creator();
-void			parsing_err_destroyer(t_parsing_err *parsing_err);
-void			minishell_destroyer(t_minishell *minishell);
+t_parsing_err   *parsing_err_destroyer(t_parsing_err *parsing_err);
+t_minishell		*minishell_destroyer(t_minishell *minishell);
 t_minishell		*minishell_creator(char **env);
 t_dlk_list		*double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);

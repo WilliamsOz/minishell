@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 16:30:29 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:27:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,13 @@ void	execute_cmd(t_minishell *minishell, char **env)
 	}
 	if (tmp_cmd != NULL)
 		execute_last_cmd(minishell, tmp_cmd, env);
-	//intput = last_pipe_output et output = cmd_output
+}
+
+t_minishell	*destroy_data(t_minishell *m)
+{
+	m = tab_env_destructor(m);
+	m->cmd = cmd_destructor(m->cmd);
+	return (m);
 }
 
 t_minishell	*treat_data(t_minishell *minishell)
@@ -146,7 +152,6 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = get_cmd(minishell); /* cmd && pipes */
 	minishell = tab_env_creator(minishell); /* tab_env */
 	execute_cmd(minishell, minishell->tab_env);
-	tab_env_destructor(minishell);
 	return (minishell);
 }
 
@@ -164,6 +169,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 		{
 			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);
+			minishell = destroy_data(minishell);
 		}
 	}
 	return (minishell);
@@ -183,8 +189,6 @@ void	minishell_core(t_minishell *minishell)
 		}
 		else
 			minishell = start_minishell(minishell);
-		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
-		cmd_destructor(minishell->cmd);
 	}
 	minishell = destroy_all_data(minishell);
 }
@@ -203,10 +207,10 @@ int	main(int ac, char **av, char **env)
 	minishell->parsing_err = parsing_err_creator(); /* parsing */
 	if (minishell->parsing_err == NULL)
 	{
-		minishell_destroyer(minishell);
+		minishell = minishell_destroyer(minishell);
 		exit (errno);
 	}
 	signal_handler = 0;
 	minishell_core(minishell);
-	return (0);
+	return (signal_handler);
 }

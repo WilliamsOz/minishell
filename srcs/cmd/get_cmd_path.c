@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 19:50:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:19:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	get_len(char *env, int **ptr_i)
 void	mall_new_path_failed(t_minishell *m)
 {
 	strerror(errno);
-	env_destructor(m->env);
-	cmd_destructor(m->cmd);
+	m->env = env_destructor(m->env);
+	m->cmd = cmd_destructor(m->cmd);
 	m = destroy_all_data(m);
 	exit (errno);
 }

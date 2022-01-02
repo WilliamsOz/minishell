@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:25:48 by user42            #+#    #+#             */
-/*   Updated: 2022/01/01 23:12:27 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 18:19:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static t_cmd	*memset_pipes(t_cmd *cmd)
 static void	pipes_opening_failed(t_minishell *m)
 {
 	strerror(errno);
-	env_destructor(m->env);
-	cmd_destructor(m->cmd);
+	m->env = env_destructor(m->env);
+	m->cmd = cmd_destructor(m->cmd);
 	m = destroy_all_data(m);
 	exit (errno);
 }
