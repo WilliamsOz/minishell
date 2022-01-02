@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 21:45:08 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:35:56 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:15:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ t_cmd	*get_previous(t_cmd *cmd)
 	return (cmd);
 }
 
+t_dlk_list	*destroy_dlk(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+
+	while (dlk != NULL)
+	{
+		tmp = dlk;
+		dlk = dlk->next;
+		free(tmp);
+		tmp = NULL;
+	}
+	return (dlk);
+}
+
 t_minishell	*get_cmd(t_minishell *m)
 {
 	m->cmd = init_cmd(m, m->d_lk);
@@ -40,5 +54,6 @@ t_minishell	*get_cmd(t_minishell *m)
 	m->cmd = cpy_cmd_from_dlk(m->cmd, m->d_lk);
 	m->cmd = get_previous(m->cmd);
 	m->cmd = find_and_get_path_cmd(m, m->cmd, m->env);
+	m->d_lk = destroy_dlk(m->d_lk);
 	return (m);
 }

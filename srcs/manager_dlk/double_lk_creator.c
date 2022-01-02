@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_lk_creator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/29 10:55:54 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 19:14:32 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ t_dlk_list	*double_lk_creator(t_minishell *minishell, char *line, int i)
 	dlk = __get_token__(dlk, line, &i, 0);
 	if (dlk->is_metacharacter == 0 && dlk->token == NULL)
 		init_dlk_token_failed(minishell);
-	dlk = __get_next_tokens__(dlk, line, i);
+	if (line[i] != '\0')
+		dlk = __get_next_tokens__(dlk, line, i);
 	if (dlk->is_metacharacter == 0 && dlk == NULL)
 		init_dlk_token_failed(minishell);
 	return (dlk);

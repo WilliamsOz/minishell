@@ -28,38 +28,44 @@ static int	count_args(char **cmd)
 	return (i);
 }
 
-static void	arg_is_ascii(t_cmd *cmd, char *arg)
+static void	arg_is_ascii(t_minishell *m, t_cmd *cmd, char *arg)
 {
 	ft_putstr_fd("exit\n", cmd->output);
 	ft_putstr_fd("bash: exit: ", cmd->output);
 	ft_putstr_fd(arg, cmd->output);
 	ft_putstr_fd(": numeric argument required\n", cmd->output);
-	exit(2);// TO FREE + check if signal handler is 0
+	m = destroy_cmd_data(m);
+	m = destroy_all_data(m);
+	exit(2);
 }
 
-static void	arg_is_num(t_cmd *cmd, char *str_nbr)
+static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
 {
 	int	nbr;
 	
 	nbr = ft_atoi(str_nbr);
 	ft_putstr_fd("exit\n", cmd->output);
-	exit(nbr);// TO FREE + check if signal handler is 0
+	m = destroy_cmd_data(m);
+	m = destroy_all_data(m);
+	exit(nbr);
 }
 
-static void	no_args(t_cmd *cmd)
+static void	no_args(t_minishell *m, t_cmd *cmd)
 {
 	ft_putstr_fd("exit\n", cmd->output);
-	exit(0); // TO FREE + check if signal handler is 0
+	m = destroy_cmd_data(m);
+	m = destroy_all_data(m);
+	exit(0);
 }
 
-void	exit_builtin(t_cmd *cmd)
+void	exit_builtin(t_minishell *m, t_cmd *cmd)
 {
 	int			i;
 	int			args_nbr;
 
 	args_nbr = count_args(cmd->cmd);
 	if (args_nbr == 1)
-		no_args(cmd);
+		no_args(m, cmd);
 	else if (args_nbr > 2)
 	{
 		ft_putstr_fd("exit\nbash: exit: too many arguments\n", cmd->output);
@@ -71,9 +77,9 @@ void	exit_builtin(t_cmd *cmd)
 		while (cmd->cmd[1][i] != '\0')
 		{
 			if (ft_isdigit(cmd->cmd[1][i]) == FALSE)
-				arg_is_ascii(cmd, cmd->cmd[1]);
+				arg_is_ascii(m, cmd, cmd->cmd[1]);
 			i++;
 		}
-		arg_is_num(cmd, cmd->cmd[1]);
+		arg_is_num(m, cmd, cmd->cmd[1]);
 	}
 }

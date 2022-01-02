@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 18:32:38 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:38:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:25:37 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,7 @@ t_cmd	*cmd_destructor(t_cmd *cmd)
 		free(tmp);
 		tmp = NULL;
 	}
+	free(cmd);
+	cmd = NULL;
 	return (cmd);
 }

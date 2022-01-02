@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_all_data.c                                 :+:      :+:    :+:   */
+/*   destroyer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:31:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:24:59 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+t_minishell	*destroy_cmd_data(t_minishell *m)
+{
+	m = tab_env_destructor(m);
+	m->cmd = cmd_destructor(m->cmd);
+	return (m);
+}
 
 t_minishell	*destroy_all_data(t_minishell *minishell)
 {

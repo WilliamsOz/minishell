@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:24:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:47:31 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ t_minishell		*minishell_creator(char **env);
 t_dlk_list		*double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
 t_minishell		*destroy_all_data(t_minishell *minishell);
+t_minishell	    *destroy_cmd_data(t_minishell *m);
 
 #endif

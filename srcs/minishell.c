@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:40:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 19:25:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,13 +133,6 @@ void	execute_cmd(t_minishell *minishell, char **env)
 		execute_last_cmd(minishell, tmp_cmd, env);
 }
 
-t_minishell	*destroy_data(t_minishell *m)
-{
-	m = tab_env_destructor(m);
-	m->cmd = cmd_destructor(m->cmd);
-	return (m);
-}
-
 t_minishell	*treat_data(t_minishell *minishell)
 {
 	if (redirection_check(minishell) == TRUE)
@@ -151,7 +144,8 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell); /* cmd && pipes */
 	minishell = tab_env_creator(minishell); /* tab_env */
-	execute_cmd(minishell, minishell->tab_env);
+	execute_cmd(minishell, minishell->tab_env); //free les fcts qui exit
+	minishell = destroy_cmd_data(minishell);
 	return (minishell);
 }
 
@@ -169,7 +163,6 @@ t_minishell	*start_minishell(t_minishell *minishell)
 		{
 			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);
-			minishell = destroy_data(minishell);
 		}
 	}
 	return (minishell);

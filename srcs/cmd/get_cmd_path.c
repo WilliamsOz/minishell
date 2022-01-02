@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:39:55 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:43:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ static char	*get_cmd_path(t_minishell *m, char *cmd, t_env *tmp_env, int i)
 			path_cmd = ft_strjoin(path, cmd);
 			if (access(path_cmd, F_OK | X_OK) == 0)
 			{
-				PS(path_cmd)
 				free(path);
 				return (path_cmd);
 			}
