@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 01:04:39 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 15:16:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	close_fd(t_cmd *tmp_cmd)
 		close(tmp_cmd->output);
 }
 
-void	interpret_status(char *cmd, int status)
+static void	interpret_status(char *cmd, int status)
 {
 	if (status == 131)
 	{
@@ -51,6 +51,8 @@ void	interpret_status(char *cmd, int status)
 		signal_handler = 1;
 	else if (status == 0)
 		signal_handler = 0;
+	else if (status == 2)
+		write(1, "\n", 1);
 }
 
 void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
@@ -72,7 +74,6 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	{
 		waitpid(0, &status, 0);
 		interpret_status(tmp_cmd->cmd[0], status);
-		if (tmp_cmd->output != STDOUT_FILENO)
-			close_fd(tmp_cmd);
+		close_fd(tmp_cmd);
 	}
 }

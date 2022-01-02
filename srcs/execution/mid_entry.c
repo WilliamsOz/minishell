@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   mid_entry.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 00:51:34 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/02 15:19:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	close_fd(t_cmd *tmp_cmd)
+{
+	if (tmp_cmd->input != STDIN_FILENO)
+		close(tmp_cmd->input);
+	if (tmp_cmd->output != STDOUT_FILENO)
+		close(tmp_cmd->output);
+}
 
 void	rw_inside_pipes(t_minishell *m, t_cmd *tmp_cmd, char **env)
 {
@@ -29,6 +37,8 @@ void	rw_inside_pipes(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	}
 	else
 	{
-		return ;
+		close(tmp_cmd->previous->pipes[1]);
+		close(tmp_cmd->pipes[1]);
+		close_fd(tmp_cmd);
 	}
 }
