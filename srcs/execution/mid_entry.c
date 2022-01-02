@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_structure.h                                    :+:      :+:    :+:   */
+/*   mid_entry.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2022/01/01 23:13:49 by user42           ###   ########.fr       */
+/*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
+/*   Updated: 2022/01/02 00:51:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_STRUCTURE_H
-# define CMD_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct g_cmd
+void	rw_inside_pipes(t_minishell *m, t_cmd *tmp_cmd, char **env)
 {
-	char			**cmd;
-	char			*path;
-	int				input;
-	int				output;
-	int				pipes[2];
-	struct g_cmd	*next;
-	struct g_cmd	*previous;
-}				t_cmd;
+	pid_t	pid;
 
-#endif
+	pid = fork();
+	if (pid == -1)
+		fork_failed(m);
+	if (pid == 0)
+	{
+		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
+		close(tmp_cmd->previous->pipes[1]);
+		dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
+		close(tmp_cmd->pipes[0]);
+		execve(tmp_cmd->path, tmp_cmd->cmd, env);
+	}
+	else
+	{
+		return ;
+	}
+}

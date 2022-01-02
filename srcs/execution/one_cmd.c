@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 20:23:09 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 01:04:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	{
 		waitpid(0, &status, 0);
 		interpret_status(tmp_cmd->cmd[0], status);
-		close_fd(tmp_cmd);
+		if (tmp_cmd->output != STDOUT_FILENO)
+			close_fd(tmp_cmd);
 	}
 }
