@@ -6,16 +6,18 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:19:32 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:39:55 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	not_found(char *path, char *path_cmd)
+static void	not_found(char **path, char **path_cmd)
 {
-	free(path_cmd);
-	free(path);
+	free(*path_cmd);
+	*path_cmd = NULL;
+	free(*path);
+	*path = NULL;
 }
 
 static int	move_to_value(char *env, int i)
@@ -98,11 +100,12 @@ static char	*get_cmd_path(t_minishell *m, char *cmd, t_env *tmp_env, int i)
 			path_cmd = ft_strjoin(path, cmd);
 			if (access(path_cmd, F_OK | X_OK) == 0)
 			{
+				PS(path_cmd)
 				free(path);
 				return (path_cmd);
 			}
 			else
-				not_found(path, path_cmd);
+				not_found(&path, &path_cmd);
 		}
 		tmp_env = tmp_env->next;
 		i = 0;

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_structure.h                                    :+:      :+:    :+:   */
+/*   cmd_destructor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/25 13:07:10 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:35:44 by wiozsert         ###   ########.fr       */
+/*   Created: 2022/01/02 18:32:38 by wiozsert          #+#    #+#             */
+/*   Updated: 2022/01/02 18:38:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMD_STRUCTURE_H
-# define CMD_STRUCTURE_H
+#include "../../inc/minishell.h"
 
-typedef struct g_cmd
+t_cmd	*cmd_destructor(t_cmd *cmd)
 {
-	char			**cmd;
-	char			*path;
-	int				input;
-	int				output;
-	int				pipes[2];
-	struct g_cmd	*next;
-	struct g_cmd	*previous;
-}				t_cmd;
+	t_cmd	*tmp;
+	int		i;
 
-#endif
+	while (cmd != NULL)
+	{
+		i = 0;
+		tmp = cmd;
+		cmd = cmd->next;
+		while (tmp->cmd[i] != NULL)
+		{
+			free(tmp->cmd[i]);
+			tmp->cmd[i] = NULL;
+			i++;
+		}
+		if (tmp->path != NULL)
+		{
+			free(tmp->path);
+			tmp->path = NULL;
+		}
+		free(tmp);
+		tmp = NULL;
+	}
+	return (cmd);
+}

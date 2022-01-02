@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:31:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 18:40:00 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	execute_cmd(t_minishell *minishell, char **env)
 t_minishell	*destroy_data(t_minishell *m)
 {
 	m = tab_env_destructor(m);
-	// m->cmd = cmd_destructor(m->cmd);
+	m->cmd = cmd_destructor(m->cmd);
 	return (m);
 }
 
