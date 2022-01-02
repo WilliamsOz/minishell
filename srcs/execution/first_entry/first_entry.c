@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:43:33 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 16:16:24 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 16:35:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_cmd	*first_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 	else
 		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
 		{
-			// prepare_fd_builtin();
+			// prepare_fd_builtin(); //dup2 pipe sur le stdout
 			execute_builtin(minishell, tmp_cmd);
 		}
 		else
