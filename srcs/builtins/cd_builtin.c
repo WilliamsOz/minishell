@@ -13,8 +13,6 @@
 // /////////////////// DO THE RM -RF CURRENT DIRECTORY CASE
 
 #include "../../inc/minishell.h"
-#include <sys/types.h>
-#include <dirent.h>
 
 static int	check_and_move_directory(char **directories, char *originalpwd)
 {
@@ -79,16 +77,15 @@ static int		find_pwd(char *var, char *pwd_header)
 static void	change_pwd_env(t_env *env, char *pwd)
 {
 	t_env	*tmp;
-	// char	*full_pwd;
+	char	*full_pwd;
 
-	(void)pwd;
 	tmp = env;
 	while (env != NULL)
 	{
 		if (find_pwd(env->var, "PWD=") == TRUE)
 		{
 			free(env->var);
-			// full_pwd = ft_strjoin("PWD=", pwd);
+			full_pwd = ft_strjoin("PWD=", pwd);
 		}
 		env = env->next;
 	}

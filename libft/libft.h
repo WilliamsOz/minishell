@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:32:01 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/28 17:41:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2021/12/30 18:36:37 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 char	**ft_split(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(const char *s1);
 
 #endif

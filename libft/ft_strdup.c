@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/26 15:15:03 by oozsertt          #+#    #+#             */
-/*   Updated: 2021/12/30 18:38:19 by oozsertt         ###   ########.fr       */
+/*   Created: 2020/09/18 01:12:09 by oozsertt          #+#    #+#             */
+/*   Updated: 2021/10/05 15:03:41 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "libft.h"
 
-void	echo_builtin(t_cmd *cmd);
-void	cd_builtin(t_cmd *cmd, t_env **env);
-void	env_builtin(t_env *env);
-void	exit_builtin(t_cmd *cmd);
-void	pwd_builtin(t_cmd *cmd, t_env *env);
-void	unset_builtin(t_cmd *cmd, t_env **env);
-void	export_builtin(t_cmd *cmd, t_env **env);
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	int		i;
+	char	*str;
 
-#endif
+	len = 0;
+	while (s1[len] != '\0')
+		len++;
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (str == NULL)
+		return (NULL);
+	str[len] = '\0';
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	return (str);
+}
