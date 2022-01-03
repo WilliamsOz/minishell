@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mid_entry.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 16:16:22 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/03 00:00:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void	rw_inside_pipes(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	if (pid == 0)
 	{
 		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
-		close(tmp_cmd->previous->pipes[1]);
-		dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
 		close(tmp_cmd->pipes[0]);
+		dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
+		close(tmp_cmd->pipes[1]);
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
 	}
 	else
 	{
-		close(tmp_cmd->previous->pipes[1]);
+		close(tmp_cmd->previous->pipes[0]);
 		close(tmp_cmd->pipes[1]);
 		close_fd(tmp_cmd);
 	}

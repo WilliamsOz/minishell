@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 09:25:48 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:19:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/02 21:20:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_minishell	*open_pipes(t_minishell *m)
 
 	m->cmd = memset_pipes(m->cmd);
 	tmp = m->cmd;
-	while (tmp != NULL)
+	while (tmp->next != NULL)
 	{
 		ind = pipe(tmp->pipes);
 		if (ind == -1)

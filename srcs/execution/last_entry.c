@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_entry.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:51:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/03 00:09:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,21 @@ void	execute_last_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 		fork_failed(m);
 	if (pid == 0)
 	{
+		close(tmp_cmd->previous->pipes[1]);
 		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
-		close(tmp_cmd->pipes[0]);
-		close(tmp_cmd->pipes[1]);
+		close(tmp_cmd->previous->pipes[0]);
 		if (tmp_cmd->output != STDOUT_FILENO)
+		{
 			dup2(tmp_cmd->output, STDOUT_FILENO);
+			close(tmp_cmd->output);
+		}
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
 	}
 	else
 	{
-		waitpid(0, &status, 0);
+		close(tmp_cmd->previous->pipes[0]);
+		close(tmp_cmd->previous->pipes[1]);
+		waitpid(0, &status, WNOHANG);
 		interpret_status(tmp_cmd->cmd[0], status);
 		close_fd(tmp_cmd);
 	}
