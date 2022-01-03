@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   last_entry.c                                       :+:      :+:    :+:   */
+/*   execute_last_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/03 00:09:31 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/03 12:17:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 static void	close_fd(t_cmd *tmp_cmd)
 {
@@ -41,6 +41,30 @@ static void	interpret_status(char *cmd, int status)
 		write(1, "\n", 1);
 }
 
+static void	link_child(t_cmd *tmp_cmd)
+{
+	if (tmp_cmd->input != STDIN_FILENO)
+	{
+		dup2(tmp_cmd->input, STDIN_FILENO);
+		close(tmp_cmd->input);
+	}
+	else
+	{
+		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
+		close(tmp_cmd->previous->pipes[0]);
+	}
+	if (tmp_cmd->output != STDOUT_FILENO)
+	{
+		dup2(tmp_cmd->output, STDOUT_FILENO);
+		close(tmp_cmd->output);
+	}
+	else
+	{
+		dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
+		close(tmp_cmd->pipes[1]);
+	}
+}
+
 void	execute_last_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 {
 	pid_t	pid;
@@ -52,21 +76,15 @@ void	execute_last_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 		fork_failed(m);
 	if (pid == 0)
 	{
-		close(tmp_cmd->previous->pipes[1]);
-		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
+		link_child(tmp_cmd);
 		close(tmp_cmd->previous->pipes[0]);
-		if (tmp_cmd->output != STDOUT_FILENO)
-		{
-			dup2(tmp_cmd->output, STDOUT_FILENO);
-			close(tmp_cmd->output);
-		}
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
 	}
 	else
 	{
+		waitpid(0, &status, WNOHANG);
 		close(tmp_cmd->previous->pipes[0]);
 		close(tmp_cmd->previous->pipes[1]);
-		waitpid(0, &status, WNOHANG);
 		interpret_status(tmp_cmd->cmd[0], status);
 		close_fd(tmp_cmd);
 	}

@@ -34,6 +34,7 @@ int main(int ac, char **av, char **env)
 	else
 	{
 		waitpid(0, &status, WNOHANG);
+		printf("%d\n", status);
 		close(pipes[0]);
 		close(pipes[1]);
 	}

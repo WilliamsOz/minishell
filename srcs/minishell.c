@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 22:03:54 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/03 12:10:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,28 +111,6 @@ void	print_cmd(t_cmd *cmd)
 
 //DELDELDELDELDELDELDELDELDELDELDELDELDsELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
-void	execute_cmd(t_minishell *minishell, char **env)
-{
-	t_cmd	*tmp_cmd;
-
-	signal(SIGCHLD, handle_sigchild);
-	tmp_cmd = minishell->cmd;
-	tmp_cmd = first_entry(minishell, tmp_cmd, env);
-	while (tmp_cmd != NULL && tmp_cmd->next != NULL)
-	{
-		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
-		{
-			// prepare_fd_builtin();
-			execute_builtin(minishell, tmp_cmd);
-		}
-		else
-			rw_inside_pipes(minishell, tmp_cmd, env);
-		tmp_cmd = tmp_cmd->next;
-	}
-	if (tmp_cmd != NULL)
-		execute_last_cmd(minishell, tmp_cmd, env);
-}
-
 t_minishell	*treat_data(t_minishell *minishell)
 {
 	if (redirection_check(minishell) == TRUE)
@@ -144,7 +122,7 @@ t_minishell	*treat_data(t_minishell *minishell)
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell); /* cmd && pipes */
 	minishell = tab_env_creator(minishell); /* tab_env */
-	execute_cmd(minishell, minishell->tab_env); //free les fcts qui exit
+	execution(minishell, minishell->tab_env);
 	minishell = destroy_cmd_data(minishell);
 	return (minishell);
 }

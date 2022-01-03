@@ -1,0 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   last_entry.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/03 12:17:33 by wiozsert          #+#    #+#             */
+/*   Updated: 2022/01/03 12:18:02 by wiozsert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../inc/minishell.h"
+
+t_cmd	*last_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
+{
+	if (tmp_cmd == NULL)
+		return (tmp_cmd);
+	execute_last_cmd(minishell, tmp_cmd, env);
+	tmp_cmd = tmp_cmd->next;
+	return (tmp_cmd);
+}

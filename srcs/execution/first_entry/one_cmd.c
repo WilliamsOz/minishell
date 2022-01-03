@@ -6,11 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:58:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/03 12:13:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 static void	link_child(t_cmd *tmp_cmd)
 {
@@ -24,14 +24,6 @@ static void	link_child(t_cmd *tmp_cmd)
 		dup2(tmp_cmd->output, STDOUT_FILENO);
 		close(tmp_cmd->output);
 	}
-}
-
-static void	close_fd(t_cmd *tmp_cmd)
-{
-	if (tmp_cmd->input != STDIN_FILENO)
-		close(tmp_cmd->input);
-	if (tmp_cmd->output != STDOUT_FILENO)
-		close(tmp_cmd->output);
 }
 
 static void	interpret_status(char *cmd, int status)
@@ -60,6 +52,7 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	pid_t	pid;
 	int		status;
 
+	ICI
 	pid = fork();
 	if (pid == -1)
 		fork_failed(m);
@@ -74,6 +67,5 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	{
 		waitpid(0, &status, 0);
 		interpret_status(tmp_cmd->cmd[0], status);
-		close_fd(tmp_cmd);
 	}
 }
