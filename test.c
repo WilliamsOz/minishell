@@ -7,36 +7,35 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	int status;
-	int h;
 	char	*tab[2] = {"cat", NULL};
-	char	*tab2[2] = {"ls", NULL};
-
-	h = dup(STDIN_FILENO);
-	pid_t pid = fork();
+	char	*tab1[2] = {"ls", NULL};
 	int pipes[2];
+
 	pipe(pipes);
+	pid_t pid = fork();
 	if (pid == 0)
 	{
-		// printf("%d\n", h);
-		// dup2(h, STDIN_FILENO);
-		// close (h);
-		dup2(pipes[0], STDIN_FILENO);
+		close(pipes[0]);
 		dup2(pipes[1], STDOUT_FILENO);
+		close(pipes[1]);
 		execve("/bin/cat", tab, env);
 	}
+	// else
+		// close(pipes[1]);
+
 	pid_t	pid1 = fork();
-	int pipes1[2];
-	pipe(pipes1);
 	if (pid1 == 0)
 	{
-		execve("/bin/ls", tab2, env);
+		dup2(pipes[0], STDIN_FILENO);
+		close(pipes[0]);
+		close(pipes[1]);
+		execve("/bin/ls", tab1, env);
 	}
 	else
 	{
-		waitpid(0, &status, WNOHANG);
-		printf("%d\n", status);
 		close(pipes[0]);
 		close(pipes[1]);
+		waitpid(0, &status, WNOHANG);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 12:13:28 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/03 15:52:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	pid_t	pid;
 	int		status;
 
-	ICI
 	pid = fork();
 	if (pid == -1)
 		fork_failed(m);
