@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/03 16:21:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/03 17:24:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ void	execute_last_cmd(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 			execute_builtin(minishell, tmp_cmd);
 		else
 			execve(tmp_cmd->path, tmp_cmd->cmd, env);
+		exit (errno);
 	}
 	else
 	{
+		close(tmp_cmd->previous->pipes[1]);
 		close(tmp_cmd->previous->pipes[0]);
 		waitpid(0, &status, 0);
 		interpret_status(tmp_cmd->cmd[0], status);
