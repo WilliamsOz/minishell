@@ -6,36 +6,48 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 18:32:38 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:10:54 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:24:14 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static t_cmd	*free_cmd_path(t_cmd *tmp, char *cmd)
+{
+	if (tmp->path != cmd)
+		free(tmp->path);
+	tmp->path = NULL;
+	return (tmp);
+}
+
+static t_cmd	*free_cmd(t_cmd *tmp, int i)
+{
+	while (tmp->cmd[i] != NULL)
+	{
+		free(tmp->cmd[i]);
+		tmp->cmd[i] = NULL;
+		i++;
+	}
+	free(tmp->cmd[i]);
+	tmp->cmd[i] = NULL;
+	free(tmp->cmd);
+	tmp->cmd = NULL;
+	free(tmp);
+	tmp = NULL;
+	return (tmp);
+}
+
 t_cmd	*cmd_destructor(t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	while (cmd != NULL)
 	{
-		i = 0;
 		tmp = cmd;
 		cmd = cmd->next;
-		while (tmp->cmd[i] != NULL)
-		{
-			free(tmp->cmd[i]);
-			tmp->cmd[i] = NULL;
-			i++;
-		}
-		free(tmp->cmd[i]);
 		if (tmp->path != NULL)
-		{
-			free(tmp->path);
-			tmp->path = NULL;
-		}
-		free(tmp);
-		tmp = NULL;
+			tmp = free_cmd_path(tmp, tmp->cmd[0]);
+		tmp = free_cmd(tmp, 0);
 	}
 	free(cmd);
 	cmd = NULL;

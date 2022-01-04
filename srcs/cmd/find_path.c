@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 11:28:26 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:23:47 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_cmd	*find_and_get_path_cmd(t_minishell *m, t_cmd *cmd, t_env *env)
 	{
 		tmp_env = env;
 		tmp_cmd->path = get_cmd_path(m, tmp_cmd->cmd[0], tmp_env, 0);
+		if (tmp_cmd->path == NULL)
+			tmp_cmd->path = tmp_cmd->cmd[0];
 		tmp_cmd = tmp_cmd->next;
 	}
 	return (cmd);

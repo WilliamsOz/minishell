@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:47:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:59:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ char	*trim(t_minishell *minishell, char *token, int i)
 		exit (errno);
 	}
 	if (ind != -1)
+	{
 		free(token);
+		token = NULL;
+	}
 	token = tmp;
 	return (token);
 }

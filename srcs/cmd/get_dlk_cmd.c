@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:56:07 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 13:22:23 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:17:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_dlk_list	*get_one_cmd_tab(t_minishell *m, t_dlk_list *dlk)
 	if (dlk->cmd == NULL)
 		init_cmd_failed(m);
 	dlk->cmd[0] = dlk->token;
+	dlk->token = NULL;
 	dlk->cmd[1] = NULL;
 	return (dlk);
 }
@@ -53,6 +54,7 @@ t_dlk_list	*get_cmd_and_flag_tab(t_minishell *m, t_dlk_list *dlk)
 	while (tmp != NULL && tmp->token != NULL)
 	{
 		dlk->cmd[i] = tmp->token;
+		tmp->token = NULL;
 		i++;
 		tmp = tmp->next;
 	}
@@ -83,7 +85,9 @@ t_dlk_list	*get_dlk_cmd(t_minishell *m, t_dlk_list *dlk)
 	tmp = dlk;
 	while (tmp != NULL)
 	{
-		if (is_rafter(tmp) == TRUE)
+		if (tmp->here_doc)
+			tmp = tmp->next;
+		else if (is_rafter(tmp) == TRUE)
 			tmp = tmp->next->next;
 		else if (tmp->token != NULL)
 			tmp = cpy_cmd(m, tmp);

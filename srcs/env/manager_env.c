@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:43:12 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 12:07:53 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:49:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,4 @@ t_env	*env_destructor(t_env *env)
 	}
 	env = NULL;
 	return (env);
-}
-
-t_env	*env_creator(t_minishell *m, char **env)
-{
-	t_env	*root;
-
-	m->env = create_root(m, &root, env);
-	return (root);
 }

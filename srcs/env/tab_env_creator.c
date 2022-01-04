@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 12:35:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 10:15:15 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:43:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_minishell	*tab_env_creator(t_minishell *m)
 		m->tab_env[i] = (char *)malloc(sizeof(char) * (len + 1));
 		if (m->tab_env[i] == NULL)
 			mall_str_tab_env_failed(m);
+		m->tab_env[i][len] = '\0';
 		m->tab_env[i] = cpy_env(tmp->var, m->tab_env[i], 0);
 		i++;
 		tmp = tmp->next;

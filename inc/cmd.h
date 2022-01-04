@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:10:57 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 10:12:13 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:05:50 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int			move_to_value(char *env, int i);
 t_minishell	*open_pipes(t_minishell *m);
 t_cmd		*find_and_get_path_cmd(t_minishell *m, t_cmd *cmd, t_env *env);
 t_cmd		*init_cmd_path(t_cmd *cmd);
-t_cmd		*cpy_cmd_from_dlk(t_cmd *cmd, t_dlk_list *dlk);
+t_minishell	*cpy_cmd_from_dlk(t_minishell *minishell);
 t_dlk_list	*get_dlk_cmd(t_minishell *minishell, t_dlk_list *dlk);
 t_dlk_list	*memset_dlk_cmd(t_dlk_list *dlk);
 void		mall_new_path_failed(t_minishell *m);

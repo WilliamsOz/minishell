@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 13:47:37 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:30:27 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:48:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ static t_env	*get_node(t_minishell *m, char **env, int i)
 	return (m->env);
 }
 
-static void		mall_root_var_failed(t_minishell *m)
-{
-	strerror(errno);
-	free(m->env);
-	m = destroy_all_data(m);
-	exit (errno);
-}
-
 t_env	*create_root(t_minishell *m, t_env **root, char **env)
 {
 	*root = (t_env *)malloc(sizeof(t_env));
@@ -92,4 +84,12 @@ t_env	*create_root(t_minishell *m, t_env **root, char **env)
 		*root = create_var(m, env, 0, 0);
 	}
 	return (*root);
+}
+
+t_env	*env_creator(t_minishell *m, char **env)
+{
+	t_env	*root;
+
+	m->env = create_root(m, &root, env);
+	return (root);
 }

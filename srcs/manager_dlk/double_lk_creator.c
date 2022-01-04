@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:49:39 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 17:22:42 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,28 @@ static char	*_cpy_token_(char *line, int *p_i, int i, int j)
 	return (tmp);
 }
 
-static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *str, int *p_i, int i)
+static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *line, int *p_i, int i)
 {
 	i = *p_i;
-	i = skip_space(str, i);
-	if (is_it_a_quote(str[i]) == 1)
+	i = skip_space(line, i);
+	if (is_it_a_quote(line[i]) == 1)
 	{
-		if (str[i] == SIMPLE_COTE)
+		if (line[i] == SIMPLE_COTE)
 			dlk->simple_quote++;
-		else if (str[i] == DOUBLE_COTE)
+		else if (line[i] == DOUBLE_COTE)
 			dlk->double_quote++;
 		i++;
-		dlk = get_coted_token(dlk, str, &i, 1);
+		dlk = get_coted_token(dlk, line, &i, 1);
 	}
-	else if (str[i] != '\0' && is_metacharacter(str[i]) == 1)
+	else if (line[i] != '\0' && is_metacharacter(line[i]) == 1)
 	{
-		if (str[i + 1] == PIPELINE)
+		if (line[i + 1] == PIPELINE)
 			dlk->pipeline_next_to_pipeline = 1;
-		dlk = get_metacharacter(dlk, str[i], &i, str);
+		dlk = get_metacharacter(dlk, line[i], &i, line);
 	}
 	else
-		dlk->token = _cpy_token_(str, &i, 0, 0);
-	i = skip_space(str, i);
+		dlk->token = _cpy_token_(line, &i, 0, 0);
+	i = skip_space(line, i);
 	*p_i = i;
 	return (dlk);
 }

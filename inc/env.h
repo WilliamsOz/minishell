@@ -6,13 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 12:29:01 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:18:40 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:50:52 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
+void		mall_root_var_failed(t_minishell *m);
 void		mall_str_tab_env_failed(t_minishell *m);
 void		mall_tab_env_failed(t_minishell *m);
 t_minishell	*tab_env_destructor(t_minishell *m);

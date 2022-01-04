@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:35:32 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/26 15:35:48 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 15:55:16 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_dlk_list	*leave_one_token(t_dlk_list *dlk)
 			{
 				keep->next = tmp->next;
 				free(tmp);
+				tmp = NULL;
 				tmp = keep->next;
 			}
 			tmp = keep->next;

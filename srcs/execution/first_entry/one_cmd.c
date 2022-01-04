@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 15:52:46 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 16:47:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	interpret_status(char *cmd, int status)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
 		signal_handler = 131;
 	}
-	else if (status == 3584)
+	else if (status == 3584 || status == 512)
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd(": command not found\n", 2);
