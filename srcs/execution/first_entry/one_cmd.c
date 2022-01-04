@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   one_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 18:38:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:19:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 		signal_handler = -1;
 		link_child(tmp_cmd);
 		execve(tmp_cmd->path, tmp_cmd->cmd, env);
+		m = free_child(m);
 		exit (errno);
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rw_inside_pipes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/03 17:24:10 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:16:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	rw_inside_pipes(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 			execute_builtin(minishell, tmp_cmd);
 		else
 			execve(tmp_cmd->path, tmp_cmd->cmd, env);
+		minishell = free_child(minishell);
 		exit (errno);
 	}
 	else

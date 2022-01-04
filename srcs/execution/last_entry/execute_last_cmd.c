@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_last_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/03 17:24:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 20:16:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	execute_last_cmd(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 			execute_builtin(minishell, tmp_cmd);
 		else
 			execve(tmp_cmd->path, tmp_cmd->cmd, env);
+		minishell = free_child(minishell);
 		exit (errno);
 	}
 	else
