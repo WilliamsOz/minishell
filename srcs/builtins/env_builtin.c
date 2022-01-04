@@ -12,8 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// env -i condition
-
 void	env_builtin(t_env *env)
 {
 	t_env	*tmp;

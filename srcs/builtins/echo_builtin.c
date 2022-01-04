@@ -13,7 +13,6 @@
 #include "../../inc/minishell.h"
 
 typedef int	t_bool;
-// maybe add echo $? command ?
 
 static t_bool	is_n_option(char *option)
 {
