@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 19:21:16 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:41:55 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ t_minishell	*is_logic_input(t_minishell *minishell)
 		heredoc_before_errors(minishell, keep);
 		if (minishell->d_lk != NULL)
 			minishell->d_lk = double_lk_destroyer(minishell->d_lk);
+		if (minishell->parsing_err != NULL)
+			minishell->parsing_err
+			= parsing_err_destroyer(minishell->parsing_err);
 		if (minishell->line != NULL)
 			minishell->line = free_line(minishell->line);
 	}

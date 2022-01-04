@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 16:45:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:50:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,13 @@ void	print_cmd(t_cmd *cmd)
 //DELDELDELDELDELDELDELDELDELDELDELDELDsELDELDELDELDELDELDELDELDELDELDELDELDELDEL
 
 t_minishell	*treat_data(t_minishell *minishell)
+//minishell && env && parsin_error && dlk && dlk->token
 {
 	if (redirection_check(minishell) == TRUE)
 	{
 		close_heredoc_pipes(minishell->d_lk);
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
+		minishell->parsing_err = parsing_err_destroyer(minishell->parsing_err);
 		return (minishell);
 	}
 	minishell = trim_token(minishell);
@@ -128,13 +130,14 @@ t_minishell	*treat_data(t_minishell *minishell)
 }
 
 t_minishell	*start_minishell(t_minishell *minishell)
+//minishell && env && parsing_error
 {
 	minishell = are_quotes_closed(minishell, 0, minishell->line);
 	if (minishell->line != NULL && minishell->line[0] != '\0')
 	{
 		add_history(minishell->line);
-		minishell->d_lk = double_lk_creator(minishell,
-			minishell->line, 0); /* d_lk */
+		minishell->d_lk = double_lk_creator(minishell, // +++++ dlk && dlk->token
+			minishell->line, 0);
 		minishell = is_logic_input(minishell);
 		minishell = heredoc(minishell, minishell->d_lk); /*hd_pipes */
 		if (minishell->line != NULL)
@@ -147,6 +150,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 }
 
 void	minishell_core(t_minishell *minishell)
+//minishell && env
 {
 	while (1)
 	{
@@ -159,9 +163,15 @@ void	minishell_core(t_minishell *minishell)
 			break ;
 		}
 		else
+		{
+			minishell->parsing_err = parsing_err_creator(); // +++++ parsing
+			if (minishell->parsing_err == NULL)
+				init_parsing_failed(minishell);
+			signal_handler = 0;
 			minishell = start_minishell(minishell);
+			minishell = destroy_data(minishell);
+		}
 	}
-	minishell = destroy_all_data(minishell);
 }
 //ne pas oublier de free char **env
 //close les pipes de la commandes pour tout les fails de malloc et a la fin
@@ -169,19 +179,17 @@ void	minishell_core(t_minishell *minishell)
 int	main(int ac, char **av, char **env)
 {
 	t_minishell	*minishell;
+	int			att;
 
-	// att = isatty(STDIN_FILENO);
 	(void)av;
-	if (ac != 1)
+	att = isatty(STDIN_FILENO);
+	if (ac != 1 || att == 0)
 		return (0);
-	minishell = minishell_creator(env); /* minishell && env */
-	minishell->parsing_err = parsing_err_creator(); /* parsing */
-	if (minishell->parsing_err == NULL)
-	{
-		minishell = minishell_destroyer(minishell);
-		exit (errno);
-	}
-	signal_handler = 0;
+	minishell = minishell_creator(env);
 	minishell_core(minishell);
+	if (minishell->env != NULL)
+		minishell->env = env_destructor(minishell->env);
+	if (minishell != NULL)
+		minishell_destroyer(minishell);
 	return (signal_handler);
 }

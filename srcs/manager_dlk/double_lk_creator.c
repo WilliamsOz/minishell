@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 19:14:32 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:49:39 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void			__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
+static void	__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ static void			__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
 	*ptr_j = *ptr_i;
 }
 
-static char			*_cpy_token_(char *line, int *p_i, int i, int j)
+static char	*_cpy_token_(char *line, int *p_i, int i, int j)
 {
 	char	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 20:19:23 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:43:14 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,10 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 		tmp = tmp->next;
 		if (signal_handler == 130)
 		{
-			m->d_lk = double_lk_destroyer(m->d_lk);
+			if (m->d_lk != NULL)
+				m->d_lk = double_lk_destroyer(m->d_lk);
+			if (m->parsing_err != NULL)
+				m->parsing_err = parsing_err_destroyer(m->parsing_err);
 			m->line = free_line(m->line);
 			close_heredoc_pipes(m->d_lk);
 			signal_handler = 0;

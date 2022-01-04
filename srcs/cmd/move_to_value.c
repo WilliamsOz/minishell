@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_creator.c                                :+:      :+:    :+:   */
+/*   move_to_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/02 13:17:19 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:10:11 by wiozsert         ###   ########.fr       */
+/*   Created: 2022/01/04 10:10:32 by wiozsert          #+#    #+#             */
+/*   Updated: 2022/01/04 10:10:48 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell	*minishell_creator(char **env)
+int	move_to_value(char *env, int i)
 {
-	t_minishell	*minishell;
-
-	minishell = NULL;
-	minishell = (t_minishell *)malloc(sizeof(t_minishell));
-	if (minishell == NULL)
-	{
-		strerror(errno);
-		exit (errno);
-	}
-	minishell->line = NULL;
-	minishell->parsing_err = NULL;
-	minishell->d_lk = NULL;
-	minishell->env = NULL;
-	minishell->env = env_creator(minishell, env);
-	return (minishell);
+	while (env[i] != '\0' && env[i] != '=')
+		i++;
+	if (env[i] == '=')
+		i++;
+	return (i);
 }

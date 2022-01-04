@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 17:23:55 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:21:49 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int signal_handler;
 
 int				is_rafter(t_dlk_list *dlk);
 void			minishell_eof_called(void);
+t_minishell 	*destroy_data(t_minishell *minishell);
 t_parsing_err	*parsing_err_creator();
 t_parsing_err   *parsing_err_destroyer(t_parsing_err *parsing_err);
 t_minishell		*minishell_destroyer(t_minishell *minishell);

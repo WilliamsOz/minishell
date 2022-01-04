@@ -6,18 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 13:56:07 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 19:00:01 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 13:22:23 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void init_cmd_failed(t_minishell *m)
-{
-	strerror(errno);
-	m = destroy_all_data(m);
-	exit (errno);
-}
 
 t_dlk_list	*get_one_cmd_tab(t_minishell *m, t_dlk_list *dlk)
 {

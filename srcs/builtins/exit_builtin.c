@@ -34,7 +34,7 @@ static void	arg_is_ascii(t_minishell *m, t_cmd *cmd, char *arg)
 	ft_putstr_fd("bash: exit: ", cmd->output);
 	ft_putstr_fd(arg, cmd->output);
 	ft_putstr_fd(": numeric argument required\n", cmd->output);
-	m = destroy_cmd_data(m);
+	m = destroy_data(m);
 	m = destroy_all_data(m);
 	exit(2);
 }
@@ -45,15 +45,15 @@ static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
 	
 	nbr = ft_atoi(str_nbr);
 	ft_putstr_fd("exit\n", cmd->output);
-	m = destroy_cmd_data(m);
+	m = destroy_data(m);
 	m = destroy_all_data(m);
 	exit(nbr);
 }
 
 static void	no_args(t_minishell *m, t_cmd *cmd)
 {
-	ft_putstr_fd("exit\n", cmd->output);
-	m = destroy_cmd_data(m);
+	ft_putstr_fd("exit\n", cmd->output); //ecrire exit sur la sortie standard ?
+	m = destroy_data(m);
 	m = destroy_all_data(m);
 	exit(0);
 }

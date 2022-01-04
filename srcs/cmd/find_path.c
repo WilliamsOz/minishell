@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:29:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:43:08 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 11:28:26 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static void	not_found(char **path, char **path_cmd)
-{
-	free(*path_cmd);
-	*path_cmd = NULL;
-	free(*path);
-	*path = NULL;
-}
-
-static int	move_to_value(char *env, int i)
-{
-	while (env[i] != '\0' && env[i] != '=')
-		i++;
-	if (env[i] == '=')
-		i++;
-	return (i);
-}
 
 static int	get_len(char *env, int **ptr_i)
 {
@@ -42,15 +25,6 @@ static int	get_len(char *env, int **ptr_i)
 	if (env[**ptr_i] == ':')
 		**ptr_i += 1;
 	return (len);
-}
-
-void	mall_new_path_failed(t_minishell *m)
-{
-	strerror(errno);
-	m->env = env_destructor(m->env);
-	m->cmd = cmd_destructor(m->cmd);
-	m = destroy_all_data(m);
-	exit (errno);
 }
 
 static char	*cpy_new_path(char *env, char *path, int i, int j)

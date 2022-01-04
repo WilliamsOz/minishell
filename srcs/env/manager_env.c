@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:43:12 by user42            #+#    #+#             */
-/*   Updated: 2022/01/02 18:17:56 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:07:53 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_env	*env_destructor(t_env *env)
 			tmp  = NULL;
 		}	
 	}
+	env = NULL;
 	return (env);
 }
 

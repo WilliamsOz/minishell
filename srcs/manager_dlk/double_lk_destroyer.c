@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:29:51 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 18:46:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:51:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ t_dlk_list	*double_lk_destroyer(t_dlk_list *dlk)
 		free(tmp);
 		tmp = NULL;
 	}
-	dlk = NULL;
 	return (dlk);
 }

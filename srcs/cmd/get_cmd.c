@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 21:45:08 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 16:46:27 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 12:53:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_dlk_list	*destroy_dlk(t_dlk_list *dlk)
 
 t_minishell	*get_cmd(t_minishell *m)
 {
-	m->cmd = init_cmd(m, m->d_lk);
-	m = open_pipes(m);
-	m = performs_redirection(m);
+	m->cmd = init_cmd(m, m->d_lk); // +++++ cmd
+	m = open_pipes(m); // ++++ pipe
+	m = performs_redirection(m); // ++++ input && output
 	m->d_lk = memset_dlk_cmd(m->d_lk);
 	m->d_lk = get_dlk_cmd(m, m->d_lk);
 	m->cmd = cpy_cmd_from_dlk(m->cmd, m->d_lk);
