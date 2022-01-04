@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 11:21:49 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:34:56 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@
 # include "./structures/double_linked_list_structure.h"
 # include "./structures/cmd_structure.h"
 # include "./structures/minishell_structure.h"
+# include "./structures/trim_token_structure.h"
 # include "./env.h"
 # include "./parsing_errors.h"
 # include "./free_line.h"
 # include "./double_lk.h"
-# include "./structures/trim_token_structure.h"
 # include "./trim_token.h"
 # include "./heredoc.h"
 # include "./signal.h"

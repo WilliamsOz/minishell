@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 17:22:42 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/04 18:35:41 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
+static void	get_end_of_quote(char *line, int *ptr_i, int *ptr_j)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ static void	__get_end_of_quote__(char *line, int *ptr_i, int *ptr_j)
 	*ptr_j = *ptr_i;
 }
 
-static char	*_cpy_token_(char *line, int *p_i, int i, int j)
+static char	*cpy_token(char *line, int *p_i, int i, int j)
 {
 	char	*tmp;
 
@@ -41,7 +41,7 @@ static char	*_cpy_token_(char *line, int *p_i, int i, int j)
 	while (line[i] != '\0' && is_metacharacter(line[i]) == 0 && line[i] != ' ')
 	{
 		if (is_it_a_quote(line[i]) == 1)
-			__get_end_of_quote__(line, &i, &j);
+			get_end_of_quote(line, &i, &j);
 		i++;
 		j++;
 	}
@@ -58,7 +58,7 @@ static char	*_cpy_token_(char *line, int *p_i, int i, int j)
 	return (tmp);
 }
 
-static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *line, int *p_i, int i)
+static t_dlk_list	*get_token(t_dlk_list *dlk, char *line, int *p_i, int i)
 {
 	i = *p_i;
 	i = skip_space(line, i);
@@ -78,13 +78,13 @@ static t_dlk_list	*__get_token__(t_dlk_list *dlk, char *line, int *p_i, int i)
 		dlk = get_metacharacter(dlk, line[i], &i, line);
 	}
 	else
-		dlk->token = _cpy_token_(line, &i, 0, 0);
+		dlk->token = cpy_token(line, &i, 0, 0);
 	i = skip_space(line, i);
 	*p_i = i;
 	return (dlk);
 }
 
-static t_dlk_list	*__get_next_tokens__(t_dlk_list *dlk, char *line, int i)
+static t_dlk_list	*get_next_tokens(t_dlk_list *dlk, char *line, int i)
 {
 	t_dlk_list	*tmp;
 	t_dlk_list	*new;
@@ -97,7 +97,7 @@ static t_dlk_list	*__get_next_tokens__(t_dlk_list *dlk, char *line, int i)
 			return (NULL);
 		new->next = NULL;
 		new = init_dlk_metacharacter(new);
-		new = __get_token__(new, line, &i, 0);
+		new = get_token(new, line, &i, 0);
 		if (new->is_metacharacter == 0 && new->token == NULL)
 			return (NULL);
 		tmp = dlk;
@@ -118,11 +118,11 @@ t_dlk_list	*double_lk_creator(t_minishell *minishell, char *line, int i)
 		init_dlk_creator_failed(minishell);
 	dlk->previous = NULL;
 	dlk = init_dlk_metacharacter(dlk);
-	dlk = __get_token__(dlk, line, &i, 0);
+	dlk = get_token(dlk, line, &i, 0);
 	if (dlk->is_metacharacter == 0 && dlk->token == NULL)
 		init_dlk_token_failed(minishell);
 	if (line[i] != '\0')
-		dlk = __get_next_tokens__(dlk, line, i);
+		dlk = get_next_tokens(dlk, line, i);
 	if (dlk->is_metacharacter == 0 && dlk == NULL)
 		init_dlk_token_failed(minishell);
 	return (dlk);
