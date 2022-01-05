@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 14:39:34 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:56:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ static void	interpret_status(t_cmd *cmd, int status, char **env)
 		write(1, "\n", 1);
 }
 
+static void	link_child(void)
+{
+	dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
+	close(tmp_cmd->previous->pipes[0]);
+	dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
+	close(tmp_cmd->pipes[1]);
+}
+
 void	rw_inside_pipes(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 {
 	pid_t	pid;
@@ -40,10 +48,7 @@ void	rw_inside_pipes(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 		fork_failed(minishell);
 	if (pid == 0)
 	{
-		dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
-		close(tmp_cmd->previous->pipes[0]);
-		dup2(tmp_cmd->pipes[1], STDOUT_FILENO);
-		close(tmp_cmd->pipes[1]);
+		link_child();
 		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
 			execute_builtin(minishell, tmp_cmd);
 		else
