@@ -6,7 +6,7 @@
 #    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2022/01/05 13:09:25 by wiozsert         ###   ########.fr        #
+#    Updated: 2022/01/05 13:18:02 by wiozsert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,18 +86,18 @@ OBJS = $(addsuffix .o, $(notdir $(basename $(FILESC))))
 all : $(NAME)
 
 $(NAME) : $(FILESC)
-	@mkdir -p obj
-	@make -C ./libft
-	@mv $(LIBFTFILESO) ./obj/
-	@mv ./libft/$(LIBFTLIB) .
-	@cc $(FLAGS) -c $(FILESC)
-	@cc $(FLAGS) $(OBJS) $(LIBFTLIB) $(RLFLAGS) -o $(NAME)
-	@mv $(OBJS) $(LIBFTLIB) ./obj
+	mkdir -p obj
+	make -C ./libft
+	mv $(LIBFTFILESO) ./obj/
+	mv ./libft/$(LIBFTLIB) .
+	cc $(FLAGS) -c $(FILESC)
+	cc $(FLAGS) $(OBJS) $(LIBFTLIB) $(RLFLAGS) -o $(NAME)
+	mv $(OBJS) $(LIBFTLIB) ./obj
 
 clean :
-	@rm -Rf ./obj $(LIBFTLIB)
+	rm -Rf ./obj $(LIBFTLIB)
 
 fclean : clean
-	@rm -Rf $(NAME)
+	rm -Rf $(NAME)
 
 re : fclean all

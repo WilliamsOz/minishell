@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rw_inside_pipes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 20:16:49 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 13:18:04 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	rw_inside_pipes(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -36,5 +37,6 @@ void	rw_inside_pipes(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 	{
 		close(tmp_cmd->previous->pipes[0]);
 		close(tmp_cmd->pipes[1]);
+		waitpid(0, &status, );
 	}
 }

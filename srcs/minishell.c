@@ -6,110 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:47:46 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 13:12:35 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-/*
-
-void    show_dlk(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-
-	if (dlk == NULL)
-	{
-		printf("La double_lk est vide\n");
-		return ;
-	}
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		printf("\n");
-		if (tmp->token != NULL)
-		{
-			BLUECLR
-			printf("Token :\n");
-			PS(tmp->token)
-			STOPCLR
-			printf("\n");
-		}
-		else if (tmp->is_metacharacter == 1)
-		{
-			YELLOWCLR
-			if (tmp->here_doc == 1)
-				printf("Here_doc\n");
-			else if (tmp->double_upper_rafter == 1)
-				printf("Double Upper Rafter\n");
-			else if (tmp->pipeline == 1)
-				printf("Pipeline\n");
-			else if (tmp->lower_rafter == 1)
-				printf("Lower Rafter\n");
-			else if (tmp->upper_rafter == 1)
-				printf("Upper Rafter\n");
-			STOPCLR
-			printf("\n");
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	print_dlk_cmd(t_dlk_list *dlk)
-{
-	t_dlk_list	*tmp;
-	int			i;
-
-	tmp = dlk;
-	while (tmp != NULL)
-	{
-		i = 0;
-		if (tmp->cmd != NULL)
-		{
-			while (tmp->cmd[i] != NULL)
-			{
-				REDCLR
-				if (i == 0)
-					printf("Command 1 : ");
-				else
-					printf("Command %d : ", i + 1);
-				printf("|%s|\n", tmp->cmd[i]);
-				STOPCLR
-				i++;
-			}
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	t_cmd	*tmp;
-	int			i;
-
-	tmp = cmd;
-	while (tmp != NULL)
-	{
-		i = 0;
-		if (tmp->cmd != NULL)
-		{
-			while (tmp->cmd[i] != NULL)
-			{
-				REDCLR
-				if (i == 0)
-					printf("Command 1 : ");
-				else
-					printf("Command %d : ", i + 1);
-				printf("|%s|\n", tmp->cmd[i]);
-				STOPCLR
-				i++;
-			}
-		}
-		tmp = tmp->next;
-	}
-}
-
-*/
 
 t_minishell	*treat_data(t_minishell *minishell)
 {
