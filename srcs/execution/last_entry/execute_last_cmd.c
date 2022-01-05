@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 13:21:21 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:42:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	execute_last_cmd(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 	{
 		close(tmp_cmd->previous->pipes[1]);
 		close(tmp_cmd->previous->pipes[0]);
-		waitpid(0, &status, WUNTRACED);
+		waitpid(0, &status, 0);
 		interpret_status(tmp_cmd, status, env);
 	}
 }
