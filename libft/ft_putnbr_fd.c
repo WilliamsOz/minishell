@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:46:51 by user42            #+#    #+#             */
-/*   Updated: 2021/12/15 12:47:37 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:21:34 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static long		ft_intlen(long nbr)
+static long	ft_intlen(long nbr)
 {
 	int		i;
 	long	len;
@@ -29,7 +29,7 @@ static long		ft_intlen(long nbr)
 	return (len);
 }
 
-void			ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	char	res[10];
 	long	nbr;

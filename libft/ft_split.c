@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/15 00:46:00 by oozsertt          #+#    #+#             */
-/*   Updated: 2021/12/26 18:50:20 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:22:04 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 static size_t	get_words_nbr(char *str, char c)
 {
-	int	i;
 	size_t	size;
+	int		i;
 
 	i = 0;
 	size = 0;
@@ -36,9 +36,9 @@ static size_t	get_words_nbr(char *str, char c)
 
 static char	**malloc_tab(char **finaltab, char *str, char c)
 {
-	int	i;
-	int	j;
 	size_t	len;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
