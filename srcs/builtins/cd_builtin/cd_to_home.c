@@ -6,13 +6,11 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:30:12 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/04 17:10:45 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:52:00 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
-
-
 
 static char	*find_home(t_env *env)
 {
@@ -58,9 +56,11 @@ static void	check_and_move_directory(char **directories, char *originalpwd)
 
 void	cd_to_home(t_env *env)
 {
-	char	*pwd = NULL;
-	char	**home_path = NULL;
+	char	*pwd;
+	char	**home_path;
 
+	pwd = NULL;
+	home_path = NULL;
 	move_to_root(env);
 	pwd = getcwd(NULL, 0);
 	home_path = ft_split(find_home(env), '/');

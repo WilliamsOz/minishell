@@ -6,13 +6,13 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 15:24:45 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/04 16:14:52 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:49:18 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int		find_env_var(char *var, char *pwd_header)
+int	find_env_var(char *var, char *pwd_header)
 {
 	int	i;
 

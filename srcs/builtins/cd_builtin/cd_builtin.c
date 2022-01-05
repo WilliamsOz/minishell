@@ -1,14 +1,14 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   cd_builtin.c                                       :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2021/12/22 21:33:59 by oozsertt          #+#    #+#             */
-// /*   Updated: 2021/12/27 15:42:11 by oozsertt         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd_builtin.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/22 21:33:59 by oozsertt          #+#    #+#             */
+/*   Updated: 2022/01/05 11:51:24 by oozsertt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
@@ -70,11 +70,13 @@ static void	change_pwd_env(t_env *env, char *pwd)
 	}
 }
 
-void	cd_builtin(t_cmd *cmd, t_env **env) // add t_env **env
+void	cd_builtin(t_cmd *cmd, t_env **env)
 {
-	char	**directories = NULL;
-	char	*pwd = NULL;
+	char	**directories;
+	char	*pwd;
 
+	directories = NULL;
+	pwd = NULL;
 	if (multiple_args(cmd->cmd) == TRUE)
 		ft_putstr_fd("bash: cd: too many arguments\n", cmd->output);
 	else if (cmd->cmd[1] == NULL)

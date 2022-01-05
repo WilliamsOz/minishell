@@ -1,18 +1,18 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   pwd_builtin.c                                      :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2021/12/26 19:10:03 by oozsertt          #+#    #+#             */
-// /*   Updated: 2021/12/26 19:55:34 by oozsertt         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd_builtin.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/26 19:10:03 by oozsertt          #+#    #+#             */
+/*   Updated: 2022/01/05 11:53:00 by oozsertt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int		find_pwd(char *var, char *pwd_header)
+static int	find_pwd(char *var, char *pwd_header)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ static int		find_pwd(char *var, char *pwd_header)
 
 static int	is_flag_error(t_cmd *cmd)
 {
-	char *flag;
+	char	*flag;
 
 	flag = cmd->cmd[1];
 	if (flag != NULL && flag[0] == '-')

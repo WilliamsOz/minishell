@@ -1,22 +1,16 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   exit_builtin.c                                     :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2021/12/26 20:26:51 by oozsertt          #+#    #+#             */
-// /*   Updated: 2021/12/27 15:39:05 by oozsertt         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/26 20:26:51 by oozsertt          #+#    #+#             */
+/*   Updated: 2022/01/05 11:52:40 by oozsertt         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-//There are four types of exit, each write exit in terminal:
-//exit : exit and set exit status to 0;
-//exit (num) : exit and set exit status to num
-//exit (num alpha) : exit and set exit status to 2 + a error message
-//exit (num) (num) (num) : doesn't exit and set exit status to 1 + a error message
 
 static int	count_args(char **cmd)
 {
@@ -43,7 +37,7 @@ static void	arg_is_ascii(t_minishell *m, char *arg)
 static void	arg_is_num(t_minishell *m, char *str_nbr)
 {
 	int	nbr;
-	
+
 	nbr = ft_atoi(str_nbr);
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	m = destroy_cmd_data(m);

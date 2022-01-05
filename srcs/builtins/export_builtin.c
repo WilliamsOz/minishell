@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:13:03 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:41:53 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:48:57 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ static void	free_strs(char **strs)
 
 static void	replace_env_var(t_env *var_node, char *var)
 {
-	char *new_var = NULL;
-	
+	char	*new_var;
+
+	new_var = NULL;
 	new_var = ft_strdup(var);
 	free(var_node->var);
 	var_node->var = new_var;
@@ -50,10 +51,12 @@ static void	replace_env_var(t_env *var_node, char *var)
 
 static int	var_exist(t_env *env, char *str)
 {
-	char	**var_and_value = NULL;
-	char	**env_var = NULL;
+	char	**var_and_value;
+	char	**env_var;
 	t_env	*tmp;
 
+	env_var = NULL;
+	var_and_value = NULL;
 	var_and_value = ft_split(str, '=');
 	tmp = env;
 	while (tmp != NULL)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_to_root.c                                       :+:      :+:    :+:   */
+/*   move_to_root.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:46:48 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/04 17:10:51 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:49:48 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	move_to_root(t_env *env)
 {
-	char	**root_path = NULL;
+	char	**root_path;
 	t_env	*tmp;
 	int		i;
 
+	root_path = NULL;
 	tmp = env;
 	while (tmp != NULL)
 	{
