@@ -30,10 +30,10 @@ static int	count_args(char **cmd)
 
 static void	arg_is_ascii(t_minishell *m, t_cmd *cmd, char *arg)
 {
-	ft_putstr_fd("exit\n", cmd->output);
-	ft_putstr_fd("bash: exit: ", cmd->output);
-	ft_putstr_fd(arg, cmd->output);
-	ft_putstr_fd(": numeric argument required\n", cmd->output);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("bash: exit: ", STDERR_FILENO);
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	m = destroy_cmd_data(m);
 	m = destroy_data(m);
 	m = destroy_all_data(m);
@@ -45,7 +45,7 @@ static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
 	int	nbr;
 	
 	nbr = ft_atoi(str_nbr);
-	ft_putstr_fd("exit\n", cmd->output);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	m = destroy_cmd_data(m);
 	m = destroy_data(m);
 	m = destroy_all_data(m);
@@ -54,7 +54,7 @@ static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
 
 static void	no_args(t_minishell *m, t_cmd *cmd)
 {
-	ft_putstr_fd("exit\n", cmd->output);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	m = destroy_cmd_data(m);
 	m = destroy_data(m);
 	m = destroy_all_data(m);
@@ -71,7 +71,8 @@ void	exit_builtin(t_minishell *m, t_cmd *cmd)
 		no_args(m, cmd);
 	else if (args_nbr > 2)
 	{
-		ft_putstr_fd("exit\nbash: exit: too many arguments\n", cmd->output);
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
 		signal_handler = 1;
 	}
 	else if (args_nbr == 2)
