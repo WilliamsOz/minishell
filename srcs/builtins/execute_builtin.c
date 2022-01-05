@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 16:32:44 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:05:54 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:47:09 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execute_builtin(t_minishell *m, t_cmd *tmp_cmd)
 {
 	if (ft_strcmp("cd", tmp_cmd->cmd[0]) == TRUE)
 		cd_builtin(tmp_cmd, &m->env);
-	if (ft_strcmp("echo", tmp_cmd->cmd[0]) == TRUE)
+	else if (ft_strcmp("echo", tmp_cmd->cmd[0]) == TRUE)
 		echo_builtin(tmp_cmd);
 	else if (ft_strcmp("env", tmp_cmd->cmd[0]) == TRUE)
 		env_builtin(m->env, tmp_cmd);

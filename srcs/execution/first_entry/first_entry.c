@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_entry.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/01 23:43:33 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 20:18:10 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:53:11 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_cmd	*first_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
 			exec_one_cmd(minishell, tmp_cmd, env);
 	}
 	else
-		exec_in_pipe(minishell, tmp_cmd);
+		minishell = exec_in_pipe(minishell, tmp_cmd);
 	close_fd(tmp_cmd);
 	tmp_cmd = tmp_cmd->next;
 	return (tmp_cmd);

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:16:31 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 14:56:54 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:49:53 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	close_fd(t_cmd *tmp_cmd)
 		close(tmp_cmd->output);
 }
 
-t_cmd	*mid_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
+t_cmd	*mid_entry(t_minishell *minishell, t_cmd *tmp_cmd)
 {
-	rw_inside_pipes(minishell, tmp_cmd, env);
+	minishell = rw_inside_pipes(minishell, tmp_cmd);
 	close_fd(tmp_cmd);
 	tmp_cmd = tmp_cmd->next;
 	return (tmp_cmd);

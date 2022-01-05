@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   last_entry.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:17:33 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 20:16:59 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:53:14 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static void	close_fd(t_cmd *tmp_cmd)
 		close(tmp_cmd->output);
 }
 
-t_cmd	*last_entry(t_minishell *minishell, t_cmd *tmp_cmd, char **env)
+t_cmd	*last_entry(t_minishell *minishell, t_cmd *tmp_cmd)
 {
 	if (tmp_cmd == NULL)
 		return (tmp_cmd);
-	execute_last_cmd(minishell, tmp_cmd, env);
+	execute_last_cmd(minishell, tmp_cmd);
 	close_fd(tmp_cmd);
 	tmp_cmd = tmp_cmd->next;
 	return (tmp_cmd);

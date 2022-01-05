@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 16:47:04 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:53:35 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:32:12 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_cmd	*get_new_node_cmd(t_minishell *m, t_cmd *root)
 	new->cmd = NULL;
 	new->input = STDIN_FILENO;
 	new->output = STDOUT_FILENO;
+	new->status = 0;
 	tmp = root;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
@@ -43,6 +44,7 @@ t_cmd	*init_cmd(t_minishell *m, t_dlk_list *dlk)
 	root->cmd = NULL;
 	root->input = STDIN_FILENO;
 	root->output = STDOUT_FILENO;
+	root->status = 0;
 	tmp = dlk;
 	while (tmp != NULL)
 	{
