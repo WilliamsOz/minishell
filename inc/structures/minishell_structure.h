@@ -6,14 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 18:21:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/30 12:39:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:45:13 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_STRUCTURE_H
 # define MINISHELL_STRUCTURE_H
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	char			*line;
 	t_parsing_err	*parsing_err;

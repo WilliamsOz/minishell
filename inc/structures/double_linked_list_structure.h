@@ -6,14 +6,14 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:15:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 18:34:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:45:02 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOUBLE_LINKED_LIST_STRUCTURE_H
 # define DOUBLE_LINKED_LIST_STRUCTURE_H
 
-typedef struct    s_dlk_list
+typedef struct s_dlk_list
 {
 	char				**cmd;
 	char				*token;

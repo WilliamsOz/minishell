@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 11:25:42 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:38:07 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:00:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	check_all_tokens_errors(t_minishell *minishell, t_dlk_list **p)
 	return (FALSE);
 }
 
-static t_minishell	*special_char_found(t_minishell *minishell)
+t_minishell	*special_char_found(t_minishell *minishell)
 {
 	if (minishell->d_lk != NULL)
 		minishell->d_lk = double_lk_destroyer(minishell->d_lk);
@@ -53,16 +53,16 @@ static void	heredoc_before_errors(t_minishell *m, t_dlk_list *keep)
 	signal(SIGQUIT, hd_handler);
 	while (tmp != NULL && tmp != keep)
 	{
-		signal_handler = 0;
+		g_signal_handler = 0;
 		if (tmp->here_doc == 1)
 		{
-			signal_handler = 0;
+			g_signal_handler = 0;
 			tmp = hd_prepare_dlk(tmp);
 			tmp = call_child(m, tmp, 0);
 			close(tmp->heredoc_pipe[0]);
 			close(tmp->heredoc_pipe[1]);
 		}
-		if (signal_handler == 130)
+		if (g_signal_handler == 130)
 			break ;
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:19:20 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 18:50:31 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:49:04 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*cpy_status(char *tmp, int *ptr_i, int *ptr_j)
 	int		i;
 
 	get_status = NULL;
-	get_status = ft_itoa(signal_handler);
+	get_status = ft_itoa(g_signal_handler);
 	i = 0;
 	while (get_status[i] != '\0')
 	{

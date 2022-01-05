@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 19:10:03 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:53:00 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:57:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	pwd_builtin(t_cmd *cmd, t_env *env)
 	t_env	*tmp;
 
 	if (is_flag_error(cmd) == TRUE)
-		signal_handler = 2;
+		g_signal_handler = 2;
 	else
 	{
 		tmp = env;
@@ -71,6 +71,6 @@ void	pwd_builtin(t_cmd *cmd, t_env *env)
 			env = env->next;
 		}
 		env = tmp;
-		signal_handler = 0;
+		g_signal_handler = 0;
 	}
 }

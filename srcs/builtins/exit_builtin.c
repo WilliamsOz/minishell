@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 20:26:51 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:52:40 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:57:44 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exit_builtin(t_minishell *m, t_cmd *cmd)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		ft_putstr_fd("bash: exit: too many arguments\n", STDERR_FILENO);
-		signal_handler = 1;
+		g_signal_handler = 1;
 	}
 	else if (args_nbr == 2)
 	{

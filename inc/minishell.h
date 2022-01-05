@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 18:34:56 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:49:25 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,42 +55,18 @@
 # define PIPELINE 124
 # define HEREDOC_CASE 0
 
-//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
-
-# define REDCLR printf("\033[0;31m");
-# define GREENCLR printf("\033[0;32m");
-# define YELLOWCLR printf("\033[0;33m");
-# define BLUECLR printf("\033[0;34m");
-# define PURPLECLR printf("\033[0;35m");
-# define CYANCLR printf("\033[0;36m");
-# define WHITECLR printf("\033[0;37m");
-# define STOPCLR printf("\033[0m");
-# define ICI printf("ICI\n");
-# define PS(x) printf("%s\n", x);
-# define PC(x) printf("%c\n", x);
-# define PD(x) printf("%d\n", x);
-# define PP(x) printf("%p\n", x);
-# define ex exit(EXIT_SUCCESS);
-void    show_dlk(t_dlk_list *dlk);
-# define SMDLK(x) show_dlk(x);
-# define PRTDLKCMD print_dlk_cmd(dlk);
-void	print_cmd(t_cmd *cmd);
-# define PRTCMD(x) print_cmd(x);
-
-//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
-
-int signal_handler;
+int	g_signal_handler;
 
 int				is_rafter(t_dlk_list *dlk);
 void			minishell_eof_called(void);
-t_minishell 	*destroy_data(t_minishell *minishell);
-t_parsing_err	*parsing_err_creator();
-t_parsing_err   *parsing_err_destroyer(t_parsing_err *parsing_err);
+t_minishell		*destroy_data(t_minishell *minishell);
+t_parsing_err	*parsing_err_creator(void);
+t_parsing_err	*parsing_err_destroyer(t_parsing_err *parsing_err);
 t_minishell		*minishell_destroyer(t_minishell *minishell);
 t_minishell		*minishell_creator(char **env);
 t_dlk_list		*double_lk_destroyer(t_dlk_list *d_lk);
 t_dlk_list		*double_lk_creator(t_minishell *minishell, char *line, int i);
 t_minishell		*destroy_all_data(t_minishell *minishell);
-t_minishell	    *destroy_cmd_data(t_minishell *m);
+t_minishell		*destroy_cmd_data(t_minishell *m);
 
 #endif

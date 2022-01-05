@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:31:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:58:59 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	get_len(t_minishell *m, char *line, int i, int len)
 	while (line[i] != '\0')
 	{
 		if (line[i] == '$' && line[i + 1] == '?')
-			len += get_status_len(&i, signal_handler);
+			len += get_status_len(&i, g_signal_handler);
 		else if (line[i] == SIMPLE_COTE || line[i] == DOUBLE_COTE)
 		{
 			i++;
@@ -107,15 +107,15 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 
 	handle_heredoc();
 	tmp = dlk;
-	while (tmp != NULL && signal_handler != 130)
+	while (tmp != NULL && g_signal_handler != 130)
 	{
-		if (tmp->here_doc == 1 && signal_handler != 130)
+		if (tmp->here_doc == 1 && g_signal_handler != 130)
 		{
 			tmp = hd_prepare_dlk(tmp);
 			tmp = call_child(m, tmp, 0);
 		}
 		tmp = tmp->next;
-		if (signal_handler == 130)
+		if (g_signal_handler == 130)
 		{
 			if (m->d_lk != NULL)
 				m->d_lk = double_lk_destroyer(m->d_lk);
@@ -123,7 +123,7 @@ t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 				m->parsing_err = parsing_err_destroyer(m->parsing_err);
 			m->line = free_line(m->line);
 			close_heredoc_pipes(m->d_lk);
-			signal_handler = 0;
+			g_signal_handler = 0;
 			break ;
 		}
 	}

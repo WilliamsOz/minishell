@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:24:22 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:47:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,11 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1 || att == 0)
 		return (0);
 	minishell = minishell_creator(env);
-	signal_handler = 0;
+	g_signal_handler = 0;
 	minishell_core(minishell);
 	if (minishell->env != NULL)
 		minishell->env = env_destructor(minishell->env);
 	if (minishell != NULL)
 		minishell_destroyer(minishell);
-	return (signal_handler);
+	return (g_signal_handler);
 }

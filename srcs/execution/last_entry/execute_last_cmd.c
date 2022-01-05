@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:41:39 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 11:20:24 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:48:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ static void	interpret_status(t_cmd *cmd, int status)
 	if (status == 131)
 	{
 		ft_putstr_fd("Quit (core dumped)\n", 2);
-		signal_handler = 131;
+		g_signal_handler = 131;
 	}
 	else if (status == 512 && ft_strcmp(cmd->cmd[0], "ls") == TRUE)
-		signal_handler = 2;
+		g_signal_handler = 2;
 	else if (status == 3584 || status == 512)
 	{
 		ft_putstr_fd(cmd->cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		signal_handler = 127;
+		g_signal_handler = 127;
 	}
 	else if (status == 256)
-		signal_handler = 1;
+		g_signal_handler = 1;
 	else if (status == 0)
-		signal_handler = 0;
+		g_signal_handler = 0;
 	else if (status == 2)
 		write(1, "\n", 1);
 }

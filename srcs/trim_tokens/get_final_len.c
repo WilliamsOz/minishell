@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:43:14 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:49:01 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	inside_dc(char *token, int *ptr_i, int len, t_env *env)
 			if (existing_expand(token + i + 1, env, 0) == TRUE)
 				len += get_expanded_len(token + i + 1, &i, 0, env);
 			else if (token[i] == '$' && token[i + 1] == '?')
-				len += get_status_len(&i, signal_handler);
+				len += get_status_len(&i, g_signal_handler);
 			else
 				i = skip_unk_exp(token, i);
 		}
@@ -65,7 +65,7 @@ int	get_final_len(char *token, t_env *env, int i, int len)
 	while (token[i] != '\0')
 	{
 		if (token[i] == '$' && token[i + 1] == '?')
-			len += get_status_len(&i, signal_handler);
+			len += get_status_len(&i, g_signal_handler);
 		else if (token[i] == SIMPLE_COTE)
 			len = inside_sc(token, &i, len);
 		else if (token[i] == DOUBLE_COTE)
