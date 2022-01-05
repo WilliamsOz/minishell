@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 00:15:00 by user42            #+#    #+#             */
-/*   Updated: 2022/01/05 15:53:54 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:55:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-static void	link_child(void)
+static void	link_child(t_cmd *tmp_cmd)
 {
 	dup2(tmp_cmd->previous->pipes[0], STDIN_FILENO);
 	close(tmp_cmd->previous->pipes[0]);
@@ -29,7 +29,7 @@ t_minishell	*rw_inside_pipes(t_minishell *m, t_cmd *tmp_cmd)
 		fork_failed(m);
 	if (pid == 0)
 	{
-		link_child();
+		link_child(tmp_cmd);
 		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
 			execute_builtin(m, tmp_cmd);
 		else
