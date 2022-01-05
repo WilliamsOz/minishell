@@ -28,7 +28,7 @@ static int	count_args(char **cmd)
 	return (i);
 }
 
-static void	arg_is_ascii(t_minishell *m, t_cmd *cmd, char *arg)
+static void	arg_is_ascii(t_minishell *m, char *arg)
 {
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	ft_putstr_fd("bash: exit: ", STDERR_FILENO);
@@ -40,7 +40,7 @@ static void	arg_is_ascii(t_minishell *m, t_cmd *cmd, char *arg)
 	exit(2);
 }
 
-static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
+static void	arg_is_num(t_minishell *m, char *str_nbr)
 {
 	int	nbr;
 	
@@ -52,7 +52,7 @@ static void	arg_is_num(t_minishell *m, t_cmd *cmd, char *str_nbr)
 	exit(nbr);
 }
 
-static void	no_args(t_minishell *m, t_cmd *cmd)
+static void	no_args(t_minishell *m)
 {
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	m = destroy_cmd_data(m);
@@ -68,7 +68,7 @@ void	exit_builtin(t_minishell *m, t_cmd *cmd)
 
 	args_nbr = count_args(cmd->cmd);
 	if (args_nbr == 1)
-		no_args(m, cmd);
+		no_args(m);
 	else if (args_nbr > 2)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
@@ -81,9 +81,9 @@ void	exit_builtin(t_minishell *m, t_cmd *cmd)
 		while (cmd->cmd[1][i] != '\0')
 		{
 			if (ft_isdigit(cmd->cmd[1][i]) == FALSE)
-				arg_is_ascii(m, cmd, cmd->cmd[1]);
+				arg_is_ascii(m, cmd->cmd[1]);
 			i++;
 		}
-		arg_is_num(m, cmd, cmd->cmd[1]);
+		arg_is_num(m, cmd->cmd[1]);
 	}
 }
