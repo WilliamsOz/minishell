@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 13:49:58 by user42            #+#    #+#             */
-/*   Updated: 2022/01/01 20:15:32 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:26:30 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void		mall_var_failed(t_minishell *m, t_env *keep)
+static void	mall_var_failed(t_minishell *m, t_env *keep)
 {
 	t_env	*tmp;
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc_failed.c                                    :+:      :+:    :+:   */
+/*   cmd_malloc_failed.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 15:18:44 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 18:36:09 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:25:19 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void init_cmd_failed(t_minishell *m)
+void	init_cmd_failed(t_minishell *m)
 {
 	strerror(errno);
 	m = destroy_all_data(m);

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 20:14:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/01 19:00:45 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:38:33 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_dlk_list	*previous_not_null(t_dlk_list *dlk)
 	return (dlk);
 }
 
-t_minishell *redirect_l_r(t_minishell *m, t_dlk_list **dlk, t_cmd **cmd)
+t_minishell	*redirect_l_r(t_minishell *m, t_dlk_list **dlk, t_cmd **cmd)
 {
 	(*dlk)->fd_file = open((*dlk)->next->token, O_RDWR);
 	if ((*cmd)->input != STDIN_FILENO)

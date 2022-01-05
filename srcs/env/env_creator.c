@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 13:47:37 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 15:48:39 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:27:08 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_env	*get_last(t_env *root)
 	return (tmp);
 }
 
-static void		new_node_malloc_failed(t_minishell *m, t_env *root)
+static void	new_node_malloc_failed(t_minishell *m, t_env *root)
 {
 	t_env	*tmp;
 
@@ -72,7 +72,7 @@ t_env	*create_root(t_minishell *m, t_env **root, char **env)
 	}
 	if (env[0] == NULL)
 	{
-		(*root)->var = (char*)malloc(sizeof(char));
+		(*root)->var = (char *)malloc(sizeof(char));
 		if ((*root)->var == NULL)
 			mall_root_var_failed(m);
 		(*root)->var = NULL;

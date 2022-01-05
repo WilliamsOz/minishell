@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/12 17:15:02 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/24 18:42:11 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:32:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void		mall_trimed_line_failed(t_minishell *m);
 void		fork_failed(t_minishell *m);
-t_dlk_list	*close_ununsed_pipes(t_dlk_list *dlk);
 void		close_heredoc_pipes(t_dlk_list *dlk);
 t_minishell	*eof_called(t_minishell *minishell, t_dlk_list *dlk);
 void		pipe_failed(t_minishell *minishell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:09:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 20:18:08 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:40:36 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	execution(t_minishell *minishell, char **env)
 {
 	t_cmd	*tmp_cmd;
 
-	signal(SIGCHLD, handle_sigchild);
 	tmp_cmd = minishell->cmd;
 	tmp_cmd = first_entry(minishell, tmp_cmd, env);
 	while (tmp_cmd != NULL && tmp_cmd->next != NULL)

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 18:43:12 by user42            #+#    #+#             */
-/*   Updated: 2022/01/04 15:49:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:27:26 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_env	*env_destructor(t_env *env)
 			free(tmp->var);
 			tmp->var = NULL;
 			free(tmp);
-			tmp  = NULL;
-		}	
+			tmp = NULL;
+		}
 	}
 	env = NULL;
 	return (env);

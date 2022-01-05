@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:30:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 15:57:44 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:41:58 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_index	get_index(int i)
 {
-	t_index index;
+	t_index	index;
 
 	index.i = i;
 	index.j = 0;
@@ -48,11 +48,11 @@ static char	*__get_dq__(char *token, char *tmp, t_index *index, t_env *env)
 	{
 		if (token[index->i] == '$' && token[index->i + 1] == '?')
 			tmp = cpy_status(tmp, &index->i, &index->j);
-		else if (token[index->i] == '$' &&
-			existing_expand(token + index->i + 1, env, 0) == TRUE)
+		else if (token[index->i] == '$'
+			&& existing_expand(token + index->i + 1, env, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index->i + 1, env, tmp,
-				&index->j);
+					&index->j);
 			index->i += get_end_of_expansion(token + index->i + 1, 0);
 		}
 		else if (token[index->i] == '$')
@@ -79,11 +79,11 @@ char	*get_trimed_token(char *token, char *tmp, t_env *env, int *ptr_i)
 			tmp = __get_sq__(token, tmp, &index.i, &index.j);
 		else if (token[index.i] == DOUBLE_COTE)
 			tmp = __get_dq__(token, tmp, &index, env);
-		else if (token[index.i] == '$' &&
-			existing_expand(token + index.i + 1, env, 0) == TRUE)
+		else if (token[index.i] == '$'
+			&& existing_expand(token + index.i + 1, env, 0) == TRUE)
 		{
 			tmp = copy_expanded_value(token + index.i + 1, env, tmp,
-				&index.j);
+					&index.j);
 			index.i += get_end_of_expansion(token + index.i + 1, 0);
 		}
 		else if (token[index.i] == '$' && token[index.i + 1] == '?')

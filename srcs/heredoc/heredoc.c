@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:07:16 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:43:14 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:31:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ static char	*get_new_line(char *line, char *new_line, t_env *env, int i)
 	{
 		if (line[i] == '$' && line[i + 1] == '?')
 			new_line = cpy_status(new_line, &i, &j);
-		else if (line[i] == '$' &&
-			existing_expand(line + i + 1, env, 0) == TRUE)
+		else if (line[i] == '$'
+			&& existing_expand(line + i + 1, env, 0) == TRUE)
 		{
-			new_line = copy_expanded_value(line + i + 1, env, new_line,
-				&j);
+			new_line = copy_expanded_value(line + i + 1, env, new_line, &j);
 			i += get_end_of_expansion(line + i + 1, 0);
 		}
 		else if (line[i] == '$')
@@ -102,39 +101,11 @@ t_minishell	*w_inside_child(t_minishell *m, t_dlk_list *tmp)
 	return (m);
 }
 
-t_dlk_list	*call_child(t_minishell *m, t_dlk_list *tmp, int status)
-{
-	pid_t	pid;
-	int		ret;
-
-	ret = pipe(tmp->heredoc_pipe);
-	if (ret == -1)
-		pipe_failed(m);
-	pid = fork();
-	if (pid == -1)
-		fork_failed(m);
-	if (pid == 0)
-	{
-		signal_handler = -1;
-		close(tmp->heredoc_pipe[0]);
-		m = w_inside_child(m, tmp);
-		close(tmp->heredoc_pipe[1]);
-		exit (EXIT_SUCCESS);
-	}
-	else
-	{
-		close(tmp->heredoc_pipe[1]);
-		waitpid(pid, &status, 0);
-	}
-	return (tmp);
-}
-
 t_minishell	*heredoc(t_minishell *m, t_dlk_list *dlk)
 {
 	t_dlk_list	*tmp;
 
-	signal(SIGINT, hd_handler);
-	signal(SIGQUIT, hd_handler);
+	handle_heredoc();
 	tmp = dlk;
 	while (tmp != NULL && signal_handler != 130)
 	{

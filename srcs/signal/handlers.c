@@ -6,19 +6,11 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 12:17:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 15:14:55 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:41:05 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	handle_sigchild(int sig)
-{
-	int		status = 1;
-
-	(void)sig;
-	waitpid(0, &status, 0);
-}
 
 void	rl_handler(int signum)
 {
@@ -53,8 +45,14 @@ void	hd_handler(int signum)
 	}
 }
 
-void	handle_rl_signal()
+void	handle_rl_signal(void)
 {
 	signal(SIGINT, rl_handler);
 	signal(SIGQUIT, rl_handler);
+}
+
+void	handle_heredoc(void)
+{
+	signal(SIGINT, hd_handler);
+	signal(SIGQUIT, hd_handler);
 }

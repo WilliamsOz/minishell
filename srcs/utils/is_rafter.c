@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:51:37 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 15:17:43 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:43:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_rafter(t_dlk_list *dlk)
 {
 	if (dlk != NULL && (dlk->upper_rafter || dlk->double_upper_rafter
-		|| dlk->lower_rafter || dlk->here_doc))
+			|| dlk->lower_rafter || dlk->here_doc))
 		return (TRUE);
 	return (FALSE);
 }

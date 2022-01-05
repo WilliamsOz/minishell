@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:28:27 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/03 12:03:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:39:13 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_minishell	*redirect_ur(t_minishell *m, t_dlk_list **dlk, t_cmd **tmp_cmd)
 {
 	if ((*tmp_cmd)->output != STDOUT_FILENO)
 		close((*tmp_cmd)->output);
-	(*dlk)->fd_file = open((*dlk)->next->token, O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	(*dlk)->fd_file = open((*dlk)->next->token,
+			O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	(*tmp_cmd)->output = (*dlk)->fd_file;
 	if ((*dlk)->previous == NULL)
 	{

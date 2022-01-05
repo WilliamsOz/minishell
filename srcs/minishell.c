@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:06:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:24:22 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-//DELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDELDEL
+/*
 
 void    show_dlk(t_dlk_list *dlk)
 {
@@ -109,7 +109,7 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
-//DELDELDELDELDELDELDELDELDELDELDELDELDsELDELDELDELDELDELDELDELDELDELDELDELDELDEL
+*/
 
 t_minishell	*treat_data(t_minishell *minishell)
 {
@@ -135,7 +135,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 	{
 		add_history(minishell->line);
 		minishell->d_lk = double_lk_creator(minishell,
-			minishell->line, 0);
+				minishell->line, 0);
 		minishell = is_logic_input(minishell);
 		minishell = heredoc(minishell, minishell->d_lk);
 		if (minishell->line != NULL)

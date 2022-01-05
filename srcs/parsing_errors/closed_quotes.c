@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:58:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:42:01 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:35:20 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	__get_end__(char *line, int i, int *s_cote, int *d_cote)
+static int	get_end(char *line, int i, int *s_cote, int *d_cote)
 {
 	if (line[i] == SIMPLE_COTE)
 		*s_cote += 1;
@@ -38,8 +38,8 @@ t_minishell	*are_quotes_closed(t_minishell*minishell, int i, char *line)
 	{
 		if (line[i] == SIMPLE_COTE || line[i] == DOUBLE_COTE)
 		{
-			i = __get_end__(line, i, &minishell->parsing_err->simple_cote,
-				&minishell->parsing_err->double_cote);
+			i = get_end(line, i, &minishell->parsing_err->simple_cote,
+					&minishell->parsing_err->double_cote);
 		}
 		else
 			i++;

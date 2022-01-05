@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:37:47 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:00:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:43:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_minishell *destroy_data(t_minishell *minishell)
+t_minishell	*destroy_data(t_minishell *minishell)
 {
 	if (minishell->parsing_err != NULL)
 		minishell->parsing_err = parsing_err_destroyer(minishell->parsing_err);

@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:05:21 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/02 19:06:00 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:32:41 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_dlk_list	*get_metacharacter(t_dlk_list *dlk, char c, int *ptr_i, char *str)
 	return (dlk);
 }
 
-int			is_metacharacter(char c)
+int	is_metacharacter(char c)
 {
 	if (c == LOWER_RAFTER || c == UPPER_RAFTER || c == PIPELINE)
 		return (1);

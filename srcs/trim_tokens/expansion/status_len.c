@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   status_len.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 17:02:34 by wiozsert          #+#    #+#             */
-/*   Updated: 2021/12/23 17:49:17 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:41:03 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int		get_status_len(int *ptr_i, int tmp)
+int	get_status_len(int *ptr_i, int tmp)
 {
 	int	len;
 

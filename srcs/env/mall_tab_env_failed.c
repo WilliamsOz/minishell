@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 12:49:22 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 15:50:58 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:26:46 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	mall_str_tab_env_failed(t_minishell *m)
 {
-	int i;
+	int	i;
 
 	strerror(errno);
 	i = 0;
@@ -39,7 +39,7 @@ void	mall_tab_env_failed(t_minishell *m)
 	exit (errno);
 }
 
-void		mall_root_var_failed(t_minishell *m)
+void	mall_root_var_failed(t_minishell *m)
 {
 	strerror(errno);
 	free(m->env);

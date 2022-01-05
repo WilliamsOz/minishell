@@ -6,13 +6,13 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 17:05:39 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 12:05:19 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 11:43:14 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int inside_sc(char *token, int *ptr_i, int len)
+static int	inside_sc(char *token, int *ptr_i, int len)
 {
 	int	i;
 
@@ -67,7 +67,7 @@ int	get_final_len(char *token, t_env *env, int i, int len)
 		if (token[i] == '$' && token[i + 1] == '?')
 			len += get_status_len(&i, signal_handler);
 		else if (token[i] == SIMPLE_COTE)
-			len = inside_sc(token, &i, len); 
+			len = inside_sc(token, &i, len);
 		else if (token[i] == DOUBLE_COTE)
 			len = inside_dc(token, &i, len, env);
 		else if (token[i] == '$')
@@ -78,7 +78,7 @@ int	get_final_len(char *token, t_env *env, int i, int len)
 				i = skip_unk_exp(token, i);
 		}
 		else
-				inc_i_and_len(&i, &len);
+			inc_i_and_len(&i, &len);
 	}
 	return (len);
 }
