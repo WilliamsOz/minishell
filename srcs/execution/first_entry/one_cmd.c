@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 11:48:22 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 13:07:43 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,16 @@ static void	link_child(t_cmd *tmp_cmd)
 	}
 }
 
-static void	interpret_status(t_cmd *cmd, int status)
+static void	interpret_status(t_cmd *cmd, int status, char **env)
 {
-	if (status == 131)
-	{
-		ft_putstr_fd("Quit (core dumped)\n", 2);
-		g_signal_handler = 131;
-	}
+	if (status == 512 && path_removed(env) == TRUE)
+		no_file_or_directory(cmd->cmd[0]);
+	else if (status == 131)
+		print_core_dumped();
 	else if (status == 512 && ft_strcmp(cmd->cmd[0], "ls") == TRUE)
 		g_signal_handler = 2;
-	else if (status == 3584 || status == 512)
-	{
-		ft_putstr_fd(cmd->cmd[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		g_signal_handler = 127;
-	}
+	else if (status == 512 || status == 3584)
+		command_not_found(cmd->cmd[0]);
 	else if (status == 256)
 		g_signal_handler = 1;
 	else if (status == 0)
@@ -68,6 +63,6 @@ void	exec_one_cmd(t_minishell *m, t_cmd *tmp_cmd, char **env)
 	else
 	{
 		waitpid(0, &status, 0);
-		interpret_status(tmp_cmd, status);
+		interpret_status(tmp_cmd, status, env);
 	}
 }
