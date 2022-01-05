@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 21:33:59 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 14:59:01 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 15:05:33 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,19 @@ static void	change_pwd_env(t_env *env, char *pwd)
 	}
 }
 
+static void	free_directories(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+}
+
 void	cd_builtin(t_cmd *cmd, t_env **env)
 {
 	char	**directories;
@@ -90,6 +103,7 @@ void	cd_builtin(t_cmd *cmd, t_env **env)
 		{
 			directories = ft_split(cmd->cmd[1], '/');
 			check_and_move_directory(directories, pwd);
+			free_directories(directories);
 		}
 	}
 	free(pwd);
