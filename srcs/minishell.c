@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 20:20:33 by user42           ###   ########.fr       */
+/*   Updated: 2022/01/05 11:06:51 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ void	minishell_core(t_minishell *minishell)
 			minishell->parsing_err = parsing_err_creator();
 			if (minishell->parsing_err == NULL)
 				init_parsing_failed(minishell);
-			signal_handler = 0;
 			minishell = start_minishell(minishell);
 			minishell = destroy_data(minishell);
 		}
@@ -181,6 +180,7 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1 || att == 0)
 		return (0);
 	minishell = minishell_creator(env);
+	signal_handler = 0;
 	minishell_core(minishell);
 	if (minishell->env != NULL)
 		minishell->env = env_destructor(minishell->env);
