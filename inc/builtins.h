@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/26 15:15:03 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:45:51 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:58:42 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define BUILTINS_H
 
 int		find_env_var(char *var, char *pwd_header);
-void	cd_to_home(t_env *env);
+void	cd_to_home(t_env *env, char *pwd);
 void	move_to_root(t_env *env);
 void	cd_builtin(t_cmd *cmd, t_env **env);
 
