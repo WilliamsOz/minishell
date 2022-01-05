@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 18:13:03 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:48:57 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 12:29:51 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	var_exist(t_env *env, char *str)
 		free_strs(env_var);
 		tmp = tmp->next;
 	}
+	free_strs(var_and_value);
 	return (FALSE);
 }
 
