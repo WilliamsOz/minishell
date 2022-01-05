@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:28:22 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 17:28:25 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:41:18 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ static int	skip_option(char **cmd)
 	return (i);
 }
 
-static void	put_strs(char **strs, t_cmd *cmd)
+static void	put_strs(char **strs, t_cmd *cmd, int i)
 {
-	int	i;
-
-	i = 0;
 	while (strs[i] != NULL)
 	{
 		ft_putstr_fd(strs[i], cmd->output);
@@ -72,7 +69,7 @@ void	echo_builtin(t_cmd *cmd)
 		i = skip_option(cmd->cmd);
 	if (cmd->cmd[i] != NULL)
 	{
-		put_strs(cmd->cmd, cmd);
+		put_strs(cmd->cmd, cmd, i);
 		if (option == 0)
 			write(cmd->output, "\n", 1);
 	}
