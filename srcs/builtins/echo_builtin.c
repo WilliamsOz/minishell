@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 20:27:13 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:52:09 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:07:43 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ static int	skip_option(char **cmd)
 	return (i);
 }
 
+static void	put_strs(char **strs, t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		ft_putstr_fd(strs[i], cmd->output);
+		if (strs[i + 1] != NULL)
+			write(1, " ", cmd->output);
+		i++;
+	}
+}
+
 void	echo_builtin(t_cmd *cmd)
 {
 	int			i;
@@ -58,13 +72,9 @@ void	echo_builtin(t_cmd *cmd)
 		i = skip_option(cmd->cmd);
 	if (cmd->cmd[i] != NULL)
 	{
+		put_strs(cmd->cmd, cmd);
 		if (option == 0)
-		{
-			ft_putstr_fd(cmd->cmd[i], cmd->output);
 			write(cmd->output, "\n", 1);
-		}
-		else
-			ft_putstr_fd(cmd->cmd[i], cmd->output);
 	}
 	else
 		write(cmd->output, "\n", 1);
