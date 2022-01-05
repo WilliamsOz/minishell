@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:58:29 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 13:05:05 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:00:38 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	print_core_dumped(void)
 
 void	command_not_found(char *cmd)
 {
+	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	g_signal_handler = 127;

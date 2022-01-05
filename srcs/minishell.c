@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 15:32:41 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:22:55 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ t_minishell	*treat_data(t_minishell *minishell)
 	return (minishell);
 }
 
+int	is_empty_dlk(t_dlk_list *dlk)
+{
+	t_dlk_list	*tmp;
+
+	tmp = dlk;
+	while (tmp != NULL)
+	{
+		if (tmp->token != NULL)
+			return (FALSE);
+		tmp = tmp->next;
+	}
+	return (TRUE);
+}
+
 t_minishell	*start_minishell(t_minishell *minishell)
 {
 	minishell = are_quotes_closed(minishell, 0, minishell->line);
@@ -39,7 +53,7 @@ t_minishell	*start_minishell(t_minishell *minishell)
 				minishell->line, 0);
 		minishell = is_logic_input(minishell);
 		minishell = heredoc(minishell, minishell->d_lk);
-		if (minishell->line != NULL)
+		if (minishell->line != NULL && is_empty_dlk(minishell->d_lk) == FALSE)
 		{
 			minishell = treat_data(minishell);
 			minishell->line = free_line(minishell->line);

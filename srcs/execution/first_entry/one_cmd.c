@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:01:49 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 13:21:06 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:24:01 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void	interpret_status(t_cmd *cmd, int status, char **env)
 		print_core_dumped();
 	else if (status == 512 && ft_strcmp(cmd->cmd[0], "ls") == TRUE)
 		g_signal_handler = 2;
-	else if (status == 512 || status == 3584)
+	else if ((status == 512 && cmd->cmd[0][0] != '/')
+		|| status == 3584 || status == 3328)
 		command_not_found(cmd->cmd[0]);
 	else if (status == 256)
 		g_signal_handler = 1;

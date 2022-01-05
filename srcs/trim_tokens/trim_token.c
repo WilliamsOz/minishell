@@ -6,11 +6,26 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 16:42:59 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 15:59:38 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:01:01 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static char	*get_null_token(t_minishell *minishell)
+{
+	char	*dest;
+
+	dest = (char *)malloc(sizeof(char));
+	if (dest == NULL)
+	{
+		strerror(errno);
+		minishell = destroy_all_data(minishell);
+		exit (errno);
+	}
+	dest[0] = '\0';
+	return (dest);
+}
 
 static char	*get_new_token(t_minishell *m, char *token, int *ptr_i)
 {
@@ -23,7 +38,7 @@ static char	*get_new_token(t_minishell *m, char *token, int *ptr_i)
 	len = get_final_len(token, m->env, i, 0);
 	if (len == 0)
 	{
-		tmp = NULL;
+		tmp = get_null_token(m);
 		return (tmp);
 	}
 	tmp = (char *)malloc(sizeof(char) * (len + 1));

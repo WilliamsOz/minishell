@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:09:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 15:54:47 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/05 17:19:28 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,15 @@ void	execution(t_minishell *minishell, char **env)
 	t_cmd	*tmp_cmd;
 
 	tmp_cmd = minishell->cmd;
-	tmp_cmd = first_entry(minishell, tmp_cmd, env);
+	if (tmp_cmd->next == NULL)
+	{
+		if (is_builtin(tmp_cmd->cmd[0]) == TRUE)
+			execute_builtin(minishell, tmp_cmd);
+		else
+			exec_one_cmd(minishell, tmp_cmd, env);
+		return ;
+	}
+	tmp_cmd = first_entry(minishell, tmp_cmd);
 	while (tmp_cmd != NULL && tmp_cmd->next != NULL)
 		tmp_cmd = mid_entry(minishell, tmp_cmd);
 	tmp_cmd = last_entry(minishell, tmp_cmd);
