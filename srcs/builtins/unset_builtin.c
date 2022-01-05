@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 17:02:20 by oozsertt          #+#    #+#             */
-/*   Updated: 2021/12/30 17:41:57 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 13:23:48 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 #include "../../inc/minishell.h"
 
-static int	find_pwd(char *var, char *pwd_header)
+static int	is_var(char *env_var, char *arg)
 {
 	int	i;
 
 	i = 0;
-	while (pwd_header[i] != '\0')
+	while (arg[i] != '\0')
 	{
-		if (var[i] != pwd_header[i] && var[i] != '\0')
+		if (arg[i] != env_var[i] || env_var[i] == '\0')
 			return (FALSE);
 		i++;
 	}
-	if (pwd_header[i] == '\0')
+	if (arg[i] == '\0' && env_var[i] != '\0'
+		&& env_var[i] == '=')
 		return (TRUE);
 	else
 		return (FALSE);
@@ -48,7 +49,7 @@ void	unset_builtin(t_cmd *cmd, t_env **env)
 	tmp = *env;
 	while (tmp != NULL)
 	{
-		if (find_pwd(tmp->var, cmd->cmd[1]) == 1)
+		if (is_var(tmp->var, cmd->cmd[1]) == 1)
 		{
 			unset_var(previous, tmp, tmp->next);
 			return ;
