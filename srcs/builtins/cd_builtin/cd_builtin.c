@@ -6,7 +6,7 @@
 /*   By: oozsertt <oozsertt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/22 21:33:59 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 11:51:24 by oozsertt         ###   ########.fr       */
+/*   Updated: 2022/01/05 14:59:01 by oozsertt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ void	cd_builtin(t_cmd *cmd, t_env **env)
 
 	directories = NULL;
 	pwd = NULL;
+	pwd = getcwd(NULL, 0);
 	if (multiple_args(cmd->cmd) == TRUE)
 		ft_putstr_fd("bash: cd: too many arguments\n", cmd->output);
 	else if (cmd->cmd[1] == NULL)
-		cd_to_home(*env);
+		cd_to_home(*env, pwd);
 	else
 	{
-		pwd = getcwd(NULL, 0);
 		if (cmd->cmd[1][0] == '/')
 			move_to_root(*env);
 		else
@@ -92,6 +92,8 @@ void	cd_builtin(t_cmd *cmd, t_env **env)
 			check_and_move_directory(directories, pwd);
 		}
 	}
+	free(pwd);
 	pwd = getcwd(NULL, 0);
 	change_pwd_env(*env, pwd);
+	free(pwd);
 }
