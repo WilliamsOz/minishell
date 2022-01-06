@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 17:28:22 by oozsertt          #+#    #+#             */
-/*   Updated: 2022/01/05 17:41:18 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:56:26 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	echo_builtin(t_cmd *cmd)
 	}
 	else
 		write(cmd->output, "\n", 1);
+	g_signal_handler = 0;
 }

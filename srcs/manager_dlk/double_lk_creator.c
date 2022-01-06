@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:00:26 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/04 18:35:41 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:12:07 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static t_dlk_list	*get_token(t_dlk_list *dlk, char *line, int *p_i, int i)
 {
 	i = *p_i;
 	i = skip_space(line, i);
+	if (line[i] == '\0')
+		dlk->only_space = 1;
 	if (is_it_a_quote(line[i]) == 1)
 	{
 		if (line[i] == SIMPLE_COTE)
@@ -96,6 +98,7 @@ static t_dlk_list	*get_next_tokens(t_dlk_list *dlk, char *line, int i)
 		if (new == NULL)
 			return (NULL);
 		new->next = NULL;
+		new->only_space = 0;
 		new = init_dlk_metacharacter(new);
 		new = get_token(new, line, &i, 0);
 		if (new->is_metacharacter == 0 && new->token == NULL)
@@ -117,6 +120,7 @@ t_dlk_list	*double_lk_creator(t_minishell *minishell, char *line, int i)
 	if (dlk == NULL)
 		init_dlk_creator_failed(minishell);
 	dlk->previous = NULL;
+	dlk->only_space = 0;
 	dlk = init_dlk_metacharacter(dlk);
 	dlk = get_token(dlk, line, &i, 0);
 	if (dlk->is_metacharacter == 0 && dlk->token == NULL)

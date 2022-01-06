@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 12:09:46 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 17:41:03 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/06 16:02:05 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 static void	print_status(t_cmd *cmd, int status, char **env)
 {
-	if (status == 512 && path_removed(env) == TRUE)
+	if ((status == 512 && path_removed(env) == TRUE)
+		|| (status == 512 && errno == 20 && cmd->cmd[0][0] == '/'
+		&& access(cmd->path, F_OK | X_OK) == -1))
 		no_file_or_directory(cmd->cmd[0]);
-	if (status == 131)
+	else if (status == 131)
 		print_core_dumped();
-	else if (status == 512 && ft_strcmp(cmd->cmd[0], "ls") == TRUE)
-		g_signal_handler = 2;
-	else if (status == 512 || status == 3584)
+	else if ((status == 512 && cmd->cmd[0][0] != '/'
+		&& access(cmd->path, F_OK | X_OK) == -1)
+		|| status == 3584 || status == 3328
+		|| (status == 512 && access(cmd->path, F_OK | X_OK) == -1))
 		command_not_found(cmd->cmd[0]);
 	else if (status == 256)
 		g_signal_handler = 1;
@@ -28,6 +31,8 @@ static void	print_status(t_cmd *cmd, int status, char **env)
 		g_signal_handler = 0;
 	else if (status == 2)
 		write(1, "\n", 1);
+	if (status == 512)
+		g_signal_handler = 2;
 }
 
 static void	interpret_status(t_cmd *cmd, char **env)

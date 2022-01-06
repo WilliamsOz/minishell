@@ -6,7 +6,7 @@
 #    By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 17:32:48 by wiozsert          #+#    #+#              #
-#    Updated: 2022/01/05 13:18:02 by wiozsert         ###   ########.fr        #
+#    Updated: 2022/01/06 15:04:37 by wiozsert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ FILESC = ./srcs/trim_tokens/get_final_token.c ./srcs/trim_tokens/trim_token.c \
 ./srcs/cmd/get_dlk_cmd.c ./srcs/cmd/init_cmd_path.c \
 ./srcs/cmd/cpy_cmd_from_dlk.c ./srcs/cmd/get_cmd.c \
 ./srcs/cmd/init_cmd.c ./srcs/cmd/find_path.c ./srcs/execution/path_removed.c \
-./srcs/execution/print_error.c
+./srcs/execution/print_error.c ./srcs/utils/only_space.c
 
 OBJS = $(addsuffix .o, $(notdir $(basename $(FILESC))))
 

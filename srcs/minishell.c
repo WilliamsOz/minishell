@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:41:58 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 17:40:33 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:52:41 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_minishell	*treat_data(t_minishell *minishell)
 		minishell->parsing_err = parsing_err_destroyer(minishell->parsing_err);
 		return (minishell);
 	}
+	if (is_there_only_space(minishell->d_lk) == TRUE)
+		return (minishell);
 	minishell = trim_token(minishell);
 	minishell = get_cmd(minishell);
 	minishell = tab_env_creator(minishell);

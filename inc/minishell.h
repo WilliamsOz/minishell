@@ -6,7 +6,7 @@
 /*   By: wiozsert <wiozsert@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 09:42:09 by wiozsert          #+#    #+#             */
-/*   Updated: 2022/01/05 16:48:48 by wiozsert         ###   ########.fr       */
+/*   Updated: 2022/01/06 15:04:21 by wiozsert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 
 int	g_signal_handler;
 
+int				is_there_only_space(t_dlk_list *dlk);
 int				is_rafter(t_dlk_list *dlk);
 void			minishell_eof_called(void);
 t_minishell		*destroy_data(t_minishell *minishell);
